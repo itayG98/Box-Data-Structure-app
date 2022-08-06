@@ -37,5 +37,12 @@ namespace Model
         {
             return $"Width {Width:f2} Height {Height:f2} Count = {Count} Last purhesed {Date}";
         }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Box other) 
+                return Height==other.Height && Width==other.Width;
+            return false;
+        }
     }
 }

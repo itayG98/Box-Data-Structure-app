@@ -12,6 +12,7 @@ namespace Model
         BST<double, BST<double, Box>> MainTree;
         public const double LimitPercentage = 0.33;
         public const int MaxBoxesPerSize = 50;
+        public const int MinBoxesPerSize = 10;
 
         public Store()
         {
