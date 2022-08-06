@@ -9,7 +9,6 @@ namespace Model
 {
     public class Store
     {
-        private readonly DB data = DB.Instance;
         BST<double, BST<double, Box>> MainTree;
         public const double LimitPercentage = 0.33;
         public const int MaxBoxesPerSize = 50;
@@ -23,6 +22,7 @@ namespace Model
 
         private void LoadFromDB()
         {
+            _ = DB.Instance;
             foreach (var elem in DB.Boxes)
             {
                 if (elem != null)
