@@ -9,20 +9,58 @@ namespace DataStructure
     public class Queue<V> where V : IComparable
     {
         QueueNode Root;
-        public Queue(QueueNode root)
+        public Queue(QueueNode root) => Root = root;
+
+        public void Add(V val)
         {
-            Root = root;
+            if (IsEmpty())
+                Root.Value = val;
+            else
+            {
+                QueueNode node = Root;
+                while (node.Next != null)
+                    node = node.Next;
+                node.Next = new QueueNode(val);
+            }
         }
-        public Queue() : this(null)
+        public V Pop()
         {
+            if (IsEmpty())
+                return default;
+            else
+            {
+                V val = Root.Value;
+                Root = Root.Next;
+                return val;
+            }
         }
+
+        public bool Contains(V val)
+        {
+            if (IsEmpty())
+                return default;
+            QueueNode node = Root;
+            while (node.Next != null)
+            {
+                if (node.CompareTo(val) == 0)
+                    return true;
+                node = node.Next;
+            }
+            return node.CompareTo(val)==0;
+        }
+
+        public Queue() : this(null) { }
+
 
         public bool IsEmpty() => Root == null;
 
-        public class QueueNode 
+        public class QueueNode
         {
             private QueueNode _next;
             private V _value;
+            public QueueNode(V val) => Value = val;
+            public QueueNode() : this(default) { }
+
 
             public V Value { get => _value; set => _value = value; }
             public QueueNode Next { get => _next; set => _next = value; }
