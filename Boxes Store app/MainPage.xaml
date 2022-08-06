@@ -12,13 +12,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="Up" Grid.Row="0" Background="PapayaWhip">
+        <Grid x:Name="Up" Grid.Row="0" Background="#CCD6A6">
             <TextBlock FontSize="65" Text="Boxes store" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
-        <Grid x:Name="Down" Grid.Row="1" Background="LightSeaGreen">
+        <Grid x:Name="Down" Grid.Row="1" Background="#7DCE13">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>

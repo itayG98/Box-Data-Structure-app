@@ -26,11 +26,13 @@ namespace Boxes_Store_app
     {
         public Logic logic;
 
-        public IEnumerable Boxes { get {return logic.store.GetAll(); } } 
+        public IEnumerable Boxes { get { return logic.store.GetAll(); } } 
         public MainPage()
         {
             this.InitializeComponent();
             logic = new Logic();         
         }
+        //submit
+        //Boxes = store.GetBestOffer(width , height ,quantity)
     }
 }
