@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,10 +25,12 @@ namespace Boxes_Store_app
     public sealed partial class MainPage : Page
     {
         public Logic logic;
+
+        public IEnumerable Boxes { get {return logic.store.GetAll(); } } 
         public MainPage()
         {
             this.InitializeComponent();
-            logic = new Logic();
+            logic = new Logic();         
         }
     }
 }

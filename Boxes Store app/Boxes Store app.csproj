@@ -155,6 +155,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{45B8A4F7-1C38-48CE-97A1-197EABCCD375}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\View Model\View Model.csproj">
       <Project>{8D86243D-3E09-4352-B937-9609807311E5}</Project>
       <Name>View Model</Name>

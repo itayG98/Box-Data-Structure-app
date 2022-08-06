@@ -6,9 +6,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:x1="using:Model"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Up" Grid.Row="0" Background="PapayaWhip">
+            <TextBlock FontSize="65" Text="Boxes store" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        <Grid x:Name="Down" Grid.Row="1" Background="LightSeaGreen">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListView Grid.Row="0" ItemsSource="{x:Bind Boxes}" Padding="50" Margin="50" FontSize="20">
+                <DataTemplate x:DataType="x1:Box">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Width {x:Bind Width}"/>
+                        <TextBlock Text="Height {x:Bind Height}"/>
+                        <TextBlock Text="Count {x:Bind Count}"/>
+                        <TextBlock Text="Last purchased :{x:Bind Date}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

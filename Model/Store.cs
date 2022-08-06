@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MoockData;
+using System.Collections;
 
 namespace Model
 {
@@ -108,6 +109,7 @@ namespace Model
                     foreach (Box box in YTree.GetEnumerator(ord))
                         act(box);
         }
+
         public int GetOffer(Action<Box> act, double width, double height, int quantity)
         //Get all fitting boxes
         {
@@ -163,6 +165,14 @@ namespace Model
                 return quantity;
             }
             return -1;
+        }
+
+        public IEnumerable GetAll() 
+        {
+            foreach (var val in MainTree.GetEnumerator(Order.InOrderV))
+                if (val is BST<double, Box> YTree)
+                    foreach (Box box in YTree.GetEnumerator(Order.InOrderV))
+                        yield return box;
         }
     }
 }
