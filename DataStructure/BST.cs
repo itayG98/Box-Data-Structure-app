@@ -211,10 +211,20 @@ namespace DataStructure
         }
         public BST<K, V> GetTreeByRange(K min, K max)
         {
-            if (max.CompareTo(min) > 0)
+            if (max.CompareTo(min) >= 0)
             {
                 BST<K, V> fitKey = new BST<K, V>();
-                foreach (TreeNode node in Inorder(Root))
+                TreeNode commonFather = Root;
+                while (commonFather != null)
+                {
+                    if (commonFather.CompareTo(min) < 0)
+                        commonFather = commonFather.Right;
+                    else if (commonFather.CompareTo(max) > 0)
+                        commonFather = commonFather.Left;
+                    else
+                        break ;
+                }
+                foreach (TreeNode node in Inorder(commonFather))
                 {
                     if (node.CompareTo(min) >= 0 && node.CompareTo(max) <= 0)
                         fitKey.AddNode(node.Key, node.Value);
