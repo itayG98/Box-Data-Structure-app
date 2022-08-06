@@ -10,7 +10,7 @@ namespace DataStructure
     {
         QueueNode Root;
         public MyQueue(QueueNode root) => Root = root;
-
+        public MyQueue() : this(null) { }
         public void Add(V val)
         {
             if (IsEmpty())
@@ -23,6 +23,24 @@ namespace DataStructure
                 node.Next = new QueueNode(val);
             }
         }
+        public void Remove(V val)
+        {
+            if (IsEmpty())
+                return;
+            QueueNode prev = Root;
+            QueueNode current = Root.Next;
+            while (current != null)
+            {
+                if (current.CompareTo(val) == 0)
+                {
+                    prev.Next = current.Next;
+                    return;
+                }
+                prev = current;
+                current = current.Next;
+            }
+        }
+       
         public V Pop()
         {
             if (IsEmpty())
@@ -34,7 +52,6 @@ namespace DataStructure
                 return val;
             }
         }
-
         public bool Contains(V val)
         {
             if (IsEmpty())
@@ -46,11 +63,8 @@ namespace DataStructure
                     return true;
                 node = node.Next;
             }
-            return node.CompareTo(val)==0;
+            return node.CompareTo(val) == 0;
         }
-
-        public MyQueue() : this(null) { }
-
 
         public bool IsEmpty() => Root == null;
 

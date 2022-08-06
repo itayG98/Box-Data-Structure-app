@@ -10,7 +10,7 @@ namespace Model
     public class Store
     {
         BST<double, BST<double, Box>> MainTree;
-        public MyQueue<Box> datesOrdered;
+        public MyQueue<Box> DatesQueue;
         public const double LimitPercentage = 0.33;
         public const int MaxBoxesPerSize = 50;
         public const int MinBoxesPerSize = 10;
@@ -18,6 +18,7 @@ namespace Model
         public Store()
         {
             MainTree = new BST<double, BST<double, Box>>();
+            DatesQueue = new MyQueue<Box>();
             LoadFromDB();
         }
 
@@ -41,14 +42,17 @@ namespace Model
                 returnedBoxes += box.Count - MaxBoxesPerSize;
                 box.Count = MaxBoxesPerSize;
             }
+
             var Xnode = MainTree.FindNode(box.Width);
             if (Xnode != null)//Found x dim
             {
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
+                    DatesQueue.Remove(box);
                     if (Ynode.Value.Count + box.Count >= MaxBoxesPerSize)
                     {
+
                         returnedBoxes += Ynode.Value.Count + box.Count - MaxBoxesPerSize;
                         Ynode.Value.Count = MaxBoxesPerSize;
                     }
@@ -64,6 +68,7 @@ namespace Model
                 BST<double, Box> YTree = new BST<double, Box>(box.Height, box);
                 MainTree.AddNode(box.Width, YTree);
             }
+            DatesQueue.Add(box);
             return returnedBoxes;
         }
         public int Add(double width, double height, int quantety, DateTime date)
@@ -73,9 +78,9 @@ namespace Model
         }
         public int Add(double width, double height, int quantety)
         {
-            return Add(width, height, quantety,DateTime.Now);
+            return Add(width, height, quantety, DateTime.Now);
         }
-        public int RemoveBoxes(double width, double height, int quantity)
+        public int RemoveBoxes(double width, double height, int quantity) //Contin here!!!
         //Return how many boxes removed
         {
             if (width <= 0 || height <= 0 || quantity <= 0)
@@ -86,7 +91,7 @@ namespace Model
             var Ynode = Xnode.Value.FindNode(height);
             if (Ynode == null)
                 return -1;
-
+            DatesQueue.Remove(Ynode.Value);
             if (Ynode.Value.Count > quantity)
                 Ynode.Value.Count -= quantity;
             else if (Ynode.Value.Count == quantity)
@@ -168,7 +173,7 @@ namespace Model
             return -1;
         }
 
-        public IEnumerable GetAll() 
+        public IEnumerable GetAll()
         {
             foreach (var val in MainTree.GetEnumerator(Order.InOrderV))
                 if (val is BST<double, Box> YTree)
