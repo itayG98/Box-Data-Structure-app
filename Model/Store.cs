@@ -84,22 +84,20 @@ namespace Model
             var Ynode = Xnode.Value.FindNode(height);
             if (Ynode == null)
                 return -1;
+
             if (Ynode.Value.Count > quantity)
-            {
                 Ynode.Value.Count -= quantity;
-                return quantity;
-            }
             else if (Ynode.Value.Count == quantity)
-            {
                 Xnode.Value.Remove(Ynode);
-                return quantity;
-            }
             else
             {
                 var count = Ynode.Value.Count;
                 Xnode.Value.Remove(Ynode);
                 return count;
             }
+            if (Ynode != null && Ynode.Value.Count < MinBoxesPerSize)
+                throw new NotImplementedException();
+            return quantity;
         }
         public void ActionOnBoxes(Action<Box> act, Order ord)
         {
