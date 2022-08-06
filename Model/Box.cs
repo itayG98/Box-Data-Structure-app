@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Box
+    public class Box :IComparable
     {
         private int _count = 0;
         private readonly double _height;
@@ -43,6 +43,13 @@ namespace Model
             if(obj is Box other) 
                 return Height==other.Height && Width==other.Width;
             return false;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is Box other)
+                return Date.CompareTo(other.Date);
+            return default;
         }
     }
 }

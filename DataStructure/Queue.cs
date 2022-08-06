@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataStructure
 {
-    public class Queue<V> where V : IComparable
+    public class MyQueue<V> where V : IComparable
     {
         QueueNode Root;
-        public Queue(QueueNode root) => Root = root;
+        public MyQueue(QueueNode root) => Root = root;
 
         public void Add(V val)
         {
@@ -49,7 +49,7 @@ namespace DataStructure
             return node.CompareTo(val)==0;
         }
 
-        public Queue() : this(null) { }
+        public MyQueue() : this(null) { }
 
 
         public bool IsEmpty() => Root == null;

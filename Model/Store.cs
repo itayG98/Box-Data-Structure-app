@@ -10,6 +10,7 @@ namespace Model
     public class Store
     {
         BST<double, BST<double, Box>> MainTree;
+        public MyQueue<Box> datesOrdered;
         public const double LimitPercentage = 0.33;
         public const int MaxBoxesPerSize = 50;
         public const int MinBoxesPerSize = 10;
