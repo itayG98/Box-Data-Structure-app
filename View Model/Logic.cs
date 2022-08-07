@@ -24,6 +24,6 @@ namespace View_Model
             store = new Store();
         }
 
-        public void GetOffer(int x , int y, int quantity) => boxesOffer = store.GetBestInRange(x, y, quantity);
+        public void GetOffer(double x , double y, int quantity) => boxesOffer = store.GetBestInRange(x, y, quantity);
     }
 }

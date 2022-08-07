@@ -1,6 +1,7 @@
 ﻿using View_Model;
 using Windows.UI.Xaml.Controls;
 using DataStructure;
+using System.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -34,7 +35,17 @@ namespace Boxes_Store_app
 
         private void Submit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            if (!double.TryParse(X.Text, out double x))
+                return;
+            if (!double.TryParse(X.Text, out double y))
+                return;
+            if (!int.TryParse(Quantity.Text, out int q))
+                return ;
+            logic.GetOffer(x,y,q);
+        }
+        private void TextBox_OnBeforeTextChanging(TextBox sender,TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
     }
 }
