@@ -108,8 +108,8 @@ namespace Model
                 return count;
             }
             if (Ynode != null && Ynode.Value.Count < MinBoxesPerSize) { }
-                //throw new NotImplementedException(); //Alert if minimal quantity
-                return quantity;
+            //throw new NotImplementedException(); //Alert if minimal quantity
+            return quantity;
         }
         public void ActionOnBoxes(Action<Box> act, Order ord)
         {
@@ -149,7 +149,7 @@ namespace Model
             return -1;
         }
         public int GetBestInRange(Action<Box> act, double width, double height, int quantity)
-        //Get all fitting boxes in range of LimitPercentage
+        //Do action for all fitting boxes in range of LimitPercentage
         {
             if (width > 0 && height > 0 && quantity > 0)
             {
@@ -178,6 +178,36 @@ namespace Model
             return -1;
         }
 
+        public IEnumerable GetBestInRange(double width, double height, int quantity)
+        //Do action for all fitting boxes in range of LimitPercentage
+        {
+            if (width > 0 && height > 0 && quantity > 0)
+            {
+                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LimitPercentage));
+                if (KeyTree != null)
+                {
+
+                    foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
+                    {
+                        if (val is BST<double, Box> ValTreee)
+                        {
+                            ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LimitPercentage));
+                            foreach (Box box in ValTreee.GetEnumerator(Order.InOrderV))
+                            {
+                                for (int i = box.Count; quantity > 0 && i > 0; i--)
+                                {
+                                    yield return box;
+                                    quantity--;
+                                }
+                            }
+                        }
+                        if (quantity <= 0)
+                            break;
+                    }
+                }
+            }
+        }
+
         public IEnumerable GetAll()
         {
             foreach (var val in MainTree.GetEnumerator(Order.InOrderV))
@@ -185,7 +215,7 @@ namespace Model
                     foreach (Box box in YTree.GetEnumerator(Order.InOrderV))
                         yield return box;
         }
-        public IEnumerable GetQueue() 
+        public IEnumerable GetQueue()
         {
             return DatesQueue.GetQueue();
         }
