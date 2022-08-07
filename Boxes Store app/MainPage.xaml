@@ -73,7 +73,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView Grid.Column="2" x:Name="Offer" Padding="30" Margin="15" FontSize="25" Header="Best offer"  IsItemClickEnabled="True" IsMultiSelectCheckBoxEnabled="True" >
+            <ListView Grid.Column="2" x:Name="Offer" Padding="30" Margin="15" FontSize="25" Header="Best offer"  IsItemClickEnabled="True" IsMultiSelectCheckBoxEnabled="True" SelectionMode="Multiple" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center" >
