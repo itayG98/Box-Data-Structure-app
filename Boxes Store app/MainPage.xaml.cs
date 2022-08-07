@@ -16,7 +16,25 @@ namespace Boxes_Store_app
         public MainPage()
         {
             this.InitializeComponent();
-            logic = new Logic();         
+            logic = new Logic();
+            Submit.Click += Submit_Click;
+            Add.Click += Add_Click;
+            Remove.Click += Remove_Click;
+        }
+
+        private void Remove_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void Submit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
