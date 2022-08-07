@@ -35,13 +35,14 @@ namespace Boxes_Store_app
 
         private void Submit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!double.TryParse(X.Text, out double x))
+            if (!double.TryParse(X.Text, out double x)&&x>0)
                 return;
-            if (!double.TryParse(X.Text, out double y))
+            if (!double.TryParse(X.Text, out double y)&&y>0)
                 return;
-            if (!int.TryParse(Quantity.Text, out int q))
+            if (!int.TryParse(Quantity.Text, out int q)&&q>0)
                 return ;
-            logic.GetOffer(x,y,q);
+            logic.GetOffer(x, y, q);
+            Offer.ItemsSource = logic.BoxesOffer;
         }
         private void TextBox_OnBeforeTextChanging(TextBox sender,TextBoxBeforeTextChangingEventArgs args)
         {

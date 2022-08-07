@@ -130,6 +130,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataStructure\DataStructure.csproj">
+      <Project>{63BD543B-B577-465A-A844-5683B9CE20AF}</Project>
+      <Name>DataStructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{45B8A4F7-1C38-48CE-97A1-197EABCCD375}</Project>
       <Name>Model</Name>

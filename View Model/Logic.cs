@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using DataStructure;
+using Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,20 +11,25 @@ namespace View_Model
 {
     public class Logic
     {
-        private IEnumerable boxesOffer;
+        private MyQueue<Box> _boxesOffer;
         private int _remained;
         public Store store;
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
-        public IEnumerable BoxesOffer { get {return boxesOffer; } }
+        public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueue(); } }
 
         public int Remained { get => _remained; private set => _remained = value; }
 
         public Logic()
         {
             store = new Store();
+            _boxesOffer = new MyQueue<Box>();
         }
 
-        public void GetOffer(double x , double y, int quantity) => boxesOffer = store.GetBestInRange(x, y, quantity);
+        public void GetOffer(double x, double y, int quantity) 
+        {
+            foreach (var b in store.GetBestInRange(x, y, quantity))
+                _boxesOffer.Add(b);
+        } 
     }
 }

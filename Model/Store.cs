@@ -178,7 +178,7 @@ namespace Model
             return -1;
         }
 
-        public IEnumerable GetBestInRange(double width, double height, int quantity)
+        public IEnumerable<Box> GetBestInRange(double width, double height, int quantity)
         //Do action for all fitting boxes in range of LimitPercentage
         {
             if (width > 0 && height > 0 && quantity > 0)
@@ -186,7 +186,6 @@ namespace Model
                 BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LimitPercentage));
                 if (KeyTree != null)
                 {
-
                     foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
                     {
                         if (val is BST<double, Box> ValTreee)

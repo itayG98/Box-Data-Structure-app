@@ -10,7 +10,7 @@ namespace DataStructure
 /// Represent a Queue where the boxes with more transaction are first
 /// </summary>
 /// <typeparam name="V"></typeparam>
-    public class MyQueue<V> where V : IComparable
+    public class MyQueue<V>  where V : IComparable
     {
         QueueNode Root;
         public MyQueue(QueueNode root) => Root = root;
