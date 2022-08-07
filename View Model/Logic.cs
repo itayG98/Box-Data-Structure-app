@@ -27,6 +27,7 @@ namespace View_Model
 
         public void GetOffer(double x, double y, int quantity) 
         {
+            _boxesOffer.Empty();
             foreach (var b in store.GetBestInRange(x, y, quantity))
                 _boxesOffer.Add(b);
             Remained = quantity- _boxesOffer.Length;

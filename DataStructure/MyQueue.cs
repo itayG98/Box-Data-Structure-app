@@ -35,6 +35,13 @@ namespace DataStructure
             }
             Length++;
         }
+
+        public void Empty()
+        {
+            Root = null;
+            Length = 0;
+        }
+
         public void Remove(V val)
         {
             if (IsEmpty())

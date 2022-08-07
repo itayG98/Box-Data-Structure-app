@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using DataStructure;
 using System.Linq;
+using Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -18,33 +19,62 @@ namespace Boxes_Store_app
         {
             this.InitializeComponent();
             logic = new Logic();
-            Submit.Click += Submit_Click;
+            GetOffer.Click += GetOffer_Click;
             Add.Click += Add_Click;
             Remove.Click += Remove_Click;
+            TakeOffer.Click += TakeOffer_Click;
         }
 
-        private void Remove_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        public void Update()
         {
-            throw new System.NotImplementedException();
-        }
-
-        private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void Submit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            if (!double.TryParse(X.Text, out double x)&&x>0)
-                return;
-            if (!double.TryParse(X.Text, out double y)&&y>0)
-                return;
-            if (!int.TryParse(Quantity.Text, out int q)&&q>0)
-                return ;
-            logic.GetOffer(x, y, q);
+            Avilable_Item.ItemsSource = logic.Boxes;
+            Queue.ItemsSource = logic.DatesQueue;
             Offer.ItemsSource = logic.BoxesOffer;
         }
-        private void TextBox_OnBeforeTextChanging(TextBox sender,TextBoxBeforeTextChangingEventArgs args)
+        private void TakeOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            foreach (Box item in Offer.SelectedItems)
+            {
+                if (item != null)
+                    logic.Remove(item.Width, item.Height, 1);
+            }
+            Update();
+        }
+        private void Remove_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!double.TryParse(X.Text, out double x) && x > 0)
+                return;
+            if (!double.TryParse(X.Text, out double y) && y > 0)
+                return;
+            if (!int.TryParse(Quantity.Text, out int q) && q > 0)
+                return;
+            logic.Remove(x, y, q);
+            Update();
+        }
+        private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!double.TryParse(X.Text, out double x) && x > 0)
+                return;
+            if (!double.TryParse(X.Text, out double y) && y > 0)
+                return;
+            if (!int.TryParse(Quantity.Text, out int q) && q > 0)
+                return;
+            logic.Add(x, y, q);
+            Update();
+        }
+        private void GetOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!double.TryParse(X.Text, out double x) && x > 0)
+                return;
+            if (!double.TryParse(X.Text, out double y) && y > 0)
+                return;
+            if (!int.TryParse(Quantity.Text, out int q) && q > 0)
+                return;
+            logic.GetOffer(x, y, q);
+            Offer.ItemsSource = logic.BoxesOffer;
+            Offer.SelectedItem = logic.BoxesOffer;
+        }
+        private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
