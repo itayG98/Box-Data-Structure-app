@@ -34,9 +34,10 @@
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="Y" Header="Width" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5"/>
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="X" Header="Height" VerticalAlignment="Bottom"  HorizontalAlignment="Center"  Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5"/>
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="Quantity" Header="Quantity" VerticalAlignment="Bottom"  HorizontalAlignment="Right"  Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5" />
-            <Button x:Name="Submit" Grid.Row="1" Grid.Column="2" Content="Get my Order" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#1e6b00"  />
-            <Button x:Name="Add" Grid.Row="1" Grid.Column="3" Content="Add To Stock" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="#1e6b00"  />
-            <Button x:Name="Remove" Grid.Row="1" Grid.Column="3" Content="Add To Stock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#1e6b00"  />
+            <Button x:Name="Submit" Grid.Row="1" Grid.Column="2" Content="Get Offer" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="#1e6b00" Padding="5" Margin="5" />
+            <Button x:Name="Get" Grid.Row="1" Grid.Column="2" Content="Take order" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#1e6b00" Padding="5" Margin="5"  />
+            <Button x:Name="Add" Grid.Row="1" Grid.Column="2" Content="Add To Stock" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#1e6b00" Padding="5" Margin="5"    />
+            <Button x:Name="Remove" Grid.Row="1" Grid.Column="3" Content="Remove" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="#1e6b00" Padding="5" Margin="5"   />
 
         </Grid>
         <Grid x:Name="Down" Grid.Row="1" Background="#7DCE13">
@@ -45,7 +46,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-       
+
             <ListView Grid.Column="0" x:Name="Avilable_Item" ItemsSource="{x:Bind logic.Boxes}" Padding="30" Margin="15" FontSize="25" Header="Avilable Boxes">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
@@ -57,8 +58,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-            
+
+
             <ListView Grid.Column="1" x:Name="Queue" ItemsSource="{x:Bind logic.DatesQueue}" Padding="30" Margin="15" FontSize="25" Header="Last Purchesed">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
@@ -67,9 +68,9 @@
                             <TextBlock Margin="5" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
                             <TextBlock Margin="5" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
                             <TextBlock Margin="5" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Count - {0:0.00}}" FontSize="16"/>
-                    </StackPanel>
-                </DataTemplate>
-                    </ListView.ItemTemplate>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
 
             <ListView Grid.Column="2" x:Name="Offer" ItemsSource="{x:Bind logic.BoxesOffer}" Padding="30" Margin="15" FontSize="25" Header="Best offer">
