@@ -23,26 +23,25 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" ItemsSource="{x:Bind logic.Boxes}" Padding="50" Margin="50" FontSize="20">
+            <ListView Grid.Column="0" ItemsSource="{x:Bind logic.Boxes}" Padding="50" Margin="30" FontSize="20" Header="Avilable Boxes">
                 <DataTemplate x:DataType="x1:Box">
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <TextBlock Text="Width {x:Bind Width}"/>
                         <TextBlock Text="Height {x:Bind Height}"/>
                         <TextBlock Text="Count {x:Bind Count}"/>
-                        <TextBlock Text="Last purchased :{x:Bind Date}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView>
-            <ListView Grid.Column="1" ItemsSource="{x:Bind logic.DatesQueue}" Padding="50" Margin="50" FontSize="20">
+            <ListView Grid.Column="1" ItemsSource="{x:Bind logic.DatesQueue}" Padding="50" Margin="30" FontSize="20" Header="Last Purchesed">
                 <DataTemplate x:DataType="x1:Box">
-                        <StackPanel Orientation="Horizontal" Margin="10">
-                            <TextBlock Text="Width {x:Bind Width}"/>
-                            <TextBlock Text="Height {x:Bind Height}"/>
-                            <TextBlock Text="Count {x:Bind Count}"/>
-                            <TextBlock Text="Last purchased :{x:Bind Date}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text=" {x:Bind LastPurchased}"/>
+                        <TextBlock Text="Width {x:Bind Width}"/>
+                        <TextBlock Text="Height {x:Bind Height}"/>
+                        <TextBlock Text="Count {x:Bind Count}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Page>

@@ -17,6 +17,7 @@ namespace Model
         public double Width { get => _width; }
         public int Count { get => _count; set => _count = value > 0 ? value : 0; }
         public DateTime Date { get => _date; set => _date = value; }
+        public int LastPurchased => (Date.Subtract(DateTime.Now).Days);
 
         public Box(double width, double height, int count, DateTime date)
         {
