@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace DataStructure
         public void Add(V val)
         {
             if (IsEmpty())
-                Root.Value = val;
+                Root = new QueueNode(val);
             else
             {
                 QueueNode node = Root;
@@ -43,7 +44,6 @@ namespace DataStructure
                 current = current.Next;
             }
         }
-       
         public V Pop()
         {
             if (IsEmpty())
@@ -67,6 +67,19 @@ namespace DataStructure
                 node = node.Next;
             }
             return node.CompareTo(val) == 0;
+        }
+        public IEnumerable<V> GetQueue()
+        {
+            if (!IsEmpty())
+            {
+                QueueNode node = Root;
+                yield return node.Value;
+                while (node.Next != null)
+                {
+                    yield return node.Next.Value;
+                    node = node.Next;
+                }
+            }
         }
 
         public bool IsEmpty() => Root == null;

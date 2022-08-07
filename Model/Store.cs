@@ -10,7 +10,7 @@ namespace Model
     public class Store
     {
         BST<double, BST<double, Box>> MainTree;
-        public MyQueue<Box> DatesQueue;
+        private MyQueue<Box> DatesQueue;
         public const double LimitPercentage = 0.33;
         public const int MaxBoxesPerSize = 50;
         public const int MinBoxesPerSize = 10;
@@ -107,7 +107,7 @@ namespace Model
                 //throw new NotImplementedException(); //Alert if toke all boxes quantity
                 return count;
             }
-            if (Ynode != null && Ynode.Value.Count < MinBoxesPerSize)
+            if (Ynode != null && Ynode.Value.Count < MinBoxesPerSize) { }
                 //throw new NotImplementedException(); //Alert if minimal quantity
                 return quantity;
         }
@@ -184,6 +184,10 @@ namespace Model
                 if (val is BST<double, Box> YTree)
                     foreach (Box box in YTree.GetEnumerator(Order.InOrderV))
                         yield return box;
+        }
+        public IEnumerable GetQueue() 
+        {
+            return DatesQueue.GetQueue();
         }
     }
 }
