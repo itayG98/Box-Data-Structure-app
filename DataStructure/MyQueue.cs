@@ -10,11 +10,19 @@ namespace DataStructure
 /// Represent a Queue where the boxes with more transaction are first
 /// </summary>
 /// <typeparam name="V"></typeparam>
-    public class MyQueue<V>  where V : IComparable
+    public class MyQueue<V> where V : IComparable
     {
         QueueNode Root;
-        public MyQueue(QueueNode root) => Root = root;
-        public MyQueue() : this(null) { }
+        private int _length;
+
+        public int Length { get => _length; private set => _length = value; }
+
+        public MyQueue(V val)
+        {
+            Length = 0;
+            Add(val);
+        }
+        public MyQueue() => Root = null;
         public void Add(V val)
         {
             if (IsEmpty())
@@ -25,6 +33,7 @@ namespace DataStructure
                 newRoot.Next = Root;
                 Root = newRoot;
             }
+            Length++;
         }
         public void Remove(V val)
         {
@@ -42,6 +51,7 @@ namespace DataStructure
                 prev = current;
                 current = current.Next;
             }
+            Length--;
         }
         public V Pop()
         {
@@ -51,9 +61,12 @@ namespace DataStructure
             {
                 V val = Root.Value;
                 Root = Root.Next;
+                Length--;
                 return val;
             }
         }
+
+
         public bool Contains(V val)
         {
             if (IsEmpty())
@@ -67,6 +80,7 @@ namespace DataStructure
             }
             return node.CompareTo(val) == 0;
         }
+        public bool IsEmpty() => Root == null;
         public IEnumerable<V> GetQueue()
         {
             if (!IsEmpty())
@@ -81,7 +95,6 @@ namespace DataStructure
             }
         }
 
-        public bool IsEmpty() => Root == null;
 
         public class QueueNode
         {
@@ -95,6 +108,12 @@ namespace DataStructure
             public V Value { get => _value; set => _value = value; }
             public QueueNode Next { get => _next; set => _next = value; }
             public int CompareTo(V val) => Value.CompareTo(val);
+            public override bool Equals(object obj)
+            {
+                if (obj is QueueNode other)
+                    return Value.Equals(other.Value);
+                return false;
+            }
         }
     }
 }

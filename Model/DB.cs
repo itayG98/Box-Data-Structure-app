@@ -25,7 +25,7 @@ namespace MoockData
         }
         private DB()
         {
-            Boxes = new Box[31];
+            Boxes = new Box[36];
 
             Boxes[0] = new Box(16, 13.3, 25);
             Boxes[1] = new Box(9, 2, 40);
@@ -57,7 +57,12 @@ namespace MoockData
             Boxes[27] = new Box(16, 13.34, 100);
             Boxes[28] = new Box(9, 2, 100);
             Boxes[29] = new Box(7.7, 7.7, 45);
-            Boxes[30] = new Box(8.8, 13.34, 23);
+            Boxes[30] = new Box(12, 13.34, 23);
+            Boxes[31] = new Box(14, 13.4, 100);
+            Boxes[32] = new Box(16, 13.34, 100);
+            Boxes[33] = new Box(18, 10, 100);
+            Boxes[34] = new Box(20, 11, 45);
+            Boxes[35] = new Box(24, 19, 23);
         }
     }
 }

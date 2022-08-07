@@ -17,7 +17,6 @@ namespace View_Model
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueue(); } }
-
         public int Remained { get => _remained; private set => _remained = value; }
 
         public Logic()
@@ -30,6 +29,12 @@ namespace View_Model
         {
             foreach (var b in store.GetBestInRange(x, y, quantity))
                 _boxesOffer.Add(b);
+            Remained = quantity- _boxesOffer.Length;
         } 
+
+        public void Remove(double x, double y, int quantity)=> Remained = store.RemoveBoxes(x, y, quantity);
+
+        public void Add(double x, double y, int quantity) => Remained = store.Add(x, y, quantity);
+
     }
 }
