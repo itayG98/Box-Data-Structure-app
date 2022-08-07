@@ -21,10 +21,9 @@ namespace DataStructure
                 Root = new QueueNode(val);
             else
             {
-                QueueNode node = Root;
-                while (node.Next != null)
-                    node = node.Next;
-                node.Next = new QueueNode(val);
+                QueueNode newRoot = new QueueNode(val);
+                newRoot.Next = Root;
+                Root = newRoot;
             }
         }
         public void Remove(V val)
@@ -87,6 +86,7 @@ namespace DataStructure
         public class QueueNode
         {
             private QueueNode _next;
+
             private V _value;
             public QueueNode(V val) => Value = val;
             public QueueNode() : this(default) { }

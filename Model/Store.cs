@@ -71,7 +71,7 @@ namespace Model
             DatesQueue.Add(box);
             return returnedBoxes;
         }
-        public int Add(double width, double height, int quantety, DateTime date)
+        internal int Add(double width, double height, int quantety, DateTime date)
         {
             var box = new Box(width, height, quantety, date);
             return Add(box);
