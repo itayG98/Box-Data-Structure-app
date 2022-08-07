@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace View_Model
 {
-
     public class Logic
     {
         public Store store;
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
-
-
         public Logic()
         {
             store = new Store();
