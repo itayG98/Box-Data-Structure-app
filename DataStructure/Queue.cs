@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataStructure
-{
+{/// <summary>
+/// Represent a Queue where the boxes with more transaction are first
+/// </summary>
+/// <typeparam name="V"></typeparam>
     public class MyQueue<V> where V : IComparable
     {
         QueueNode Root;

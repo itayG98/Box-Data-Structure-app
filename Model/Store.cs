@@ -80,7 +80,7 @@ namespace Model
         {
             return Add(width, height, quantety, DateTime.Now);
         }
-        public int RemoveBoxes(double width, double height, int quantity) //Contin here!!!
+        public int RemoveBoxes(double width, double height, int quantity)
         //Return how many boxes removed
         {
             if (width <= 0 || height <= 0 || quantity <= 0)
@@ -91,20 +91,25 @@ namespace Model
             var Ynode = Xnode.Value.FindNode(height);
             if (Ynode == null)
                 return -1;
+
             DatesQueue.Remove(Ynode.Value);
             if (Ynode.Value.Count > quantity)
+            {
                 Ynode.Value.Count -= quantity;
+                DatesQueue.Add(Ynode.Value); //Update the queue
+            }
             else if (Ynode.Value.Count == quantity)
                 Xnode.Value.Remove(Ynode);
             else
             {
                 var count = Ynode.Value.Count;
                 Xnode.Value.Remove(Ynode);
+                //throw new NotImplementedException(); //Alert if toke all boxes quantity
                 return count;
             }
             if (Ynode != null && Ynode.Value.Count < MinBoxesPerSize)
-                throw new NotImplementedException();
-            return quantity;
+                //throw new NotImplementedException(); //Alert if minimal quantity
+                return quantity;
         }
         public void ActionOnBoxes(Action<Box> act, Order ord)
         {
