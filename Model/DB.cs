@@ -23,7 +23,6 @@ namespace MoockData
                 return _instance;
             }
         }
-
         private DB()
         {
             Boxes = new Box[32];
