@@ -20,8 +20,8 @@
         </Grid.RowDefinitions>
         <Grid x:Name="Up" Grid.Row="0" Background="#CCD6A6">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
