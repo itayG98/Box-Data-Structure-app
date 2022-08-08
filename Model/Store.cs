@@ -30,6 +30,7 @@ namespace Model
                 if (elem != null)
                     Add(elem);
             }
+            //DatesQueue.Sort();
         }
         private int Add(Box box)
         //Return the boxes count which were not added

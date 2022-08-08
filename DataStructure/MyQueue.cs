@@ -15,7 +15,7 @@ namespace DataStructure
         QueueNode Root;
         private int _length;
 
-        public int Length { get => _length; private set => _length = value; }
+        public int Length { get => _length; private set => _length = value > -1 ? value : 0; }
 
         public MyQueue(V val)
         {
@@ -36,6 +36,11 @@ namespace DataStructure
             Length++;
         }
 
+        public void Sort()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Empty()
         {
             Root = null;
@@ -46,6 +51,12 @@ namespace DataStructure
         {
             if (IsEmpty())
                 return;
+            else if (Root.CompareTo(val) == 0)
+            {
+                Root = Root.Next;
+                Length--;
+                return;
+            }
             QueueNode prev = Root;
             QueueNode current = Root.Next;
             while (current != null)

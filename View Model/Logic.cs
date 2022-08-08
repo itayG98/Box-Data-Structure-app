@@ -25,15 +25,23 @@ namespace View_Model
             _boxesOffer = new MyQueue<Box>();
         }
 
-        public void GetOffer(double x, double y, int quantity) 
+        public void GetOffer(double x, double y, int quantity)
         {
             _boxesOffer.Empty();
             foreach (var b in store.GetBestInRange(x, y, quantity))
                 _boxesOffer.Add(b);
-            Remained = quantity- _boxesOffer.Length;
-        } 
-
-        public void Remove(double x, double y, int quantity)=> Remained = store.RemoveBoxes(x, y, quantity);
+            Remained = quantity - _boxesOffer.Length;
+        }
+        public void TakeOffer(IEnumerable boxes)
+        {
+            foreach (Box b in boxes)
+            {
+                _boxesOffer.Remove(b);
+                store.RemoveBoxes(b.Width,b.Height,1);
+                Remained--;
+            }
+        }
+        public void Remove(double x, double y, int quantity) => Remained = store.RemoveBoxes(x, y, quantity);
 
         public void Add(double x, double y, int quantity) => Remained = store.Add(x, y, quantity);
 

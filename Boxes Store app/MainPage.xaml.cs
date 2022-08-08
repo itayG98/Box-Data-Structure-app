@@ -33,11 +33,7 @@ namespace Boxes_Store_app
         }
         private void TakeOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            foreach (Box item in Offer.SelectedItems)
-            {
-                if (item != null)
-                    logic.Remove(item.Width, item.Height, 1);
-            }
+            logic.TakeOffer(Offer.SelectedItems);
             Update();
         }
         private void Remove_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -73,6 +69,7 @@ namespace Boxes_Store_app
             logic.GetOffer(x, y, q);
             Offer.ItemsSource = logic.BoxesOffer;
             Offer.SelectedItem = logic.BoxesOffer;
+            Offer.SelectAll();
         }
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
