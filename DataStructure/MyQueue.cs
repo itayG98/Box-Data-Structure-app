@@ -46,7 +46,7 @@ namespace DataStructure
 
         public void Empty()
         {
-            Root =Tail = null;
+            Root = Tail = null;
             Length = 0;
         }
 
@@ -125,8 +125,10 @@ namespace DataStructure
         private V _value;
         public QueueNode(V val) => Value = val;
 
-        public V Value { get => _value; set => _value = value; }
-        public QueueNode<V> Next { get => _next; set => _next = value; }
+        public V Value { get => _value; internal set => _value = value; }
+        public QueueNode<V> Next { get => _next; internal set => _next = value; }
+        public QueueNode<V> Prev { get => _prev; internal set => _prev = value; }
+
         public int CompareTo(V val) => Value.CompareTo(val);
         public override bool Equals(object obj)
         {
