@@ -49,7 +49,11 @@ namespace View_Model
                 Remained--;
             }
         }
-        public void Remove(double x, double y, int quantity) => Remained = store.RemoveBoxes(x, y, quantity);
+        public void Remove(double x, double y, int quantity) 
+        {
+            Remained = store.RemoveBoxes(x, y, quantity);
+            _boxesOffer.Empty();
+        } 
 
         public void Add(double x, double y, int quantity) => Remained = store.Add(x, y, quantity);
 
