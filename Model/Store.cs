@@ -11,9 +11,10 @@ namespace Model
     {
         BST<double, BST<double, Box>> MainTree;
         private MyQueue<Box> DatesQueue;
-        public const double LimitPercentage = 0.33;
-        public const int MaxBoxesPerSize = 50;
-        public const int MinBoxesPerSize = 10;
+        public const double LIMIT_PERCENTAGE = 0.5;
+        public const int MAX_BOXES_PER_SIZE = 50;
+        public const int MIN_BOXES_PER_SIZE = 10;
+        public const int MAX_DAYS = 100;
 
         public Store()
         {
@@ -69,7 +70,7 @@ namespace Model
                 BST<double, Box> YTree = new BST<double, Box>(box.Height, box);
                 MainTree.AddNode(box.Width, YTree);
             }
-            box.Node=DatesQueue.Add(box);
+            box.Node = DatesQueue.Add(box);
             return returnedBoxes;
         }
         internal int Add(double width, double height, int quantety, DateTime date)
@@ -92,7 +93,7 @@ namespace Model
             var Ynode = Xnode.Value.FindNode(height);
             if (Ynode == null)
                 return 0;
-            DatesQueue.Remove(new Box(width,height,quantity));
+            DatesQueue.Remove(new Box(width, height, quantity));
             if (Ynode.Value.Count > quantity)
             {
                 Ynode.Value.Count -= quantity;
@@ -119,33 +120,6 @@ namespace Model
                         act(box);
         }
 
-        public int GetOffer(Action<Box> act, double width, double height, int quantity)
-        //Get all fitting boxes
-        {
-            if (width > 0 && height > 0 && quantity > 0)
-            {
-                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByMinKey(width);
-                foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
-                {
-                    if (val is BST<double, Box> ValTreee)
-                    {
-                        ValTreee = ValTreee.GetTreeByMinKey(height);
-                        foreach (Box box in ValTreee.GetEnumerator(Order.InOrderV))
-                        {
-                            for (int i = box.Count; quantity > 0 && i > 0; i--)
-                            {
-                                act(box);
-                                quantity--;
-                            }
-                        }
-                    }
-                    if (quantity <= 0)
-                        break;
-                }
-                return quantity;
-            }
-            return -1;
-        }
         public int GetBestInRange(Action<Box> act, double width, double height, int quantity)
         //Do action for all fitting boxes in range of LimitPercentage
         {
@@ -227,6 +201,22 @@ namespace Model
             }
         }
 
+        public void RemoveOldBox()
+        {
+            foreach (Box box in GetQueue())
+            {
+                if (box != null)
+                {
+                    if (box.LastPurchased >= MAX_DAYS)
+                    {
+                        RemoveBoxes(box.Width,box.Height,box.Count);
+                        DatesQueue.Remove(box.Node);
+                    }
+                    else
+                        return;
+                }
+            }
+        }
         public IEnumerable GetAll()
         {
             foreach (var val in MainTree.GetEnumerator(Order.InOrderV))

@@ -96,6 +96,14 @@ namespace DataStructure
                 right = right.Prev;
             }
         }
+        public void Remove(QueueNode<V> remove)
+        {
+            if (remove.Prev != null && remove.Next != null)
+            {
+                remove.Prev.Next = remove.Next;
+                remove.Next.Prev = remove.Prev;
+            }
+        }
         public V Pop()
         {
             if (IsEmpty())
