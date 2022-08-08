@@ -152,12 +152,12 @@ namespace DataStructure
         //===============================================================================================
         private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction)
         {
-            if (fatherNode.Left.Equals(SonNode))
+            if (fatherNode.Left != null && fatherNode.Left.Equals(SonNode))
             {
                 direction = Direction.Left;
                 return fatherNode;
             }
-            else if (fatherNode.Right.Equals(SonNode))
+            else if (fatherNode.Right != null && fatherNode.Right.Equals(SonNode))
             {
                 direction = Direction.Right;
                 return fatherNode;
@@ -222,7 +222,7 @@ namespace DataStructure
                     else if (commonFather.CompareTo(max) > 0)
                         commonFather = commonFather.Left;
                     else
-                        break ;
+                        break;
                 }
                 foreach (TreeNode node in Inorder(commonFather))
                 {
@@ -235,7 +235,7 @@ namespace DataStructure
             }
             return null;
         }
-        public IEnumerable GetNextTreeByRange(K min, K max) 
+        public IEnumerable GetNextTreeByRange(K min, K max)
         {
             if (max.CompareTo(min) >= 0)
             {
@@ -267,17 +267,17 @@ namespace DataStructure
         public IEnumerable GetEnumerator(Order ord)
 
         {
-            switch (ord)
-            {
-                case Order.InOrderV:
-                    return InorderValue(Root);
-                case Order.PreOrderV:
-                    return PreOrderValue(Root);
-                case Order.RightPostOrderV:
-                    return RightPostOrderValue(Root);
-                default:
-                    return null;
-            }
+            if (Root != null)
+                switch (ord)
+                {
+                    case Order.InOrderV:
+                        return InorderValue(Root);
+                    case Order.PreOrderV:
+                        return PreOrderValue(Root);
+                    case Order.RightPostOrderV:
+                        return RightPostOrderValue(Root);
+                }
+            return null;
         }
         private IEnumerable InorderValue(TreeNode node)
         {

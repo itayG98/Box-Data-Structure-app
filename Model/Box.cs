@@ -22,6 +22,10 @@ namespace Model
 
         public Box(double width, double height, int count, DateTime date)
         {
+            if (width<=0)
+                width = 1;
+            if(height<=0)
+                height = 1;
             _width = width;
             _height = height;
             Count = count;

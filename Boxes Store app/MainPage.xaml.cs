@@ -73,7 +73,7 @@ namespace Boxes_Store_app
         }
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c)&& c!='.');
         }
     }
 }
