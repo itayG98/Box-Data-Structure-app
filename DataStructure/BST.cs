@@ -117,7 +117,7 @@ namespace DataStructure
             }
             else
             {
-                var fatherNode = FindFather(Root, node, out Direction dir);
+                TreeNode fatherNode = FindFather(Root, node, out Direction dir);
                 if (dir == Direction.Right)
                 {
                     if (node.Left == null)
