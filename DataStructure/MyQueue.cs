@@ -16,16 +16,16 @@ namespace DataStructure
         private QueueNode<V> _tail;
         private int _length;
 
-        public QueueNode<V> Root { get => _root; set => _root = value; }
-        public QueueNode<V> Tail { get => _tail; set => _tail = value; }
-        public int Length { get => _length; private set => _length = value > -1 ? value : 0; }
+        public QueueNode<V> Root { get => _root; private set => _root = value; }
+        public QueueNode<V> Tail { get => _tail; private set => _tail = value; }
+        public int Length { get => _length; private set => _length = value < 0 ? 0 : 1; }
 
         public MyQueue(V val)
         {
             Length = 0;
             Add(val);
         }
-        public MyQueue() => Root = null;
+        public MyQueue() => Root = Tail = null;
         public void Add(V val)
         {
             if (IsEmpty())
@@ -46,7 +46,7 @@ namespace DataStructure
 
         public void Empty()
         {
-            Root = null;
+            Root =Tail = null;
             Length = 0;
         }
 
@@ -124,8 +124,6 @@ namespace DataStructure
 
         private V _value;
         public QueueNode(V val) => Value = val;
-        public QueueNode() : this(default) { }
-
 
         public V Value { get => _value; set => _value = value; }
         public QueueNode<V> Next { get => _next; set => _next = value; }
