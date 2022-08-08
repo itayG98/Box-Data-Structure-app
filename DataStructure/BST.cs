@@ -291,11 +291,17 @@ namespace DataStructure
         {
             if (node != null)
             {
-                foreach (var n in InorderValue(node.Left))
-                    yield return n;
+                foreach (V n in InorderValue(node.Left))
+                {
+                    if (n != null)
+                        yield return n;
+                }
                 yield return node.Value;
-                foreach (var n in InorderValue(node.Right))
-                    yield return n;
+                foreach (V n in InorderValue(node.Right))
+                {
+                    if (n != null)
+                        yield return n;
+                }
             }
         }
         private IEnumerable Inorder(TreeNode node)
@@ -314,9 +320,9 @@ namespace DataStructure
             if (node != null)
             {
                 yield return node.Value;
-                foreach (var n in PreOrderValue(node.Left))
+                foreach (V n in PreOrderValue(node.Left))
                     yield return n;
-                foreach (var n in PreOrderValue(node.Right))
+                foreach (V n in PreOrderValue(node.Right))
                     yield return n;
             }
         }
@@ -324,10 +330,10 @@ namespace DataStructure
         {
             if (node != null)
             {
-                foreach (var n in RightPostOrderValue(node.Right))
+                foreach (V n in RightPostOrderValue(node.Right))
                     yield return n;
                 yield return node.Value;
-                foreach (var n in RightPostOrderValue(node.Left))
+                foreach (V n in RightPostOrderValue(node.Left))
                     yield return n;
             }
         }

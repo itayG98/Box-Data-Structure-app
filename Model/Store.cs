@@ -93,6 +93,7 @@ namespace Model
             var Ynode = Xnode.Value.FindNode(height);
             if (Ynode == null)
                 return 0;
+
             DatesQueue.Remove(new Box(width, height, quantity));
             if (Ynode.Value.Count > quantity)
             {
