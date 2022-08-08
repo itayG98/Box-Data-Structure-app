@@ -115,6 +115,8 @@ namespace DataStructure
                     newRoot.Right = node.Right;
                 }
             }
+            else if (node.IsLeaf())
+                node.Value = default;
             else
             {
                 TreeNode fatherNode = FindFather(Root, node, out Direction dir);
@@ -363,7 +365,7 @@ namespace DataStructure
                 Right = null;
             }
 
-            public bool IsLeaf() => Left == null && Right == null;
+            public bool IsLeaf() =>  Left == null && Right == null;
 
             public int CompareTo(K key) => Key.CompareTo(key);
 

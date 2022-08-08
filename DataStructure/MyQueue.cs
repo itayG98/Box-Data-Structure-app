@@ -36,7 +36,7 @@ namespace DataStructure
                 Length = 1;
                 return;
             }
-            else if (Tail == null)
+            else if (Root != null && Tail == null)
             {
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;
@@ -82,7 +82,7 @@ namespace DataStructure
             QueueNode<V> right = Tail.Prev;
             while (right.Next.Equals(left))
             {
-                if (right==null||left==null)
+                if (right == null || left == null)
                     break;
                 if (left.Value.Equals(val))
                 {

@@ -14,7 +14,7 @@ namespace View_Model
         private MyQueue<Box> _boxesOffer;
         private int _remained;
         public Store store;
-        public IEnumerable Boxes { get { return store.GetAll(); } }
+        public IEnumerable Boxes { get { return store.GetAll();  } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueue(); } }
         public int Remained { get => _remained; private set => _remained = value>0? value :0 ; }

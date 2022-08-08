@@ -92,7 +92,6 @@ namespace Model
             var Ynode = Xnode.Value.FindNode(height);
             if (Ynode == null)
                 return 0;
-
             DatesQueue.Remove(new Box(width,height,quantity));
             if (Ynode.Value.Count > quantity)
             {
@@ -106,11 +105,8 @@ namespace Model
             {
                 var count = Ynode.Value.Count;
                 Xnode.Value.Remove(Ynode);
-                //throw new NotImplementedException(); //Alert if toke all boxes quantity
                 return count;
             }
-            if (Ynode != null && Ynode.Value.Count < MinBoxesPerSize) { }
-            //throw new NotImplementedException(); //Alert if minimal quantity
             return quantity;
         }
         public void ActionOnBoxes(Action<Box> act, Order ord)

@@ -47,7 +47,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0" x:Name="Avilable_Item" ItemsSource="{x:Bind logic.Boxes}" Padding="30" Margin="15" FontSize="25" Header="Avilable Boxes">
+            <ListView Grid.Column="0" x:Name="Avilable_Item" ItemsSource="{x:Bind logic.Boxes,Mode=OneWay}" Padding="30" Margin="15" FontSize="25" Header="Avilable Boxes">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center">
@@ -60,7 +60,7 @@
             </ListView>
 
 
-            <ListView Grid.Column="1" x:Name="Queue" ItemsSource="{x:Bind logic.DatesQueue}" Padding="30" Margin="15" FontSize="25" Header="Last Purchesed">
+            <ListView Grid.Column="1" x:Name="Queue" ItemsSource="{x:Bind logic.DatesQueue,Mode=OneWay}" Padding="30" Margin="15" FontSize="25" Header="Last Purchesed">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center" >
@@ -73,7 +73,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView Grid.Column="2" x:Name="Offer" Padding="30" Margin="15" FontSize="25" Header="Best offer"  IsItemClickEnabled="True" IsMultiSelectCheckBoxEnabled="True" SelectionMode="Multiple" >
+            <ListView Grid.Column="2" x:Name="Offer" ItemsSource="{x:Bind logic.BoxesOffer,Mode=OneWay}"  Padding="30" Margin="15" FontSize="25" Header="Best offer"  IsItemClickEnabled="True" IsMultiSelectCheckBoxEnabled="True" SelectionMode="Multiple" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center" >
