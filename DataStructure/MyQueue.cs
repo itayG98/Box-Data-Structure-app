@@ -12,9 +12,12 @@ namespace DataStructure
 /// <typeparam name="V"></typeparam>
     public class MyQueue<V> where V : IComparable
     {
-        QueueNode<V> Root;
+        private QueueNode<V> _root;
+        private QueueNode<V> _tail;
         private int _length;
 
+        public QueueNode<V> Root { get => _root; set => _root = value; }
+        public QueueNode<V> Tail { get => _tail; set => _tail = value; }
         public int Length { get => _length; private set => _length = value > -1 ? value : 0; }
 
         public MyQueue(V val)
@@ -117,6 +120,7 @@ namespace DataStructure
     public class QueueNode<V> where V : IComparable
     {
         private QueueNode<V> _next;
+        private QueueNode<V> _prev;
 
         private V _value;
         public QueueNode(V val) => Value = val;
