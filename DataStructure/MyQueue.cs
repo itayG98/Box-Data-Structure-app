@@ -26,7 +26,7 @@ namespace DataStructure
             Add(val);
         }
         public MyQueue() => Root = Tail = null;
-        public void Add(V val)
+        public QueueNode<V> Add(V val)
         {
             if (IsEmpty())
             {
@@ -34,7 +34,7 @@ namespace DataStructure
                 Tail = null;
                 Root.Next = Tail;
                 Length = 1;
-                return;
+                return Root;
             }
             else if (Root != null && Tail == null)
             {
@@ -42,26 +42,20 @@ namespace DataStructure
                 Root.Next = Tail;
                 Tail.Prev = Root;
                 Length++;
-                return;
+                return Tail;
             }
             QueueNode<V> newRoot = new QueueNode<V>(val);
             newRoot.Prev = Tail;
             Tail.Next = newRoot;
             Tail = newRoot;
             Length++;
+            return newRoot;
         }
-
-        public void Sort()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Empty()
         {
             Root = Tail = null;
             Length = 0;
         }
-
         public void Remove(V val)
         {
             if (IsEmpty())
@@ -102,7 +96,6 @@ namespace DataStructure
                 right = right.Prev;
             }
         }
-
         public V Pop()
         {
             if (IsEmpty())
@@ -115,7 +108,6 @@ namespace DataStructure
                 return val;
             }
         }
-
         public bool Contains(V val)
         {
             if (IsEmpty())

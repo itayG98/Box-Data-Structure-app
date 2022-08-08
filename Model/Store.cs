@@ -69,7 +69,7 @@ namespace Model
                 BST<double, Box> YTree = new BST<double, Box>(box.Height, box);
                 MainTree.AddNode(box.Width, YTree);
             }
-            DatesQueue.Add(box);
+            box.Node=DatesQueue.Add(box);
             return returnedBoxes;
         }
         internal int Add(double width, double height, int quantety, DateTime date)

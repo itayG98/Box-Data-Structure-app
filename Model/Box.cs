@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataStructure;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Model
         private readonly double _height;
         private readonly double _width;
         private DateTime _date;
+        QueueNode<Box> _node;
 
 
 
@@ -22,6 +24,7 @@ namespace Model
         public DateTime Date { get => _date; set => _date = value; }
         public int LastPurchased => (DateTime.Now - Date).Days;
 
+        public QueueNode<Box> Node { get => _node; set => _node = value; }
         public Box(double width, double height, int count, DateTime date)
         {
             if (width<=0)
