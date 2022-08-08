@@ -9,7 +9,7 @@ using Model;
 namespace Boxes_Store_app
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// An The main page of the boxes store
     /// </summary>
     public sealed partial class MainPage : Page
     {
