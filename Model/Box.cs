@@ -14,6 +14,8 @@ namespace Model
         private readonly double _width;
         private DateTime _date;
 
+
+
         public double Height { get => _height; }
         public double Width { get => _width; }
         public int Count { get => _count; set => _count = value > 0 ? value : 0; }

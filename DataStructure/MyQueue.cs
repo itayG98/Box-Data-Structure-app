@@ -12,7 +12,7 @@ namespace DataStructure
 /// <typeparam name="V"></typeparam>
     public class MyQueue<V> where V : IComparable
     {
-        QueueNode Root;
+        QueueNode<V> Root;
         private int _length;
 
         public int Length { get => _length; private set => _length = value > -1 ? value : 0; }
@@ -26,10 +26,10 @@ namespace DataStructure
         public void Add(V val)
         {
             if (IsEmpty())
-                Root = new QueueNode(val);
+                Root = new QueueNode<V>(val);
             else
             {
-                QueueNode newRoot = new QueueNode(val);
+                QueueNode<V> newRoot = new QueueNode<V>(val);
                 newRoot.Next = Root;
                 Root = newRoot;
             }
@@ -57,8 +57,8 @@ namespace DataStructure
                 Length--;
                 return;
             }
-            QueueNode prev = Root;
-            QueueNode current = Root.Next;
+            QueueNode<V> prev = Root;
+            QueueNode<V> current = Root.Next;
             while (current != null)
             {
                 if (current.Value.Equals(val))
@@ -85,12 +85,11 @@ namespace DataStructure
             }
         }
 
-
         public bool Contains(V val)
         {
             if (IsEmpty())
                 return default;
-            QueueNode node = Root;
+            QueueNode<V> node = Root;
             while (node.Next != null)
             {
                 if (node.CompareTo(val) == 0)
@@ -104,7 +103,7 @@ namespace DataStructure
         {
             if (!IsEmpty())
             {
-                QueueNode node = Root;
+                QueueNode<V> node = Root;
                 yield return node.Value;
                 while (node.Next != null)
                 {
@@ -114,25 +113,24 @@ namespace DataStructure
             }
         }
 
+    }
+    public class QueueNode<V> where V : IComparable
+    {
+        private QueueNode<V> _next;
 
-        public class QueueNode
+        private V _value;
+        public QueueNode(V val) => Value = val;
+        public QueueNode() : this(default) { }
+
+
+        public V Value { get => _value; set => _value = value; }
+        public QueueNode<V> Next { get => _next; set => _next = value; }
+        public int CompareTo(V val) => Value.CompareTo(val);
+        public override bool Equals(object obj)
         {
-            private QueueNode _next;
-
-            private V _value;
-            public QueueNode(V val) => Value = val;
-            public QueueNode() : this(default) { }
-
-
-            public V Value { get => _value; set => _value = value; }
-            public QueueNode Next { get => _next; set => _next = value; }
-            public int CompareTo(V val) => Value.CompareTo(val);
-            public override bool Equals(object obj)
-            {
-                if (obj is QueueNode other)
-                    return Value.Equals(other.Value);
-                return false;
-            }
+            if (obj is QueueNode<V> other)
+                return Value.Equals(other.Value);
+            return false;
         }
     }
 }
