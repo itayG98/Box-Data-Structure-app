@@ -31,9 +31,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.ColumnSpan="4" FontSize="65" Text="Boxes store" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="Y" Header="Width" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="X" Header="Height" VerticalAlignment="Bottom"  HorizontalAlignment="Center"  Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="Quantity" Header="Quantity" VerticalAlignment="Bottom"  HorizontalAlignment="Right"  Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5" />
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="X" Header="Width" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="Y" Header="Height" VerticalAlignment="Bottom"  HorizontalAlignment="Center"  Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChanging" MaxLength="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="Quantity" Header="Quantity" VerticalAlignment="Bottom"  HorizontalAlignment="Right"  Padding="5" Margin="3" Background="#c3ff63" BeforeTextChanging="TextBox_OnBeforeTextChangingInt" MaxLength="5" />
             <Button x:Name="GetOffer" Grid.Row="1" Grid.Column="2" Content="Get Offer" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="#1e6b00" Padding="5" Margin="5" />
             <Button x:Name="TakeOffer" Grid.Row="1" Grid.Column="2" Content="Take order" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#1e6b00" Padding="5" Margin="5"  />
             <Button x:Name="Add" Grid.Row="1" Grid.Column="2" Content="Add To Stock" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#1e6b00" Padding="5" Margin="5"    />

@@ -40,7 +40,7 @@ namespace Boxes_Store_app
         {
             if (!double.TryParse(X.Text, out double x) && x > 0)
                 return;
-            if (!double.TryParse(X.Text, out double y) && y > 0)
+            if (!double.TryParse(Y.Text, out double y) && y > 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) && q > 0)
                 return;
@@ -51,7 +51,7 @@ namespace Boxes_Store_app
         {
             if (!double.TryParse(X.Text, out double x) && x > 0)
                 return;
-            if (!double.TryParse(X.Text, out double y) && y > 0)
+            if (!double.TryParse(Y.Text, out double y) && y > 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) && q > 0)
                 return;
@@ -60,11 +60,11 @@ namespace Boxes_Store_app
         }
         private void GetOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!double.TryParse(X.Text, out double x) && x > 0)
+            if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
-            if (!double.TryParse(X.Text, out double y) && y > 0)
+            if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
-            if (!int.TryParse(Quantity.Text, out int q) && q > 0)
+            if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
             logic.GetOfferEfficintely(x, y, q);
             Offer.ItemsSource = logic.BoxesOffer;
@@ -74,6 +74,10 @@ namespace Boxes_Store_app
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c)&& c!='.');
+        }
+        private void TextBox_OnBeforeTextChangingInt(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
     }
 }
