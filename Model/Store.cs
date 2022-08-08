@@ -208,6 +208,28 @@ namespace Model
             }
         }
 
+        public IEnumerable<Box> GetBest(double width, double height, int quantity)
+        //Do action for all fitting boxes in range of LimitPercentage
+        {
+            int temp;
+            if (width > 0 && height > 0 && quantity > 0)
+            {
+                foreach (BST<double, Box> Ytree in MainTree.GetNextTreeByRange(width, width * (1 + LimitPercentage)))
+                {
+                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LimitPercentage)))
+                    {
+                        temp=quantity<b.Count? quantity : b.Count;
+                        quantity-=temp;
+                        yield return new Box(b.Width,b.Height, temp);
+                        if (quantity < 1)
+                            break;
+                    }
+                    if (quantity < 1)
+                        break;
+                }
+            }
+        }
+
         public IEnumerable GetAll()
         {
             foreach (var val in MainTree.GetEnumerator(Order.InOrderV))

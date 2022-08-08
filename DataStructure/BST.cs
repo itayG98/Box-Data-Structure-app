@@ -235,6 +235,29 @@ namespace DataStructure
             }
             return null;
         }
+        public IEnumerable GetNextTreeByRange(K min, K max) 
+        {
+            if (max.CompareTo(min) >= 0)
+            {
+                TreeNode commonFather = Root;
+                while (commonFather != null)
+                {
+                    if (commonFather.CompareTo(min) < 0)
+                        commonFather = commonFather.Right;
+                    else if (commonFather.CompareTo(max) > 0)
+                        commonFather = commonFather.Left;
+                    else
+                        break;
+                }
+                foreach (TreeNode node in Inorder(commonFather))
+                {
+                    if (node.CompareTo(min) >= 0 && node.CompareTo(max) <= 0)
+                        yield return node.Value;
+                    else if (node.CompareTo(max) > 0)
+                        break;
+                }
+            }
+        }
 
         //===============================================================================================
         public bool IsEmpty() => Root == null;

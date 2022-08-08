@@ -66,7 +66,7 @@ namespace Boxes_Store_app
                 return;
             if (!int.TryParse(Quantity.Text, out int q) && q > 0)
                 return;
-            logic.GetOffer(x, y, q);
+            logic.GetOfferEfficintely(x, y, q);
             Offer.ItemsSource = logic.BoxesOffer;
             Offer.SelectedItem = logic.BoxesOffer;
             Offer.SelectAll();

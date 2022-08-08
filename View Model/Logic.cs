@@ -25,6 +25,13 @@ namespace View_Model
             _boxesOffer = new MyQueue<Box>();
         }
 
+        public void GetOfferEfficintely(double x, double y, int quantity) 
+        {
+            _boxesOffer.Empty();
+            foreach (Box b in store.GetBest(x, y, quantity))
+                _boxesOffer.Add(b);
+            Remained = quantity - _boxesOffer.Length;
+        }
         public void GetOffer(double x, double y, int quantity)
         {
             _boxesOffer.Empty();
@@ -37,7 +44,7 @@ namespace View_Model
             foreach (Box b in boxes)
             {
                 _boxesOffer.Remove(b);
-                store.RemoveBoxes(b.Width,b.Height,1);
+                store.RemoveBoxes(b.Width,b.Height,b.Count);
                 Remained--;
             }
         }
