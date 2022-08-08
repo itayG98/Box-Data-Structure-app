@@ -23,8 +23,19 @@ namespace Boxes_Store_app
             Add.Click += Add_Click;
             Remove.Click += Remove_Click;
             TakeOffer.Click += TakeOffer_Click;
+            Avilable_Item.IsItemClickEnabled = true;
+            Avilable_Item.ItemClick += Avilable_Item_ItemClick;
         }
 
+        private void Avilable_Item_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is Box box )
+            {
+                X.Text = box.Width.ToString();
+                Y.Text = box.Height.ToString();
+                Quantity.Text = box.Count.ToString();
+            }
+        }
         public void Update()
         {
             Avilable_Item.ItemsSource = logic.Boxes;

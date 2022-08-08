@@ -39,10 +39,10 @@ namespace Model
             int returnedBoxes = 0;
             //Check if box data is valid
             if (box == null || box.Count <= 0) return -1;
-            if (box.Count >= MaxBoxesPerSize)
+            if (box.Count >= MAX_BOXES_PER_SIZE)
             {
-                returnedBoxes += box.Count - MaxBoxesPerSize;
-                box.Count = MaxBoxesPerSize;
+                returnedBoxes += box.Count - MAX_BOXES_PER_SIZE;
+                box.Count = MAX_BOXES_PER_SIZE;
             }
 
             var Xnode = MainTree.FindNode(box.Width);
@@ -52,11 +52,11 @@ namespace Model
                 if (Ynode != null) //Found y dim
                 {
                     DatesQueue.Remove(box);
-                    if (Ynode.Value.Count + box.Count >= MaxBoxesPerSize)
+                    if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE)
                     {
 
-                        returnedBoxes += Ynode.Value.Count + box.Count - MaxBoxesPerSize;
-                        Ynode.Value.Count = MaxBoxesPerSize;
+                        returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
+                        Ynode.Value.Count = MAX_BOXES_PER_SIZE;
                     }
                     else
                         Ynode.Value.Count += box.Count;
@@ -125,14 +125,14 @@ namespace Model
         {
             if (width > 0 && height > 0 && quantity > 0)
             {
-                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LimitPercentage));
+                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LIMIT_PERCENTAGE));
                 if (KeyTree == null)
                     return quantity;
                 foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
                 {
                     if (val is BST<double, Box> ValTreee)
                     {
-                        ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LimitPercentage));
+                        ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LIMIT_PERCENTAGE));
                         foreach (Box box in ValTreee.GetEnumerator(Order.InOrderV))
                         {
                             for (int i = box.Count; quantity > 0 && i > 0; i--)
@@ -155,14 +155,14 @@ namespace Model
         {
             if (width > 0 && height > 0 && quantity > 0)
             {
-                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LimitPercentage));
+                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LIMIT_PERCENTAGE));
                 if (KeyTree != null)
                 {
                     foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
                     {
                         if (val is BST<double, Box> ValTreee)
                         {
-                            ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LimitPercentage));
+                            ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LIMIT_PERCENTAGE));
                             foreach (Box box in ValTreee.GetEnumerator(Order.InOrderV))
                             {
                                 for (int i = box.Count; quantity > 0 && i > 0; i--)
@@ -185,9 +185,9 @@ namespace Model
             int temp;
             if (width > 0 && height > 0 && quantity > 0)
             {
-                foreach (BST<double, Box> Ytree in MainTree.GetNextTreeByRange(width, width * (1 + LimitPercentage)))
+                foreach (BST<double, Box> Ytree in MainTree.GetNextTreeByRange(width, width * (1 + LIMIT_PERCENTAGE)))
                 {
-                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LimitPercentage)))
+                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LIMIT_PERCENTAGE)))
                     {
                         temp = quantity < b.Count ? quantity : b.Count;
                         quantity -= temp;

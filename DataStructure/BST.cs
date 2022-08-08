@@ -274,7 +274,6 @@ namespace DataStructure
 
 
         public IEnumerable GetEnumerator(Order ord)
-
         {
             switch (ord)
             {
@@ -365,7 +364,7 @@ namespace DataStructure
                 Right = null;
             }
 
-            public bool IsLeaf() =>  Left == null && Right == null;
+            public bool IsLeaf() => Left == null && Right == null;
 
             public int CompareTo(K key) => Key.CompareTo(key);
 
