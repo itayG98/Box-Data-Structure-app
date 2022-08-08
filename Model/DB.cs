@@ -36,7 +36,7 @@ namespace MoockData
             Boxes[0] = new Box(5, 5.5, 25);
             Boxes[1] = new Box(5, 6, 25);
             Boxes[2] = new Box(5, 6.5, 25);
-            Boxes[3] = new Box(5, 9.5, 25);
+            Boxes[3] = new Box(5, 1.5, 25);
             Boxes[4] = new Box(5, 3.5, 25);
             Boxes[5] = new Box(5, 3.5, 25);
             /*            Boxes[6] = new Box(15, 8, 10);

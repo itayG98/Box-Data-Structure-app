@@ -118,32 +118,35 @@ namespace DataStructure
             else
             {
                 TreeNode fatherNode = FindFather(Root, node, out Direction dir);
-                if (dir == Direction.Right)
+                if (fatherNode != null)
                 {
-                    if (node.Left == null)
-                        fatherNode.Right = node.Right;
-                    else if (node.Right == null)
-                        fatherNode.Right = node.Left;
-                    else
+                    if (dir == Direction.Right)
                     {
-                        var toElavete = FindMaxNode(node.Left);
-                        toElavete.Right = node.Right;
-                        fatherNode.Right = toElavete;
-                        var leftNode = FindMinNode(toElavete);
-                        leftNode.Left = node.Left;
+                        if (node.Left == null)
+                            fatherNode.Right = node.Right;
+                        else if (node.Right == null)
+                            fatherNode.Right = node.Left;
+                        else
+                        {
+                            var toElavete = FindMaxNode(node.Left);
+                            toElavete.Right = node.Right;
+                            fatherNode.Right = toElavete;
+                            var leftNode = FindMinNode(toElavete);
+                            leftNode.Left = node.Left;
+                        }
                     }
-                }
-                else if (dir == Direction.Left)
-                {
-                    if (node.Left == null)
-                        fatherNode.Left = node.Right;
-                    else if (node.Right == null)
-                        fatherNode.Left = node.Left;
-                    else
+                    else if (dir == Direction.Left)
                     {
-                        fatherNode.Left = node.Right;
-                        var toElavete = FindMinNode(node.Right);
-                        toElavete.Left = node.Left;
+                        if (node.Left == null)
+                            fatherNode.Left = node.Right;
+                        else if (node.Right == null)
+                            fatherNode.Left = node.Left;
+                        else
+                        {
+                            fatherNode.Left = node.Right;
+                            var toElavete = FindMinNode(node.Right);
+                            toElavete.Left = node.Left;
+                        }
                     }
                 }
             }
@@ -152,22 +155,26 @@ namespace DataStructure
         //===============================================================================================
         private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction)
         {
-            if (fatherNode.Left != null && fatherNode.Left.Equals(SonNode))
+            if (fatherNode != null)
             {
-                direction = Direction.Left;
-                return fatherNode;
+                if (fatherNode.Left != null && fatherNode.Left.Equals(SonNode))
+                {
+                    direction = Direction.Left;
+                    return fatherNode;
+                }
+                else if (fatherNode.Right != null && fatherNode.Right.Equals(SonNode))
+                {
+                    direction = Direction.Right;
+                    return fatherNode;
+                }
+                var right = FindFather(SonNode.Right, SonNode, out direction);
+                if (right != null)
+                    return right;
+                var left = FindFather(SonNode.Left, SonNode, out direction);
+                if (right != null)
+                    return left;
             }
-            else if (fatherNode.Right != null && fatherNode.Right.Equals(SonNode))
-            {
-                direction = Direction.Right;
-                return fatherNode;
-            }
-            var right = FindFather(SonNode.Right, SonNode, out direction);
-            if (right != null)
-                return right;
-            var left = FindFather(SonNode.Left, SonNode, out direction);
-            if (right != null)
-                return left;
+            direction = default;
             return null;
         }
         private TreeNode FindMaxNode(TreeNode node)
@@ -275,7 +282,7 @@ namespace DataStructure
                     return PreOrderValue(Root);
                 case Order.RightPostOrderV:
                     return RightPostOrderValue(Root);
-                    default:
+                default:
                     return default;
             }
         }

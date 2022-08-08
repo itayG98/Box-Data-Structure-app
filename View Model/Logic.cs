@@ -45,8 +45,7 @@ namespace View_Model
             foreach (Box b in boxes)
             {
                 _boxesOffer.Remove(b);
-                store.RemoveBoxes(b.Width,b.Height,b.Count);
-                Remained--;
+                Remained -= store.RemoveBoxes(b.Width, b.Height, b.Count);
             }
         }
         public void Remove(double x, double y, int quantity) 
@@ -54,7 +53,6 @@ namespace View_Model
             Remained = store.RemoveBoxes(x, y, quantity);
             _boxesOffer.Empty();
         } 
-
         public void Add(double x, double y, int quantity) => Remained = store.Add(x, y, quantity);
 
     }

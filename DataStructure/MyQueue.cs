@@ -51,7 +51,7 @@ namespace DataStructure
         {
             if (IsEmpty())
                 return;
-            else if (Root.CompareTo(val) == 0)
+            else if (Root.Value.Equals(val))
             {
                 Root = Root.Next;
                 Length--;
@@ -61,7 +61,7 @@ namespace DataStructure
             QueueNode current = Root.Next;
             while (current != null)
             {
-                if (current.CompareTo(val) == 0)
+                if (current.Value.Equals(val))
                 {
                     prev.Next = current.Next;
                     return;
@@ -71,6 +71,7 @@ namespace DataStructure
             }
             Length--;
         }
+
         public V Pop()
         {
             if (IsEmpty())

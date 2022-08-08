@@ -38,22 +38,22 @@ namespace Boxes_Store_app
         }
         private void Remove_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!double.TryParse(X.Text, out double x) && x > 0)
+            if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
-            if (!double.TryParse(Y.Text, out double y) && y > 0)
+            if (!double.TryParse(Y.Text, out double y)|| y < 0)
                 return;
-            if (!int.TryParse(Quantity.Text, out int q) && q > 0)
+            if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
             logic.Remove(x, y, q);
             Update();
         }
         private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!double.TryParse(X.Text, out double x) && x > 0)
+            if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
-            if (!double.TryParse(Y.Text, out double y) && y > 0)
+            if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
-            if (!int.TryParse(Quantity.Text, out int q) && q > 0)
+            if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
             logic.Add(x, y, q);
             Update();
@@ -73,7 +73,7 @@ namespace Boxes_Store_app
         }
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            args.Cancel = args.NewText.Any(c => !char.IsDigit(c)&& c!='.');
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c) && c != '.');
         }
         private void TextBox_OnBeforeTextChangingInt(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
