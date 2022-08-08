@@ -267,17 +267,17 @@ namespace DataStructure
         public IEnumerable GetEnumerator(Order ord)
 
         {
-            if (Root != null)
-                switch (ord)
-                {
-                    case Order.InOrderV:
-                        return InorderValue(Root);
-                    case Order.PreOrderV:
-                        return PreOrderValue(Root);
-                    case Order.RightPostOrderV:
-                        return RightPostOrderValue(Root);
-                }
-            return null;
+            switch (ord)
+            {
+                case Order.InOrderV:
+                    return InorderValue(Root);
+                case Order.PreOrderV:
+                    return PreOrderValue(Root);
+                case Order.RightPostOrderV:
+                    return RightPostOrderValue(Root);
+                    default:
+                    return default;
+            }
         }
         private IEnumerable InorderValue(TreeNode node)
         {

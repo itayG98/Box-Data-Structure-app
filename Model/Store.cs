@@ -84,7 +84,7 @@ namespace Model
         public int RemoveBoxes(double width, double height, int quantity)
         //Return how many boxes removed
         {
-            if (width <= 0 || height <= 0 || quantity <1)
+            if (width <= 0 || height <= 0 || quantity < 1)
                 return -1;
             var Xnode = MainTree.FindNode(width);
             if (Xnode == null)
@@ -97,7 +97,7 @@ namespace Model
             if (Ynode.Value.Count > quantity)
             {
                 Ynode.Value.Count -= quantity;
-                Ynode.Value.Date= DateTime.Now;
+                Ynode.Value.Date = DateTime.Now;
                 DatesQueue.Add(Ynode.Value); //Update the queue
             }
             else if (Ynode.Value.Count == quantity)
@@ -219,9 +219,9 @@ namespace Model
                 {
                     foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LimitPercentage)))
                     {
-                        temp=quantity<b.Count? quantity : b.Count;
-                        quantity-=temp;
-                        yield return new Box(b.Width,b.Height, temp);
+                        temp = quantity < b.Count ? quantity : b.Count;
+                        quantity -= temp;
+                        yield return new Box(b.Width, b.Height, temp);
                         if (quantity < 1)
                             break;
                     }
@@ -235,8 +235,9 @@ namespace Model
         {
             foreach (var val in MainTree.GetEnumerator(Order.InOrderV))
                 if (val is BST<double, Box> YTree)
-                    foreach (Box box in YTree.GetEnumerator(Order.InOrderV))
-                        yield return box;
+                    foreach (var b in YTree.GetEnumerator(Order.InOrderV))
+                        if (b is Box box)
+                            yield return box;
         }
         public IEnumerable GetQueue()
         {
