@@ -29,13 +29,25 @@ namespace DataStructure
         public void Add(V val)
         {
             if (IsEmpty())
-                Root = new QueueNode<V>(val);
-            else
             {
-                QueueNode<V> newRoot = new QueueNode<V>(val);
-                newRoot.Next = Root;
-                Root = newRoot;
+                Root = new QueueNode<V>(val);
+                Tail = null;
+                Root.Next = Tail;
+                Length = 1;
+                return;
             }
+            else if (Tail == null)
+            {
+                Tail = new QueueNode<V>(val);
+                Root.Next = Tail;
+                Tail.Prev = Root;
+                Length++;
+                return;
+            }
+            QueueNode<V> newRoot = new QueueNode<V>(val);
+            newRoot.Prev = Tail;
+            Tail.Next = newRoot;
+            Tail = newRoot;
             Length++;
         }
 
@@ -60,19 +72,35 @@ namespace DataStructure
                 Length--;
                 return;
             }
-            QueueNode<V> prev = Root;
-            QueueNode<V> current = Root.Next;
-            while (current != null)
+            else if (Tail.Value.Equals(val))
             {
-                if (current.Value.Equals(val))
+                Tail = Tail.Prev;
+                Length--;
+                return;
+            }
+            QueueNode<V> left = Root.Next;
+            QueueNode<V> right = Tail.Prev;
+            while (right.Next.Equals(left))
+            {
+                if (right==null||left==null)
+                    break;
+                if (left.Value.Equals(val))
                 {
-                    prev.Next = current.Next;
+                    left.Prev.Next = left.Next;
+                    left.Next.Prev = left.Prev;
+                    Length--;
                     return;
                 }
-                prev = current;
-                current = current.Next;
+                else if (right.Value.Equals(val))
+                {
+                    right.Prev.Next = right.Next;
+                    right.Next.Prev = right.Prev;
+                    Length--;
+                    return;
+                }
+                left = left.Next;
+                right = right.Prev;
             }
-            Length--;
         }
 
         public V Pop()
