@@ -17,12 +17,13 @@ namespace View_Model
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueue(); } }
-        public int Remained { get => _remained; private set => _remained = value; }
+        public int Remained { get => _remained; private set => _remained = value>0? value :0 ; }
 
         public Logic()
         {
             store = new Store();
             _boxesOffer = new MyQueue<Box>();
+            Remained = 0;
         }
 
         public void GetOfferEfficintely(double x, double y, int quantity) 

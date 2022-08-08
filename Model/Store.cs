@@ -84,7 +84,7 @@ namespace Model
         public int RemoveBoxes(double width, double height, int quantity)
         //Return how many boxes removed
         {
-            if (width <= 0 || height <= 0 || quantity <= 0)
+            if (width <= 0 || height <= 0 || quantity <1)
                 return -1;
             var Xnode = MainTree.FindNode(width);
             if (Xnode == null)
@@ -97,6 +97,7 @@ namespace Model
             if (Ynode.Value.Count > quantity)
             {
                 Ynode.Value.Count -= quantity;
+                Ynode.Value.Date= DateTime.Now;
                 DatesQueue.Add(Ynode.Value); //Update the queue
             }
             else if (Ynode.Value.Count == quantity)
