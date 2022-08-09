@@ -169,7 +169,7 @@ namespace DataStructure
         }
 
         //===============================================================================================
-        private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction)
+        private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction) //Continuo here
         {
             if (fatherNode != null && SonNode != null && !fatherNode.IsLeaf())
             {
@@ -183,19 +183,21 @@ namespace DataStructure
                     direction = Direction.Right;
                     return fatherNode;
                 }
-                else
-                {
-                    var right = FindFather(SonNode.Right, SonNode, out direction);
-                    if (right != null)
-                        return right;
-                    var left = FindFather(SonNode.Left, SonNode, out direction);
-                    if (right != null)
-                        return left;
-                }
+                var right = FindFather(SonNode.Right, SonNode, out direction);
+                if (right != null)
+                    return right;
+                var left = FindFather(SonNode.Left, SonNode, out direction);
+                if (right != null)
+                    return left;
             }
             direction = default;
             return null;
         }
+
+
+
+
+
         private TreeNode FindMaxNode(TreeNode node)
         {
             if (node.Right == null)
