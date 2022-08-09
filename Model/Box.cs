@@ -16,8 +16,6 @@ namespace Model
         private DateTime _date;
         QueueNode<Box> _node;
 
-
-
         public double Height { get => _height; }
         public double Width { get => _width; }
         public int Count { get => _count; set => _count = value > 0 ? value : 0; }

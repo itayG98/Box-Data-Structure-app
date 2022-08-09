@@ -201,19 +201,27 @@ namespace Model
             }
         }
 
-        public void RemoveOldBox()
+        public void PopOldBoxes()
         {
             foreach (Box box in GetQueue())
             {
-                if (box != null)
+                if (box != null && box.LastPurchased >= MAX_DAYS)
                 {
-                    if (box.LastPurchased >= MAX_DAYS)
-                    {
-                        RemoveBoxes(box.Width, box.Height, box.Count);
-                        DatesQueue.Remove(box.Node);
-                    }
-                    else
-                        return;
+                    RemoveBoxes(box.Width, box.Height, box.Count);
+                    DatesQueue.Pop();
+                }
+                else
+                    return;
+            }
+        }
+        public IEnumerable GetandPopOldBoxes()
+        {
+            foreach (Box box in GetQueue())
+            {
+                if (box != null && box.LastPurchased >= MAX_DAYS)
+                {
+                    RemoveBoxes(box.Width, box.Height, box.Count);
+                    yield return DatesQueue.Pop();
                 }
             }
         }

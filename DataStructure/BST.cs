@@ -171,7 +171,7 @@ namespace DataStructure
         //===============================================================================================
         private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction) 
         {
-            if (fatherNode != null && SonNode != null && !fatherNode.IsLeaf())
+            if (fatherNode != null && SonNode != null)
             {
                 if (fatherNode.Left.Equals(SonNode))
                 {
@@ -310,11 +310,11 @@ namespace DataStructure
         {
             if (node != null)
             {
-                foreach (V n in InorderValue(node.Left)) //Stack OverFlow Here
-                    yield return n;
+                foreach (V val in InorderValue(node.Left)) //Stack OverFlow Here
+                    yield return val;
                 yield return node.Value;
-                foreach (V n in InorderValue(node.Right))
-                    yield return n;
+                foreach (V val in InorderValue(node.Right))
+                    yield return val;
             }
         }
         private IEnumerable Inorder(TreeNode node)
@@ -333,21 +333,21 @@ namespace DataStructure
             if (node != null)
             {
                 yield return node.Value;
-                foreach (V n in PreOrderValue(node.Left))
-                    yield return n;
-                foreach (V n in PreOrderValue(node.Right))
-                    yield return n;
+                foreach (V val in PreOrderValue(node.Left))
+                    yield return val;
+                foreach (V val in PreOrderValue(node.Right))
+                    yield return val;
             }
         }
         private IEnumerable RightPostOrderValue(TreeNode node)
         {
             if (node != null)
             {
-                foreach (V n in RightPostOrderValue(node.Right))
-                    yield return n;
+                foreach (V val in RightPostOrderValue(node.Right))
+                    yield return val;
                 yield return node.Value;
-                foreach (V n in RightPostOrderValue(node.Left))
-                    yield return n;
+                foreach (V val in RightPostOrderValue(node.Left))
+                    yield return val;
             }
         }
         private IEnumerable RightPostOrder(TreeNode node)
