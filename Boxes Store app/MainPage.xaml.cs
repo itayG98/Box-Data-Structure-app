@@ -3,6 +3,8 @@ using Windows.UI.Xaml.Controls;
 using DataStructure;
 using System.Linq;
 using Model;
+using System;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -29,7 +31,7 @@ namespace Boxes_Store_app
 
         private void Avilable_Item_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (e.ClickedItem is Box box )
+            if (e.ClickedItem is Box box)
             {
                 X.Text = box.Width.ToString();
                 Y.Text = box.Height.ToString();
@@ -51,7 +53,7 @@ namespace Boxes_Store_app
         {
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
-            if (!double.TryParse(Y.Text, out double y)|| y < 0)
+            if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
@@ -89,6 +91,11 @@ namespace Boxes_Store_app
         private void TextBox_OnBeforeTextChangingInt(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
+
+        public async void ShowAlert(string msg)
+        {
+            await new MessageDialog(msg).ShowAsync();
         }
     }
 }

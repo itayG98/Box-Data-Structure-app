@@ -99,24 +99,38 @@ namespace DataStructure
         //===============================================================================================
         public void Remove(TreeNode node)
         {
-            if (node == null)
+            if (node is null) //Empty tree
                 return;
-            else if (Root == node)
+            else if (Root == node) //Root Removal
             {
-                if (node.Left == null)
-                    Root = node.Right;
-                else if (node.Right == null)
-                    Root = node.Left;
-                else
+                if (Root.IsLeaf()) //Remove a root which is leaf
+                    Root = null;
+                else if (Root.Left == null)
+                    Root = Root.Right;
+                else if (Root.Right == null)
+                    Root = Root.Left;
+                else //Elevate left max into a new Root 
                 {
-                    var newRoot = FindMaxNode(node.Left);
+                    var newRoot = FindMaxNode(Root.Left);
                     var toElavte = FindMinNode(newRoot);
-                    toElavte.Left = node.Left;
-                    newRoot.Right = node.Right;
+                    TreeNode father = FindFather(Root, newRoot, out _);
+                    if (toElavte.Equals(newRoot)) //NewRoot doest have left child
+                    {
+
+                        newRoot.Right = Root.Right;
+                        newRoot.Left = Root.Left;
+                        Root = newRoot;
+                        father.Right = null;
+                    }
+                    else //NewRoot also have left child
+                    {
+                        newRoot.Right = Root.Right;
+                        toElavte.Left = Root.Left;
+                        Root = newRoot;
+                        father.Right = null;
+                    }
                 }
             }
-            else if (node.IsLeaf())
-                node.Value = default;
             else
             {
                 TreeNode fatherNode = FindFather(Root, node, out Direction dir);
@@ -157,7 +171,7 @@ namespace DataStructure
         //===============================================================================================
         private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction)
         {
-            if (fatherNode != null && SonNode!=null)
+            if (fatherNode != null && SonNode != null && !fatherNode.IsLeaf())
             {
                 if (fatherNode.Left != null && fatherNode.Left.Equals(SonNode))
                 {
@@ -291,17 +305,11 @@ namespace DataStructure
         {
             if (node != null)
             {
-                foreach (V n in InorderValue(node.Left))
-                {
-                    if (n != null)
-                        yield return n;
-                }
+                foreach (V n in InorderValue(node.Left)) //Stack OverFlow Here
+                    yield return n;
                 yield return node.Value;
                 foreach (V n in InorderValue(node.Right))
-                {
-                    if (n != null)
-                        yield return n;
-                }
+                    yield return n;
             }
         }
         private IEnumerable Inorder(TreeNode node)
@@ -366,8 +374,6 @@ namespace DataStructure
             {
                 Key = key;
                 Value = value;
-                Left = null;
-                Right = null;
             }
 
             public bool IsLeaf() => Left == null && Right == null;

@@ -115,10 +115,9 @@ namespace Model
         {
             if (MainTree.IsEmpty())
                 return;
-            foreach (var val in MainTree.GetEnumerator(ord))
-                if (val is BST<double, Box> YTree)
-                    foreach (Box box in YTree.GetEnumerator(ord))
-                        act(box);
+            foreach (BST<double, Box> YTree in MainTree.GetEnumerator(ord))
+                foreach (Box box in YTree.GetEnumerator(ord))
+                    act(box);
         }
 
         public int GetBestInRange(Action<Box> act, double width, double height, int quantity)
@@ -210,7 +209,7 @@ namespace Model
                 {
                     if (box.LastPurchased >= MAX_DAYS)
                     {
-                        RemoveBoxes(box.Width,box.Height,box.Count);
+                        RemoveBoxes(box.Width, box.Height, box.Count);
                         DatesQueue.Remove(box.Node);
                     }
                     else
@@ -220,11 +219,9 @@ namespace Model
         }
         public IEnumerable GetAll()
         {
-            foreach (var val in MainTree.GetEnumerator(Order.InOrderV))
-                if (val is BST<double, Box> YTree)
-                    foreach (var b in YTree.GetEnumerator(Order.InOrderV))
-                        if (b is Box box)
-                            yield return box;
+            foreach (BST<double, Box> YTree in MainTree.GetEnumerator(Order.InOrderV))
+                foreach (Box box in YTree.GetEnumerator(Order.InOrderV))
+                    yield return box;
         }
         public IEnumerable GetQueue()
         {
