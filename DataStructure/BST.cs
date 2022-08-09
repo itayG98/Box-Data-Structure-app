@@ -99,11 +99,11 @@ namespace DataStructure
         //===============================================================================================
         public void Remove(TreeNode node)
         {
-            if (node is null) //Empty tree
+            if (node is null)
                 return;
-            else if (Root == node) //Root Removal
+            else if (Root == node)
             {
-                if (Root.IsLeaf()) //Remove a root which is leaf
+                if (Root.IsLeaf()) //if root is leaf
                     Root = null;
                 else if (Root.Left == null)
                     Root = Root.Right;
@@ -130,7 +130,7 @@ namespace DataStructure
                         father.Right = null;
                     }
                 }
-            }
+            } //Root Removal
             else
             {
                 TreeNode fatherNode = FindFather(Root, node, out Direction dir);
@@ -173,22 +173,25 @@ namespace DataStructure
         {
             if (fatherNode != null && SonNode != null && !fatherNode.IsLeaf())
             {
-                if (fatherNode.Left != null && fatherNode.Left.Equals(SonNode))
+                if (fatherNode.Left.Equals(SonNode))
                 {
                     direction = Direction.Left;
                     return fatherNode;
                 }
-                else if (fatherNode.Right != null && fatherNode.Right.Equals(SonNode))
+                else if (fatherNode.Right.Equals(SonNode))
                 {
                     direction = Direction.Right;
                     return fatherNode;
                 }
-                var right = FindFather(SonNode.Right, SonNode, out direction);
-                if (right != null)
-                    return right;
-                var left = FindFather(SonNode.Left, SonNode, out direction);
-                if (right != null)
-                    return left;
+                else
+                {
+                    var right = FindFather(SonNode.Right, SonNode, out direction);
+                    if (right != null)
+                        return right;
+                    var left = FindFather(SonNode.Left, SonNode, out direction);
+                    if (right != null)
+                        return left;
+                }
             }
             direction = default;
             return null;
