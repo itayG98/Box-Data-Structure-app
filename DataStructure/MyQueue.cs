@@ -41,7 +41,7 @@ namespace DataStructure
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;
                 Tail.Prev = Root;
-                Length++;
+                Length=2;
                 return Tail;
             }
             QueueNode<V> newRoot = new QueueNode<V>(val);
@@ -56,53 +56,63 @@ namespace DataStructure
             Root = Tail = null;
             Length = 0;
         }
-        public void Remove(V val)
+        public bool Remove(V val)
         {
-            if (IsEmpty())
-                return;
-            else if (Root.Value.Equals(val))
+            if (IsEmpty() || val != null)
+                return false;
+            QueueNode<V> temp = Root;
+            while (temp != null)
             {
-                Root = Root.Next;
-                Length--;
-                return;
-            }
-            else if (Tail.Value.Equals(val))
-            {
-                Tail = Tail.Prev;
-                Length--;
-                return;
-            }
-            QueueNode<V> left = Root.Next;
-            QueueNode<V> right = Tail.Prev;
-            while (right.Next.Equals(left))
-            {
-                if (right == null || left == null)
-                    break;
-                if (left.Value.Equals(val))
+                if (temp.CompareTo(val) == 0)
                 {
-                    left.Prev.Next = left.Next;
-                    left.Next.Prev = left.Prev;
+                    if (temp == Root)
+                    {
+                        temp.Next = Root.Next;
+                        Root = temp;
+                        Length--;
+                    }
+                    else if (temp == Tail)
+                    {
+                        temp.Prev = Tail.Prev;
+                        Tail = temp;
+                    }
+                    else
+                    {
+                        temp.Prev.Next = temp.Next;
+                        temp.Next.Prev = temp.Prev;
+                        Length--;
+                    }
                     Length--;
-                    return;
+                    return true;
                 }
-                else if (right.Value.Equals(val))
-                {
-                    right.Prev.Next = right.Next;
-                    right.Next.Prev = right.Prev;
-                    Length--;
-                    return;
-                }
-                left = left.Next;
-                right = right.Prev;
+                temp = temp.Next;
             }
+            return false;
         }
-        public void Remove(QueueNode<V> remove)
+        public bool Remove(QueueNode<V> remove)
         {
+            if (remove == null)
+                return false;
             if (remove.Prev != null && remove.Next != null)
             {
                 remove.Prev.Next = remove.Next;
                 remove.Next.Prev = remove.Prev;
+                Length--;
+                return true;
             }
+            else if (remove.Prev != null) //Root
+            {
+                Root = remove.Next;
+                Length--;
+                return true;
+            }
+            else if (remove.Prev != null)
+            {
+                Tail = remove.Prev;
+                Length--;
+                return true;
+            }
+            return false;
         }
         public V Pop()
         {

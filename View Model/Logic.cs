@@ -29,7 +29,7 @@ namespace View_Model
         public void GetOfferEfficintely(double x, double y, int quantity) 
         {
             _boxesOffer.Empty();
-            foreach (Box b in store.GetBest(x, y, quantity))
+            foreach (Box b in store.GetBestOffer(x, y, quantity))
                 _boxesOffer.Add(b);
             Remained = quantity - _boxesOffer.Length;
         }
@@ -37,8 +37,8 @@ namespace View_Model
         {
             foreach (Box b in boxes)
             {
+                _boxesOffer.Remove(b.Node);
                 Remained -= store.RemoveBoxes(b.Width, b.Height, b.Count);
-                _boxesOffer.Remove(b);
             }
         }
         public void Remove(double x, double y, int quantity) 

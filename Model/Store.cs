@@ -98,7 +98,7 @@ namespace Model
             {
                 Ynode.Value.Count -= quantity;
                 Ynode.Value.Date = DateTime.Now;
-                DatesQueue.Add(Ynode.Value); //Update the queue
+                Ynode.Value.Node= DatesQueue.Add(Ynode.Value); //Update the queue
             }
             else if (Ynode.Value.Count == quantity)
             {
@@ -123,66 +123,7 @@ namespace Model
                     act(box);
         }
 
-        public int GetBestInRange(Action<Box> act, double width, double height, int quantity)
-        //Do action for all fitting boxes in range of LimitPercentage
-        {
-            if (width > 0 && height > 0 && quantity > 0)
-            {
-                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LIMIT_PERCENTAGE));
-                if (KeyTree == null)
-                    return quantity;
-                foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
-                {
-                    if (val is BST<double, Box> ValTreee)
-                    {
-                        ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LIMIT_PERCENTAGE));
-                        foreach (Box box in ValTreee.GetEnumerator(Order.InOrderV))
-                        {
-                            for (int i = box.Count; quantity > 0 && i > 0; i--)
-                            {
-                                act(box);
-                                quantity--;
-                            }
-                        }
-                    }
-                    if (quantity <= 0)
-                        break;
-                }
-                return quantity;
-            }
-            return -1;
-        }
-
-        public IEnumerable<Box> GetBestInRange(double width, double height, int quantity)
-        //Do action for all fitting boxes in range of LimitPercentage
-        {
-            if (width > 0 && height > 0 && quantity > 0)
-            {
-                BST<double, BST<double, Box>> KeyTree = MainTree.GetTreeByRange(width, width * (1 + LIMIT_PERCENTAGE));
-                if (KeyTree != null)
-                {
-                    foreach (var val in KeyTree.GetEnumerator(Order.InOrderV))
-                    {
-                        if (val is BST<double, Box> ValTreee)
-                        {
-                            ValTreee = ValTreee.GetTreeByRange(height, height * (1 + LIMIT_PERCENTAGE));
-                            foreach (Box box in ValTreee.GetEnumerator(Order.InOrderV))
-                            {
-                                for (int i = box.Count; quantity > 0 && i > 0; i--)
-                                {
-                                    yield return box;
-                                    quantity--;
-                                }
-                            }
-                        }
-                        if (quantity <= 0)
-                            break;
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<Box> GetBest(double width, double height, int quantity)
+        public IEnumerable<Box> GetBestOffer(double width, double height, int quantity)
         //Do action for all fitting boxes in range of LimitPercentage
         {
             int temp;
