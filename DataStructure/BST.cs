@@ -51,7 +51,6 @@ namespace DataStructure
         //===============================================================================================
         public TreeNode FindNode(K key) => FindNode(key, Root);
         //A Tree can Search K Type And return a TreeNode.Return deafult if not exist.
-
         private TreeNode FindNode(K key, TreeNode node)
         {
             if (node == null)
@@ -97,118 +96,60 @@ namespace DataStructure
         }
         public void AddNode(TreeNode node) => AddNode(node.Key, node.Value);
         //===============================================================================================
+
         public void Remove(TreeNode node)
         {
-            if (node is null)
-                return;
-            else if (Root == node)
-            {
-                if (Root.IsLeaf()) //if root is leaf
-                    Root = null;
-                else if (Root.Left == null)
-                    Root = Root.Right;
-                else if (Root.Right == null)
-                    Root = Root.Left;
-                else //Elevate left max into a new Root 
-                {
-                    var newRoot = FindMaxNode(Root.Left);
-                    var toElavte = FindMinNode(newRoot);
-                    TreeNode father = FindFather(Root, newRoot, out _);
-                    if (toElavte.Equals(newRoot)) //NewRoot doest have left child
-                    {
+             Root = Remove(Root, node.Key);
+        }
+        public TreeNode Remove(TreeNode father, K KeyToDelete)
+        {
+            if (father == null) //If the tree is empty or the key couldnt be found
+                return father;
 
-                        newRoot.Right = Root.Right;
-                        newRoot.Left = Root.Left;
-                        Root = newRoot;
-                        father.Right = null;
-                    }
-                    else //NewRoot also have left child
-                    {
-                        newRoot.Right = Root.Right;
-                        toElavte.Left = Root.Left;
-                        Root = newRoot;
-                        father.Right = null;
-                    }
-                }
-            } //Root Removal
+            if (KeyToDelete.CompareTo(father.Key) < 0)
+                father.Left = Remove(father.Left, KeyToDelete);
+            else if (KeyToDelete.CompareTo(father.Key) > 0)
+                father.Right = Remove(father.Right, KeyToDelete);
+
+            // if the keys match we have the father and the node delete the node
             else
             {
-                TreeNode fatherNode = FindFather(Root, node, out Direction dir);
-                if (fatherNode != null)
+                // node with only one child or no child
+                if (father.IsLeaf())
+                    return null;
+                else if (father.Left == null)
                 {
-                    if (dir == Direction.Right)
-                    {
-                        if (node.Left == null)
-                            fatherNode.Right = node.Right;
-                        else if (node.Right == null)
-                            fatherNode.Right = node.Left;
-                        else
-                        {
-                            var toElavete = FindMaxNode(node.Left);
-                            toElavete.Right = node.Right;
-                            fatherNode.Right = toElavete;
-                            var leftNode = FindMinNode(toElavete);
-                            leftNode.Left = node.Left;
-                        }
-                    }
-                    else if (dir == Direction.Left)
-                    {
-                        if (node.Left == null)
-                            fatherNode.Left = node.Right;
-                        else if (node.Right == null)
-                            fatherNode.Left = node.Left;
-                        else
-                        {
-                            fatherNode.Left = node.Right;
-                            var toElavete = FindMinNode(node.Right);
-                            toElavete.Left = node.Left;
-                        }
-                    }
+                    return father.Right;
                 }
+                else if (father.Right == null)
+                {
+                    return father.Left;
+                }
+
+                TreeNode newFather = FindMinNode(father.Right);
+                father.Value = newFather.Value;
+                father.Key = newFather.Key;
+                father.Right = Remove(father.Right, father.Key);
             }
+            return father;
         }
 
         //===============================================================================================
-        private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction) 
-        {
-            if (fatherNode != null && SonNode != null)
-            {
-                if (fatherNode.Left.Equals(SonNode))
-                {
-                    direction = Direction.Left;
-                    return fatherNode;
-                }
-                else if (fatherNode.Right.Equals(SonNode))
-                {
-                    direction = Direction.Right;
-                    return fatherNode;
-                }
-                var right = FindFather(SonNode.Right, SonNode, out direction);
-                if (right != null)
-                    return right;
-                var left = FindFather(SonNode.Left, SonNode, out direction);
-                if (right != null)
-                    return left;
-            }
-            direction = default;
-            return null;
-        }
-
-
-
-
-
         private TreeNode FindMaxNode(TreeNode node)
         {
+            if (node == null)
+                return null;
             if (node.Right == null)
                 return node;
             return FindMaxNode(node.Right);
         }
         private TreeNode FindMinNode(TreeNode node)
         {
-            if (node.Right == null)
+            if (node == null)
+                return null;
+            if (node.Left == null)
                 return node;
-            return FindMaxNode(node.Right);
+            return FindMinNode(node.Left);
         }
 
         //===============================================================================================
@@ -290,7 +231,6 @@ namespace DataStructure
         //===============================================================================================
         public bool IsEmpty() => Root == null;
         //===============================================================================================
-
 
         public IEnumerable GetEnumerator(Order ord)
         {
@@ -384,7 +324,6 @@ namespace DataStructure
             public bool IsLeaf() => Left == null && Right == null;
 
             public int CompareTo(K key) => Key.CompareTo(key);
-
         }
     }
 }

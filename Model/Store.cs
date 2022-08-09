@@ -25,11 +25,11 @@ namespace Model
 
         private void LoadFromDB()
         {
-            _ = DB.Instance;
+            _= DB.Instance;
             foreach (var elem in DB.Boxes)
             {
-                if (elem != null)
-                    Add(elem);
+                if (elem is Box box)
+                    Add(box);
             }
             //DatesQueue.Sort();
         }
@@ -54,7 +54,6 @@ namespace Model
                     DatesQueue.Remove(box);
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE)
                     {
-
                         returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
                     }
@@ -102,13 +101,17 @@ namespace Model
                 DatesQueue.Add(Ynode.Value); //Update the queue
             }
             else if (Ynode.Value.Count == quantity)
+            {
                 Xnode.Value.Remove(Ynode);
+            }
             else
             {
                 var count = Ynode.Value.Count;
                 Xnode.Value.Remove(Ynode);
-                return count;
+                quantity=count;
             }
+            if (Xnode.Value.IsEmpty())
+                MainTree.Remove(Xnode);
             return quantity;
         }
         public void ActionOnBoxes(Action<Box> act, Order ord)

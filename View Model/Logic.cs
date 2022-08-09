@@ -33,19 +33,12 @@ namespace View_Model
                 _boxesOffer.Add(b);
             Remained = quantity - _boxesOffer.Length;
         }
-        public void GetOffer(double x, double y, int quantity)
-        {
-            _boxesOffer.Empty();
-            foreach (var b in store.GetBestInRange(x, y, quantity))
-                _boxesOffer.Add(b);
-            Remained = quantity - _boxesOffer.Length;
-        }
         public void TakeOffer(IEnumerable boxes)
         {
             foreach (Box b in boxes)
             {
-                _boxesOffer.Remove(b);
                 Remained -= store.RemoveBoxes(b.Width, b.Height, b.Count);
+                _boxesOffer.Remove(b);
             }
         }
         public void Remove(double x, double y, int quantity) 
