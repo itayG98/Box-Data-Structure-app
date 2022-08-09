@@ -11,7 +11,8 @@ using Windows.UI.Popups;
 namespace Boxes_Store_app
 {
     /// <summary>
-    /// An The main page of the boxes store
+    /// An The main page of the boxes store 
+    /// Handle the store using logic.
     /// </summary>
     public sealed partial class MainPage : Page
     {
