@@ -157,7 +157,7 @@ namespace DataStructure
         //===============================================================================================
         private TreeNode FindFather(TreeNode fatherNode, TreeNode SonNode, out Direction direction)
         {
-            if (fatherNode != null)
+            if (fatherNode != null && SonNode!=null)
             {
                 if (fatherNode.Left != null && fatherNode.Left.Equals(SonNode))
                 {
