@@ -59,34 +59,44 @@ namespace DataStructure
         }
         public bool Remove(V val)
         {
-            if (IsEmpty() || val != null)
+            if (IsEmpty() || val == null)
                 return false;
             QueueNode<V> temp = Root;
+            if (Root.CompareTo(val) == 0)
+            {
+                if (Root.Next == null)
+                {
+                    Empty();
+                    return true;
+                }
+                temp = Root.Next;
+                temp.Prev = null;
+                Root = temp;
+                Length--;
+                return true;
+            }
+            else if (Tail.CompareTo(val) == 0)
+            {
+                if (Tail.Prev == null)
+                {
+                    Empty();
+                    return true;
+                }
+                temp = Tail.Prev;
+                temp.Next = null;
+                Tail = temp;
+                Length--;
+                return true;
+            }
+            temp = Root.Next;
             while (temp != null)
             {
                 if (temp.CompareTo(val) == 0)
                 {
-                    if (temp == Root)
-                    {
-                        Root = Root.Next;
-                        Root.Prev = null;
-                        Length--;
-                        return true;
-                    }
-                    else if (temp == Tail)
-                    {
-                        Tail = Tail.Prev;
-                        Tail.Next = null;
-                        Length--;
-                        return true;
-                    }
-                    else
-                    {
-                        temp.Prev.Next = temp.Next;
-                        temp.Next.Prev = temp.Prev;
-                        Length--;
-                        return true;
-                    }
+                    temp.Prev.Next = temp.Next;
+                    temp.Next.Prev = temp.Prev;
+                    Length--;
+                    return true;
                 }
                 temp = temp.Next;
             }
@@ -94,10 +104,15 @@ namespace DataStructure
         }
         public bool Remove(QueueNode<V> toRemove)
         {
-            if (toRemove == null)
+            if (IsEmpty() || toRemove == null)
                 return false;
             if (toRemove == Root)
             {
+                if (toRemove.Next == null)
+                {
+                    Empty();
+                    return true;
+                }
                 Root = toRemove.Next;
                 Root.Prev = null;
                 Length--;
@@ -105,6 +120,11 @@ namespace DataStructure
             }
             else if (toRemove == Tail)
             {
+                if (toRemove.Prev==null) 
+                {
+                    Empty();
+                    return true;
+                }
                 toRemove.Prev.Next = null;
                 Tail = toRemove.Prev;
                 Length--;
