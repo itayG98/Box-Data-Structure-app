@@ -90,9 +90,7 @@ namespace DataStructure
             }
             return false;
         }
-        //Fix removing tail and head
         public bool Remove(QueueNode<V> toRemove)
-        //Fix removing tail and head
         {
             if (toRemove == null)
                 return false;
@@ -103,19 +101,18 @@ namespace DataStructure
                 Length--;
                 return true;
             }
-            else if (toRemove.Prev == null) //Root
+            else if (toRemove.Prev == null && toRemove.Next!=null) //Root
             {
                 Root = toRemove.Next;
                 Length--;
                 return true;
             }
-            else if (toRemove.Next == null) //Tail
+            else //Tail
             {
                 Tail = toRemove.Prev;
                 Length--;
                 return true;
             }
-            return false;
         }
         public V Pop()
         {

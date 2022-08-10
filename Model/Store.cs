@@ -89,29 +89,27 @@ namespace Model
             return Add(width, height, quantety, DateTime.Now);
         }
         public int RemoveBoxes(Box box,int quantity)
-        //Return how many boxes remained to return
+        //Return how many boxes removed
         {
             //Search the box in both trees
             if (box.Width <= 0 || box.Height <= 0 || box.Count < 1)
-                return quantity;
+                return 0;
             var Xnode = MainTree.FindNode(box.Width);
             if (Xnode == null)
-                return quantity;
+                return 0;
             var Ynode = Xnode.Value.FindNode(box.Height);
             if (Ynode == null)
-                return quantity;
+                return 0;
             
             DatesQueue.Remove(box);
             if (box.Count > quantity)
             {
-                box.Count -= box.Count;
+                box.Count -= quantity;
                 box.Date = DateTime.Now;
                 box.Node = DatesQueue.Add(Ynode.Value); //Update the queue
-                quantity= 0;
             }
             else if (box.Count == quantity) { 
                 Xnode.Value.Remove(Ynode);
-                quantity=0;
             }
             else
             {

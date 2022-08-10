@@ -42,18 +42,18 @@
         </Grid>
         <Grid x:Name="Down" Grid.Row="1" Background="#7DCE13">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="11*"/>
             </Grid.ColumnDefinitions>
 
             <ListView Grid.Column="0" x:Name="Avilable_Item" ItemsSource="{x:Bind logic.Boxes,Mode=OneWay}" Padding="30" Margin="15" FontSize="25" Header="Avilable Boxes">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center">
-                            <TextBlock Margin="5" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
-                            <TextBlock Margin="5" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
-                            <TextBlock Margin="5" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Count - {0:0.00}}" FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Count - {0:0.00}}" FontSize="16"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -64,10 +64,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center" >
-                            <TextBlock Margin="5" Text="{x:Bind LastPurchased}" FontSize="20" FontWeight="ExtraBlack" />
-                            <TextBlock Margin="5" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
-                            <TextBlock Margin="5" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
-                            <TextBlock Margin="5" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Count - {0:0.00}}" FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind LastPurchased}" FontSize="20" FontWeight="ExtraBlack" />
+                            <TextBlock Margin="4" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Count - {0:0.00}}" FontSize="16"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -77,9 +77,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Box">
                         <StackPanel Orientation="Horizontal" Margin="5" Padding="5" VerticalAlignment="Center" >
-                            <TextBlock Margin="5" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
-                            <TextBlock Margin="5" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
-                            <TextBlock Margin="5" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  quantity - {0:0.00}}" FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Width ,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Width - {0:0.00}}"  FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Height,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Height - {0:0.00}}" FontSize="16"/>
+                            <TextBlock Margin="4" Text="{x:Bind Count,Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=  Total quantity - {0:0.00}}" FontSize="16"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -5,6 +5,7 @@ using System.Linq;
 using Model;
 using System;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -47,7 +48,7 @@ namespace Boxes_Store_app
         }
 
 
-        private void GetOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void GetOffer_Click(object sender, RoutedEventArgs e)
         {
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
@@ -55,18 +56,17 @@ namespace Boxes_Store_app
                 return;
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
-            logic.Amount = q;
+            logic.AmountRequested = q;
             logic.GetOfferEfficintely(x, y);
             Offer.ItemsSource = logic.BoxesOffer;
-            Offer.SelectedItem = logic.BoxesOffer;
             Offer.SelectAll();
         }
-        private void TakeOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void TakeOffer_Click(object sender,RoutedEventArgs e)
         {
             logic.TakeOffer(Offer.SelectedItems);
             Update();
         }
-        private void Remove_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Remove_Click(object sender, RoutedEventArgs e)
         {
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
@@ -77,7 +77,7 @@ namespace Boxes_Store_app
             logic.Remove(x, y, q);
             Update();
         }
-        private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Add_Click(object sender, RoutedEventArgs e)
         {
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
