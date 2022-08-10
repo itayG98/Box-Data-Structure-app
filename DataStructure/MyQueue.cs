@@ -36,12 +36,12 @@ namespace DataStructure
                 Length = 1;
                 return Root;
             }
-            else if (Root != null && Tail == null)
+            else if (Tail == null)
             {
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;
                 Tail.Prev = Root;
-                Length=2;
+                Length = 2;
                 return Tail;
             }
             QueueNode<V> newRoot = new QueueNode<V>(val);
@@ -53,8 +53,8 @@ namespace DataStructure
         }
         public void Empty()
         {
-            Root= null;
-            Tail= null;
+            Root = null;
+            Tail = null;
             Length = 0;
         }
         public bool Remove(V val)
@@ -90,7 +90,9 @@ namespace DataStructure
             }
             return false;
         }
+        //Fix removing tail and head
         public bool Remove(QueueNode<V> toRemove)
+        //Fix removing tail and head
         {
             if (toRemove == null)
                 return false;
@@ -101,13 +103,13 @@ namespace DataStructure
                 Length--;
                 return true;
             }
-            else if (toRemove.Prev != null) //Root
+            else if (toRemove.Prev == null) //Root
             {
                 Root = toRemove.Next;
                 Length--;
                 return true;
             }
-            else if (toRemove.Next != null) //Tail
+            else if (toRemove.Next == null) //Tail
             {
                 Tail = toRemove.Prev;
                 Length--;
@@ -140,7 +142,8 @@ namespace DataStructure
             }
             return node.CompareTo(val) == 0;
         }
-        public bool IsEmpty() => Root == null;
+        public bool IsEmpty() => Root == null && Tail == null;
+
         public IEnumerable<V> GetQueue()
         {
             if (!IsEmpty())
