@@ -10,11 +10,11 @@ namespace Model
     public class Store
     {
         private readonly BST<double, BST<double, Box>> MainTree;
-        private readonly  MyQueue<Box> DatesQueue;
+        private readonly MyQueue<Box> DatesQueue;
         private readonly DB _data;
         public readonly double LIMIT_PERCENTAGE;
-        public readonly int MAX_BOXES_PER_SIZE ;
-        public readonly int MIN_BOXES_PER_SIZE ;
+        public readonly int MAX_BOXES_PER_SIZE;
+        public readonly int MIN_BOXES_PER_SIZE;
         public readonly int MAX_DAYS;
 
         public DB Data => _data;
@@ -31,7 +31,7 @@ namespace Model
         }
 
         private void LoadFromDB()
-        {                   
+        {
             foreach (var elem in DB.Boxes)
             {
                 if (elem is Box box)
@@ -105,7 +105,7 @@ namespace Model
             {
                 Ynode.Value.Count -= quantity;
                 Ynode.Value.Date = DateTime.Now;
-                Ynode.Value.Node= DatesQueue.Add(Ynode.Value); //Update the queue
+                Ynode.Value.Node = DatesQueue.Add(Ynode.Value); //Update the queue
             }
             else if (Ynode.Value.Count == quantity)
             {
@@ -115,7 +115,7 @@ namespace Model
             {
                 var count = Ynode.Value.Count;
                 Xnode.Value.Remove(Ynode);
-                quantity=count;
+                quantity = count;
             }
             if (Xnode.Value.IsEmpty())
                 MainTree.Remove(Xnode);
