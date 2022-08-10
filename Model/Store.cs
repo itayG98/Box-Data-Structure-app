@@ -88,6 +88,40 @@ namespace Model
         {
             return Add(width, height, quantety, DateTime.Now);
         }
+        public int RemoveBoxes(Box box,int quantity)
+        //Return how many boxes remained to return
+        {
+            //Search the box in both trees
+            if (box.Width <= 0 || box.Height <= 0 || box.Count < 1)
+                return quantity;
+            var Xnode = MainTree.FindNode(box.Width);
+            if (Xnode == null)
+                return quantity;
+            var Ynode = Xnode.Value.FindNode(box.Height);
+            if (Ynode == null)
+                return quantity;
+            
+            DatesQueue.Remove(box);
+            if (box.Count > quantity)
+            {
+                box.Count -= box.Count;
+                box.Date = DateTime.Now;
+                box.Node = DatesQueue.Add(Ynode.Value); //Update the queue
+                quantity= 0;
+            }
+            else if (box.Count == quantity) { 
+                Xnode.Value.Remove(Ynode);
+                quantity=0;
+            }
+            else
+            {
+                Xnode.Value.Remove(Ynode);
+                quantity -= box.Count; 
+            }
+            if (Xnode.Value.IsEmpty())
+                MainTree.Remove(Xnode);
+            return quantity;
+        }
         public int RemoveBoxes(double width, double height, int quantity)
         //Return how many boxes removed
         {
@@ -129,7 +163,6 @@ namespace Model
                 foreach (Box box in YTree.GetEnumerator(ord))
                     act(box);
         }
-
         public IEnumerable<Box> GetBestOffer(double width, double height, int quantity)
         //Do action for all fitting boxes in range of LimitPercentage
         {

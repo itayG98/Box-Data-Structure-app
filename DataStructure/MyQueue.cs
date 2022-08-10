@@ -53,7 +53,8 @@ namespace DataStructure
         }
         public void Empty()
         {
-            Root = Tail = null;
+            Root= null;
+            Tail= null;
             Length = 0;
         }
         public bool Remove(V val)
@@ -89,26 +90,26 @@ namespace DataStructure
             }
             return false;
         }
-        public bool Remove(QueueNode<V> remove)
+        public bool Remove(QueueNode<V> toRemove)
         {
-            if (remove == null)
+            if (toRemove == null)
                 return false;
-            if (remove.Prev != null && remove.Next != null)
+            if (toRemove.Prev != null && toRemove.Next != null)
             {
-                remove.Prev.Next = remove.Next;
-                remove.Next.Prev = remove.Prev;
+                toRemove.Prev.Next = toRemove.Next;
+                toRemove.Next.Prev = toRemove.Prev;
                 Length--;
                 return true;
             }
-            else if (remove.Prev != null) //Root
+            else if (toRemove.Prev != null) //Root
             {
-                Root = remove.Next;
+                Root = toRemove.Next;
                 Length--;
                 return true;
             }
-            else if (remove.Prev != null)
+            else if (toRemove.Next != null) //Tail
             {
-                Tail = remove.Prev;
+                Tail = toRemove.Prev;
                 Length--;
                 return true;
             }

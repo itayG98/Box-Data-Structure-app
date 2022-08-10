@@ -30,6 +30,12 @@ namespace Boxes_Store_app
             Avilable_Item.ItemClick += Avilable_Item_ItemClick;
         }
 
+        public void Update()
+        {
+            Avilable_Item.ItemsSource = logic.Boxes;
+            Queue.ItemsSource = logic.DatesQueue;
+            Offer.ItemsSource = logic.BoxesOffer;
+        }
         private void Avilable_Item_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Box box)
@@ -39,11 +45,21 @@ namespace Boxes_Store_app
                 Quantity.Text = box.Count.ToString();
             }
         }
-        public void Update()
+
+
+        private void GetOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Avilable_Item.ItemsSource = logic.Boxes;
-            Queue.ItemsSource = logic.DatesQueue;
+            if (!double.TryParse(X.Text, out double x) || x < 0)
+                return;
+            if (!double.TryParse(Y.Text, out double y) || y < 0)
+                return;
+            if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
+                return;
+            logic.Amount = q;
+            logic.GetOfferEfficintely(x, y);
             Offer.ItemsSource = logic.BoxesOffer;
+            Offer.SelectedItem = logic.BoxesOffer;
+            Offer.SelectAll();
         }
         private void TakeOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
@@ -72,19 +88,8 @@ namespace Boxes_Store_app
             logic.Add(x, y, q);
             Update();
         }
-        private void GetOffer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            if (!double.TryParse(X.Text, out double x) || x < 0)
-                return;
-            if (!double.TryParse(Y.Text, out double y) || y < 0)
-                return;
-            if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
-                return;
-            logic.GetOfferEfficintely(x, y, q);
-            Offer.ItemsSource = logic.BoxesOffer;
-            Offer.SelectedItem = logic.BoxesOffer;
-            Offer.SelectAll();
-        }
+
+
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c) && c != '.');
@@ -93,6 +98,7 @@ namespace Boxes_Store_app
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
+
 
         public async void ShowAlert(string msg)
         {

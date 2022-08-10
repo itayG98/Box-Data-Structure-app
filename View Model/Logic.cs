@@ -11,42 +11,55 @@ namespace View_Model
 {
     public class Logic
     {
+        private int _amount;
         private MyQueue<Box> _boxesOffer;
-        private int _remained;
         public Store store;
-        public IEnumerable Boxes { get { return store.GetAll();  } }
+
+        public int Amount { get { return _amount; } set { _amount = value >= 0 ? value : 0; } }
+        public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueue(); } }
-        public int Remained { get => _remained; private set => _remained = value>0? value :0 ; }
 
         public Logic()
         {
             store = new Store();
             _boxesOffer = new MyQueue<Box>();
-            Remained = 0;
         }
 
-        public void GetOfferEfficintely(double x, double y, int quantity) 
+        public void GetOfferEfficintely(double x, double y)
         {
             _boxesOffer.Empty();
-            foreach (Box b in store.GetBestOffer(x, y, quantity))
+            foreach (Box b in store.GetBestOffer(x, y, Amount))
                 _boxesOffer.Add(b);
-            Remained = quantity - _boxesOffer.Length;
         }
         public void TakeOffer(IEnumerable boxes)
+            //Test the Method
         {
             foreach (Box b in boxes)
             {
-                _boxesOffer.Remove(b.Node);
-                Remained -= store.RemoveBoxes(b.Width, b.Height, b.Count);
+                if (Amount <= 0)
+                {
+                    _boxesOffer.Empty();
+                    return;
+                }
+                if (Amount >= b.Count)
+                {
+                    _boxesOffer.Remove(b.Node);
+                    Amount -= store.RemoveBoxes(b,b.Count);
+                }
+                else if (Amount < b.Count)
+                {
+                    _boxesOffer.Remove(b.Node);
+                    Amount -= store.RemoveBoxes(b, Amount);
+                }
             }
-        }
-        public void Remove(double x, double y, int quantity) 
-        {
-            Remained = store.RemoveBoxes(x, y, quantity);
             _boxesOffer.Empty();
-        } 
-        public void Add(double x, double y, int quantity) => Remained = store.Add(x, y, quantity);
+        }
+        public void Remove(double x, double y, int quantity)
+        {
+            _boxesOffer.Empty();
+        }
+        public void Add(double x, double y, int quantity) => Amount = store.Add(x, y, quantity);
 
     }
 }
