@@ -250,7 +250,7 @@ namespace DataStructure
         {
             if (node != null)
             {
-                foreach (V val in InorderValue(node.Left)) //Stack OverFlow Here
+                foreach (V val in InorderValue(node.Left))
                     yield return val;
                 yield return node.Value;
                 foreach (V val in InorderValue(node.Right))

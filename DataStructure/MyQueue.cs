@@ -22,7 +22,7 @@ namespace DataStructure
 
         public MyQueue(V val)
         {
-            Length = 0;
+            Length = 1;
             Add(val);
         }
         public MyQueue() => Root = Tail = null;
@@ -71,20 +71,22 @@ namespace DataStructure
                         temp.Next = Root.Next;
                         Root = temp;
                         Length--;
+                        return true;
                     }
                     else if (temp == Tail)
                     {
                         temp.Prev = Tail.Prev;
                         Tail = temp;
+                        Length--;
+                        return true;
                     }
                     else
                     {
                         temp.Prev.Next = temp.Next;
                         temp.Next.Prev = temp.Prev;
                         Length--;
+                        return true;
                     }
-                    Length--;
-                    return true;
                 }
                 temp = temp.Next;
             }
@@ -154,7 +156,6 @@ namespace DataStructure
                 }
             }
         }
-
     }
     public class QueueNode<V> where V : IComparable
     {
