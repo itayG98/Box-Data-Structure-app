@@ -169,8 +169,11 @@ namespace DataStructure
             return node.CompareTo(val) == 0;
         }
         public bool IsEmpty() => Root == null && Tail == null;
-
-        public IEnumerable<V> GetQueue()
+        /// <summary>
+        /// New first queue
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<V> GetQueueNewFirst()
         {
             if (!IsEmpty())
             {
@@ -183,10 +186,24 @@ namespace DataStructure
                 }
             }
         }
+        /// <summary>
+        /// Oldest first queue
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<V> GetQueueOldFirst()
+        {
+            if (!IsEmpty())
+            {
+                QueueNode<V> node = Tail;
+                yield return node.Value;
+                while (node.Prev != null)
+                {
+                    yield return node.Prev.Value;
+                    node = node.Prev;
+                }
+            }
+        }
     }
-
-
-
 
     public class QueueNode<V> where V : IComparable
     {

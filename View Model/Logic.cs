@@ -20,7 +20,7 @@ namespace View_Model
         public int Remain { get => _remain; private set { _remain = value >= 0 ? value : 0; } }
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
-        public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueue(); } }
+        public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueNewFirst(); } }
 
 
         public Logic()

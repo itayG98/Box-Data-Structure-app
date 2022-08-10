@@ -68,7 +68,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    if (!DatesQueue.Remove(Ynode.Value.Node))
+                    if (!DatesQueue.Remove(Ynode.Value.Node)) //If the box doesnt have node field
                         DatesQueue.Remove(Ynode.Value);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
@@ -110,7 +110,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(height);
                 if (Ynode != null) //Found y dim   => Ynode.Value==box to update
                 {
-                    if (!DatesQueue.Remove(Ynode.Value.Node))
+                    if (!DatesQueue.Remove(Ynode.Value.Node)) //If the box doesnt have node field
                         DatesQueue.Remove(Ynode.Value);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                     {
@@ -295,7 +295,7 @@ namespace Model
         }
         public IEnumerable GetQueue()
         {
-            return DatesQueue.GetQueue();
+            return DatesQueue.GetQueueNewFirst();
         }
     }
 }
