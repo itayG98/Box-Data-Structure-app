@@ -15,16 +15,17 @@ namespace DataStructure
         private QueueNode<V> _root;
         private QueueNode<V> _tail;
         private int _length;
-
+        
+        /// <summary>
+        /// Root represent the oldest box
+        /// </summary>
         public QueueNode<V> Root { get => _root; private set => _root = value; }
+        /// <summary>
+        /// Tail represent the most new Box
+        /// </summary>
         public QueueNode<V> Tail { get => _tail; private set => _tail = value; }
         public int Length { get => _length; private set => _length = value < 0 ? 0 : 1; }
 
-        public MyQueue(V val)
-        {
-            Length = 1;
-            Add(val);
-        }
         public MyQueue() => Root = Tail = null;
         public QueueNode<V> Add(V val)
         {
@@ -32,11 +33,12 @@ namespace DataStructure
             {
                 Root = new QueueNode<V>(val);
                 Tail = null;
-                Root.Next = Tail;
+                Root.Prev = null;
+                Root.Next = null;
                 Length = 1;
                 return Root;
             }
-            else if (Root.Next==null)
+            else if (Root!=null && Root.Next==null)
             {
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;
@@ -44,8 +46,10 @@ namespace DataStructure
                 Length = 2;
                 return Tail;
             }
-            QueueNode<V> newRoot = new QueueNode<V>(val);
-            newRoot.Prev = Tail;
+            QueueNode<V> newRoot = new QueueNode<V>(val)
+            {
+                Prev = Tail
+            };
             Tail.Next = newRoot;
             Tail = newRoot;
             Length++;
@@ -180,6 +184,10 @@ namespace DataStructure
             }
         }
     }
+
+
+
+
     public class QueueNode<V> where V : IComparable
     {
         private QueueNode<V> _next;

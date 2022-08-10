@@ -67,7 +67,11 @@ namespace Model
                 {
                     DatesQueue.Remove(Ynode.Value.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
-                        returnedBoxes = box.Count;
+                    {
+                        Ynode.Value.Date = DateTime.Now;
+                        DatesQueue.Add(Ynode.Value);
+                        return box.Count;
+                    }
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
