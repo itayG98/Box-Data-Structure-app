@@ -28,6 +28,7 @@ namespace View_Model
 
         public void GetOfferEfficintely(double x, double y, int quantity) 
         {
+            throw new NotImplementedException("Queue get offer return box with numbers");
             _boxesOffer.Empty();
             foreach (Box b in store.GetBestOffer(x, y, quantity))
                 _boxesOffer.Add(b);

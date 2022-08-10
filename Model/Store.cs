@@ -9,23 +9,29 @@ namespace Model
 {
     public class Store
     {
-        BST<double, BST<double, Box>> MainTree;
-        private MyQueue<Box> DatesQueue;
-        public const double LIMIT_PERCENTAGE = 0.5;
-        public const int MAX_BOXES_PER_SIZE = 50;
-        public const int MIN_BOXES_PER_SIZE = 10;
-        public const int MAX_DAYS = 100;
+        private readonly BST<double, BST<double, Box>> MainTree;
+        private readonly  MyQueue<Box> DatesQueue;
+        private readonly DB _data;
+        public readonly double LIMIT_PERCENTAGE;
+        public readonly int MAX_BOXES_PER_SIZE ;
+        public readonly int MIN_BOXES_PER_SIZE ;
+        public readonly int MAX_DAYS;
 
+        public DB Data => _data;
         public Store()
         {
             MainTree = new BST<double, BST<double, Box>>();
             DatesQueue = new MyQueue<Box>();
+            _data = DB.Instance;
+            LIMIT_PERCENTAGE = Data.LimitPercebtage;
+            MAX_BOXES_PER_SIZE = Data.MaxBoxesPerSize;
+            MIN_BOXES_PER_SIZE = Data.MinBoxesPerSize;
+            MAX_DAYS = Data.MaxDays;
             LoadFromDB();
         }
 
         private void LoadFromDB()
-        {
-            _= DB.Instance;
+        {                   
             foreach (var elem in DB.Boxes)
             {
                 if (elem is Box box)
@@ -39,6 +45,7 @@ namespace Model
             int returnedBoxes = 0;
             //Check if box data is valid
             if (box == null || box.Count <= 0) return -1;
+            //lower to max amount
             if (box.Count >= MAX_BOXES_PER_SIZE)
             {
                 returnedBoxes += box.Count - MAX_BOXES_PER_SIZE;
@@ -51,7 +58,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    DatesQueue.Remove(box);
+                    DatesQueue.Remove(Ynode.Value.Node);
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE)
                     {
                         returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
@@ -93,7 +100,7 @@ namespace Model
             if (Ynode == null)
                 return 0;
 
-            DatesQueue.Remove(new Box(width, height, quantity));
+            DatesQueue.Remove(Ynode.Value.Node);
             if (Ynode.Value.Count > quantity)
             {
                 Ynode.Value.Count -= quantity;
@@ -135,7 +142,7 @@ namespace Model
                     {
                         temp = quantity < b.Count ? quantity : b.Count;
                         quantity -= temp;
-                        yield return new Box(b.Width, b.Height, temp);
+                        yield return (b);
                         if (quantity < 1)
                             break;
                     }

@@ -1,16 +1,25 @@
 ﻿using Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MoockData
 {
-    class DB
+
+    public class DB
     {
         private static DB _instance;
         private static Box[] _boxes;
+        private readonly Configuration _config;
+        private readonly double limitPercebtage ;
+        private readonly int maxBoxesPerSize;
+        private readonly int minBoxesPerSize;
+        private readonly int maxDays ;
+
         public static Box[] Boxes { get => _boxes; set => _boxes = value; }
         public static DB Instance
         //SingleTone
@@ -22,11 +31,24 @@ namespace MoockData
                 return _instance;
             }
         }
+
+        public Configuration Config { get => _config; }
+        public double LimitPercebtage => limitPercebtage;
+        public int MaxBoxesPerSize => maxBoxesPerSize;
+        public int MinBoxesPerSize => minBoxesPerSize;
+        public int MaxDays => maxDays;
+
         private DB()
         {
-            Boxes = new Box[36];
+            _config = new Configuration();
 
-            Boxes[0] = new Box(5, 5.5, 25);
+            limitPercebtage = Config.ConfigData.LIMIT_PERCENTAGE;
+            maxBoxesPerSize = Config.ConfigData.MAX_BOXES_PER_SIZE;
+            minBoxesPerSize = Config.ConfigData.MIN_BOXES_PER_SIZE;
+            maxDays = Config.ConfigData.MAX_DAYS;
+
+            Boxes = new Box[36];
+            Boxes[0] = new Box(5, 5.5, 85);
             Boxes[1] = new Box(5, 6, 25);
             Boxes[2] = new Box(5, 6.5, 25);
             Boxes[3] = new Box(5, 9.5, 25);
@@ -71,3 +93,27 @@ namespace MoockData
         }
     }
 }
+
+public class Configuration
+{
+    public ConfigData ConfigData { get; private set; }
+
+    public Configuration()
+    {
+        var currentDir = Environment.CurrentDirectory;
+        var fileName = "ConfigData.json";
+        var configPath = Path.Combine(currentDir, fileName);
+        var raw = File.ReadAllText(configPath);
+        ConfigData = JsonConvert.DeserializeObject<ConfigData>(raw);
+    }
+}
+
+public class ConfigData
+{
+    public double LIMIT_PERCENTAGE { get; set; }
+    public int MAX_BOXES_PER_SIZE { get; set; }
+    public int MIN_BOXES_PER_SIZE { get; set; }
+    public int MAX_DAYS { get; set; }
+
+}
+
