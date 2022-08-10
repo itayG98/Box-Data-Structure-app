@@ -51,19 +51,19 @@ namespace Model
         {
             int returnedBoxes = 0;
             //Check if box data is valid
-            if (box == null || box.Count <= 0) return -1;
+            if (box == null || box.Count <= 0)
+                return 0;
             //lower to max amount
             if (box.Count >= MAX_BOXES_PER_SIZE)
             {
                 returnedBoxes += box.Count - MAX_BOXES_PER_SIZE;
                 box.Count = MAX_BOXES_PER_SIZE;
             }
-
             var Xnode = MainTree.FindNode(box.Width);
             if (Xnode != null)//Found x dim
             {
                 var Ynode = Xnode.Value.FindNode(box.Height);
-                if (Ynode != null) //Found y dim
+                if (Ynode != null) //Found y dim   => Ynode.Value==box to update
                 {
                     DatesQueue.Remove(Ynode.Value.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
@@ -74,12 +74,17 @@ namespace Model
                     }
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
-                        returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
+                        DatesQueue.Add(Ynode.Value);
+                        return Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
                     }
                     else //Adding the boxes regulary
+                    {
                         Ynode.Value.Count += box.Count;
-                    Ynode.Value.Date = box.Date;
+                        Ynode.Value.Date = box.Date;
+                        Ynode.Value.Node = DatesQueue.Add(box);
+                        return 0;
+                    }
                 }
                 else
                     Xnode.Value.AddNode(box.Height, box);
@@ -92,22 +97,8 @@ namespace Model
             box.Node = DatesQueue.Add(box);
             return returnedBoxes;
         }
-        internal int Add(double width, double height, int quantety, DateTime date)
-        {
-            var box = new Box(width, height, quantety, date);
-            return Add(box);
-        }
-        public int Add(double width, double height, int quantety)
-        {
-            return Add(width, height, quantety, DateTime.Now);
-        }
-        /// <summary>
-        /// Return how many boxes removed
-        /// </summary>
-        /// <param name="box"></param>
-        /// <param name="quantity"></param>
-        /// <returns></returns>
-
+        internal int Add(double width, double height, int quantety, DateTime date)=>Add(new Box(width, height, quantety, date));
+        public int Add(double width, double height, int quantety) => Add(width, height, quantety, DateTime.Now);
 
         //--------------------------------------------------------------------------------------
         public int RemoveBoxes(Box box, int quantity)

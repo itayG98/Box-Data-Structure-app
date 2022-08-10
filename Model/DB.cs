@@ -53,7 +53,7 @@ namespace MoockData
             Boxes[2] = new Box(6, 6.5, 45);
             Boxes[3] = new Box(6, 9.5, 45);
             Boxes[4] = new Box(8, 8.5, 54);
-            Boxes[5] = new Box(8, 2.5, 45);
+/*            Boxes[5] = new Box(8, 2.5, 45);
             Boxes[0] = new Box(8, 5.5, 45);
             Boxes[1] = new Box(10, 6, 50);
             Boxes[2] = new Box(11, 6.5, 50);
@@ -70,7 +70,7 @@ namespace MoockData
             Boxes[13] = new Box(25, 20, 76);
             Boxes[14] = new Box(25, 25, 6);
             Boxes[15] = new Box(22, 18, 76);
-            Boxes[16] = new Box(21, 16, 76);
+            Boxes[16] = new Box(21, 16, 76);*/
         }
     }
 }
