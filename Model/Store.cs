@@ -44,6 +44,9 @@ namespace Model
         /// </summary>
         /// <param name="box"></param>
         /// <returns></returns>
+
+        //--------------------------------------------------------------------------------------
+
         private int Add(Box box)
         {
             int returnedBoxes = 0;
@@ -98,6 +101,9 @@ namespace Model
         /// <param name="box"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
+
+
+        //--------------------------------------------------------------------------------------
         public int RemoveBoxes(Box box, int quantity)
 
         {
@@ -168,6 +174,9 @@ namespace Model
                 MainTree.Remove(Xnode);
             return quantity;
         }
+
+
+        //--------------------------------------------------------------------------------------
         public void ActionOnBoxes(Action<Box> act, Order ord)
         {
             if (MainTree.IsEmpty())
@@ -183,6 +192,23 @@ namespace Model
         /// <param name="height"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
+        /// 
+        public void PopOldBoxes()
+        {
+            foreach (Box box in GetQueue())
+            {
+                if (box != null && box.LastPurchased >= MAX_DAYS)
+                {
+                    RemoveBoxes(box.Width, box.Height, box.Count);
+                    DatesQueue.Pop();
+                }
+                else
+                    return;
+            }
+        }
+
+
+        //--------------------------------------------------------------------------------------
         public IEnumerable<Box> GetBestOffer(double width, double height, int quantity)
         {
             int temp;
@@ -201,20 +227,6 @@ namespace Model
                     if (quantity < 1)
                         break;
                 }
-            }
-        }
-
-        public void PopOldBoxes()
-        {
-            foreach (Box box in GetQueue())
-            {
-                if (box != null && box.LastPurchased >= MAX_DAYS)
-                {
-                    RemoveBoxes(box.Width, box.Height, box.Count);
-                    DatesQueue.Pop();
-                }
-                else
-                    return;
             }
         }
         public IEnumerable GetandPopOldBoxes()

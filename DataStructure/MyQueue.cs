@@ -68,15 +68,15 @@ namespace DataStructure
                 {
                     if (temp == Root)
                     {
-                        temp.Next = Root.Next;
-                        Root = temp;
+                        Root = Root.Next;
+                        Root.Prev = null;
                         Length--;
                         return true;
                     }
                     else if (temp == Tail)
                     {
-                        temp.Prev = Tail.Prev;
-                        Tail = temp;
+                        Tail = Tail.Prev;
+                        Tail.Next = null;
                         Length--;
                         return true;
                     }
@@ -96,25 +96,28 @@ namespace DataStructure
         {
             if (toRemove == null)
                 return false;
-            if (toRemove.Prev != null && toRemove.Next != null)
+            if (toRemove == Root)
+            {
+                Root = toRemove.Next;
+                Root.Prev = null;
+                Length--;
+                return true;
+            }
+            else if (toRemove == Tail)
+            {
+                toRemove.Prev.Next = null;
+                Tail = toRemove.Prev;
+                Length--;
+                return true;
+            }
+            else if (toRemove.Prev != null && toRemove.Next != null)
             {
                 toRemove.Prev.Next = toRemove.Next;
                 toRemove.Next.Prev = toRemove.Prev;
                 Length--;
                 return true;
             }
-            else if (toRemove.Prev == null && toRemove.Next!=null) //Root
-            {
-                Root = toRemove.Next;
-                Length--;
-                return true;
-            }
-            else //Tail
-            {
-                Tail = toRemove.Prev;
-                Length--;
-                return true;
-            }
+            return false;
         }
         public V Pop()
         {
