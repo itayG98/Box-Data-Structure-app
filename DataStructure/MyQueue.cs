@@ -36,7 +36,7 @@ namespace DataStructure
                 Length = 1;
                 return Root;
             }
-            else if (Tail == null)
+            else if (Root.Next==null)
             {
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;

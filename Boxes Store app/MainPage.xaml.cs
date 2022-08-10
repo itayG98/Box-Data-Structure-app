@@ -29,7 +29,11 @@ namespace Boxes_Store_app
             TakeOffer.Click += TakeOffer_Click;
             Avilable_Item.IsItemClickEnabled = true;
             Avilable_Item.ItemClick += Avilable_Item_ItemClick;
+            Queue.IsItemClickEnabled = true;
+            Queue.ItemClick += Queue_ItemClick;
         }
+
+
 
         public void Update()
         {
@@ -37,6 +41,7 @@ namespace Boxes_Store_app
             Queue.ItemsSource = logic.DatesQueue;
             Offer.ItemsSource = logic.BoxesOffer;
         }
+
         private void Avilable_Item_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Box box)
@@ -44,10 +49,19 @@ namespace Boxes_Store_app
                 X.Text = box.Width.ToString();
                 Y.Text = box.Height.ToString();
                 Quantity.Text = box.Count.ToString();
+                GetOffer_Click(GetOffer, e);
             }
         }
-
-
+        private void Queue_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is Box box)
+            {
+                X.Text = box.Width.ToString();
+                Y.Text = box.Height.ToString();
+                Quantity.Text = box.Count.ToString();
+                GetOffer_Click(GetOffer, e);
+            }
+        }
         private void GetOffer_Click(object sender, RoutedEventArgs e)
         {
             if (!double.TryParse(X.Text, out double x) || x < 0)
@@ -61,6 +75,8 @@ namespace Boxes_Store_app
             Offer.ItemsSource = logic.BoxesOffer;
             Offer.SelectAll();
         }
+
+
         private void TakeOffer_Click(object sender,RoutedEventArgs e)
         {
             logic.TakeOffer(Offer.SelectedItems);
