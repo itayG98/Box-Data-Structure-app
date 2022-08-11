@@ -34,7 +34,6 @@ namespace Boxes_Store_app
         }
 
 
-
         public void Update()
         {
             Avilable_Item.ItemsSource = logic.Boxes;
@@ -42,6 +41,11 @@ namespace Boxes_Store_app
             Offer.ItemsSource = logic.BoxesOffer;
         }
 
+        /// <summary>
+        /// Get offer of the boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Avilable_Item_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Box box)
@@ -52,6 +56,11 @@ namespace Boxes_Store_app
                 GetOffer_Click(GetOffer, e);
             }
         }
+        /// <summary>
+        /// Get offer of the boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Queue_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Box box)
@@ -62,6 +71,11 @@ namespace Boxes_Store_app
                 GetOffer_Click(GetOffer, e);
             }
         }
+        /// <summary>
+        /// Get offer of the boxes with the parameters that submited
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetOffer_Click(object sender, RoutedEventArgs e)
         {
             if (!double.TryParse(X.Text, out double x) || x < 0)
