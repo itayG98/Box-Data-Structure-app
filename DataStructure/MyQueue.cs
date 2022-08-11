@@ -66,7 +66,7 @@ namespace DataStructure
             if (IsEmpty() || val == null)
                 return false;
             QueueNode<V> temp = Root;
-            foreach (QueueNode<V> node in GetQueueNewFirst())
+            foreach (QueueNode<V> node in GetQueueRootFirst())
             {
                 if (node.CompareTo(val) == 0)
                     if (node.Prev == null && node.Next == null)
@@ -94,7 +94,7 @@ namespace DataStructure
             }
             return false;
         }
-        public bool Remove(QueueNode<V> toRemove)
+        public bool Remove(QueueNode<V> toRemove) //O(1)
         {
             if (IsEmpty() || toRemove == null)
                 return false;
@@ -158,10 +158,10 @@ namespace DataStructure
         }
         public bool IsEmpty() => Root == null && Tail == null;
         /// <summary>
-        /// New first queue
+        /// Return Root first value
         /// </summary>
         /// <returns></returns>
-        public IEnumerable GetQueueNewFirst()
+        public IEnumerable GetQueueRootFirstByValue()
         {
             if (!IsEmpty())
             {
@@ -175,10 +175,10 @@ namespace DataStructure
             }
         }
         /// <summary>
-        /// Oldest first queue
+        /// Tails first value
         /// </summary>
         /// <returns></returns>
-        public IEnumerable GetQueueOldFirst()
+        public IEnumerable GetQueueTalisFirstValue()
         {
             if (!IsEmpty())
             {
@@ -187,6 +187,40 @@ namespace DataStructure
                 while (node.Prev != null)
                 {
                     yield return node.Prev.Value;
+                    node = node.Prev;
+                }
+            }
+        }
+        /// <summary>
+        /// Return Root first queue
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable GetQueueRootFirst()
+        {
+            if (!IsEmpty())
+            {
+                QueueNode<V> node = Root;
+                yield return node;
+                while (node.Next != null)
+                {
+                    yield return node.Next;
+                    node = node.Next;
+                }
+            }
+        }
+        /// <summary>
+        /// Return Tail first queue
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable GetQueueTalisFirst()
+        {
+            if (!IsEmpty())
+            {
+                QueueNode<V> node = Tail;
+                yield return node;
+                while (node.Prev != null)
+                {
+                    yield return node.Prev;
                     node = node.Prev;
                 }
             }

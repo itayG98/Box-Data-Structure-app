@@ -298,7 +298,7 @@ namespace Model
         }
         public IEnumerable GetQueue()
         {
-            return DatesQueue.GetQueueNewFirst();
+            return DatesQueue.GetQueueRootFirstByValue();
         }
     }
 }
