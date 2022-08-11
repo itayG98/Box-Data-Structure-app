@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Box :IComparable
+    public class Box : IComparable, IFormattable
     {
         private int _count = 0;
         private readonly double _height;
@@ -25,16 +25,16 @@ namespace Model
         public QueueNode<Box> Node { get => _node; set => _node = value; }
         public Box(double width, double height, int count, DateTime date)
         {
-            if (width<=0)
+            if (width <= 0)
                 width = 1;
-            if(height<=0)
+            if (height <= 0)
                 height = 1;
             _width = width;
             _height = height;
             Count = count;
             Date = date;
         }
-        public Box(double width, double height, int count) : this(width, height, count,DateTime.Now)
+        public Box(double width, double height, int count) : this(width, height, count, DateTime.Now)
         {
         }
 
@@ -42,15 +42,22 @@ namespace Model
         {
             return $"Width : {Width:f2} Height : {Height:f2} Count :{Count}";
         }
-        public string ToLongString()
+        public string ToString(string format, IFormatProvider formatProvider)
         {
-            return $"Width {Width:f2} Height {Height:f2} Count = {Count} Last purhesed {Date}";
+            switch (format)
+            {
+                case "dim":
+                    return $"Width - {Width} Height - {Height}.";
+                case "long":
+                    return $"Width {Width:f2} Height {Height:f2} Count = {Count} Last purhesed {Date}";
+                default:
+                    return ToString();
+            }
         }
-
         public override bool Equals(object obj)
         {
-            if(obj is Box other) 
-                return Height==other.Height && Width==other.Width;
+            if (obj is Box other)
+                return Height == other.Height && Width == other.Width;
             return false;
         }
 
@@ -60,5 +67,6 @@ namespace Model
                 return Date.CompareTo(other.Date);
             return default;
         }
+
     }
 }

@@ -155,18 +155,23 @@ namespace Model
         public int Add(double width, double height, int quantety) => Add(width, height, quantety, DateTime.Now);
 
         //--------------------------------------------------------------------------------------
-        public int RemoveBoxes(Box box, int quantity)
-
+        /// <summary>
+        /// Return the box instance or null if couldnt find it
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public Box RemoveBoxes(Box box, int quantity)
         {
             //Search the box in both trees
             if (box.Width <= 0 || box.Height <= 0 || box.Count < 1)
-                return 0;
+                return null;
             var Xnode = MainTree.FindNode(box.Width);
             if (Xnode == null)
-                return 0;
+                return null;
             var Ynode = Xnode.Value.FindNode(box.Height);
             if (Ynode == null)
-                return 0;
+                return null;
 
             DatesQueue.Remove(box);
             if (box.Count > quantity)
@@ -175,18 +180,14 @@ namespace Model
                 box.Date = DateTime.Now;
                 box.Node = DatesQueue.Add(Ynode.Value); //Update the queue
             }
-            else if (box.Count == quantity)
+            else if (box.Count <= quantity)
             {
                 Xnode.Value.Remove(Ynode);
-            }
-            else
-            {
-                Xnode.Value.Remove(Ynode);
-                quantity -= box.Count;
+                box.Count = 0;
             }
             if (Xnode.Value.IsEmpty())
                 MainTree.Remove(Xnode);
-            return quantity;
+            return box;
         }
         /// <summary>
         /// Return how many boxes removed

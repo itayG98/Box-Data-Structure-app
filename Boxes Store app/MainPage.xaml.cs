@@ -93,8 +93,11 @@ namespace Boxes_Store_app
 
         private void TakeOffer_Click(object sender, RoutedEventArgs e)
         {
-            logic.TakeOffer(Offer.SelectedItems);
+            MessageDialog WarMmsgDial = new MessageDialog(String.Empty,"Warning");
+            logic.TakeOffer(Offer.SelectedItems ,WarMmsgDial);
             ShowMessegeDialog(logic.Msg, "Recipt");
+            if (WarMmsgDial.Content.Length > 0)
+                WarMmsgDial.ShowAsync();
             Update();
         }
         private void Remove_Click(object sender, RoutedEventArgs e)

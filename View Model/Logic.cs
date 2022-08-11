@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace View_Model
 {
     public class Logic
     {
-        private string msg;
+        private string recipt;
         private int _amountRequested;
         private int _remain;
         private MyQueue<Box> _boxesOffer;
@@ -20,7 +21,7 @@ namespace View_Model
 
         public int AmountRequested { get { return _amountRequested; } set { _amountRequested = value >= 0 ? value : 0; } }
         public int Remain { get => _remain; private set { _remain = value >= 0 ? value : 0; } }
-        public string Msg { get => msg; private set => msg = value; }
+        public string Msg { get => recipt; private set => recipt = value; }
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueRootFirstByValue(); } }
@@ -33,7 +34,7 @@ namespace View_Model
         }
 
         public int GetOfferEfficintely(double x, double y)
-            //Return remaining boxes
+        //Return remaining boxes
         {
             Remain = AmountRequested;
             if (x < 0 && y < 0)
@@ -48,7 +49,7 @@ namespace View_Model
             }
             return Remain;
         }
-        public int TakeOffer(IEnumerable offer)
+        public int TakeOffer(IEnumerable offer, MessageDialog msgDial)
         //Return number of boxes wich taken
         {
             StringBuilder sb = new StringBuilder();
@@ -59,31 +60,31 @@ namespace View_Model
                 {
                     _boxesOffer.Empty();
                     sb.Append($"Total :{AmountRequested}");
-                    Msg = sb.ToString(); 
-                    return Remain;
+                    break;
                 }
-                 if (Remain >= b.Count)
+                else
                 {
+                    int temp = b.Count;
                     _boxesOffer.Remove(b.Node);
-                    Remain -= store.RemoveBoxes(b, b.Count);
-                    sb.AppendLine($"{b.Count} Boxes of width {b.Width} and height {b.Height} .");
+                    store.RemoveBoxes(b, AmountRequested<b.Count? AmountRequested:b.Count);
+                    Remain -= temp - b.Count;
+                    sb.AppendLine($"{temp - b.Count} Boxes of {b:dim}");
                 }
-                else if (Remain < b.Count)
-                {
-                    _boxesOffer.Remove(b.Node);
-                    Remain -= store.RemoveBoxes(b, AmountRequested);
-                }
+                if (b.Count > 0 && b.Count < store.MIN_BOXES_PER_SIZE)
+                    msgDial.Content += $"Boxes of {b:dim} is below the limit! " + $"Only-{b.Count} left";
+                else if (b.Count <= 0 )
+                    msgDial.Content += $"Out of {b:dim}" + $"{b.Count} boxes\n";
             }
             _boxesOffer.Empty();
-            if (Remain>0)
-                sb.Append($"Counldnt fulfill :{Remain} boxes");
+            if (Remain > 0)
+                sb.Append($"Could not fulfill :{Remain} boxes");
             Msg = sb.ToString();
             return Remain;
         }
         public void Remove(double x, double y, int quantity)
         {
             _boxesOffer.Empty();
-            store.RemoveBoxes(x, y,quantity);
+            store.RemoveBoxes(x, y, quantity);
         }
         public void Add(double x, double y, int quantity)
         {
