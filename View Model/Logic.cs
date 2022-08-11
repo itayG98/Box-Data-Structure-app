@@ -1,11 +1,16 @@
 ﻿using DataStructure;
 using Model;
+using System;
 using System.Collections;
 using System.Text;
 using Windows.UI.Popups;
 
+
 namespace View_Model
 {
+    /// <summary>
+    /// View model class having one single store object
+    /// </summary>
     public class Logic
     {
         private string recipt;
@@ -22,7 +27,7 @@ namespace View_Model
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueRootFirstByValue(); } }
 
-
+        
         public Logic()
         {
             store = new Store();
@@ -45,6 +50,13 @@ namespace View_Model
             }
             return Remain;
         }
+
+        public void RemoveOld(MessageDialog msgDial)
+        {
+            foreach (Box b in store.GetandPopOldBoxes())
+                msgDial.Content += $"Out of {b:dim} boxes\n";
+        }
+
         public int TakeOffer(IEnumerable offer, MessageDialog msgDial)
         //Return number of boxes wich taken
         {

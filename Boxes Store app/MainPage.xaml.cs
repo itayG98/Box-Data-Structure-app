@@ -6,6 +6,7 @@ using Model;
 using System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using Windows.Globalization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,8 +32,18 @@ namespace Boxes_Store_app
             Avilable_Item.ItemClick += Avilable_Item_ItemClick;
             Queue.IsItemClickEnabled = true;
             Queue.ItemClick += Queue_ItemClick;
+            DispatcherTimer dayTimer = new DispatcherTimer() {Interval=new TimeSpan(1,0,0,0)};
+            dayTimer.Tick += DayTimer_Tick;
+            dayTimer.Start();
         }
 
+        private void DayTimer_Tick(object sender, object e)
+        {
+            MessageDialog RemoveDutToTime = new MessageDialog(String.Empty, "Removed Items");
+            logic.RemoveOld(RemoveDutToTime);
+            if (RemoveDutToTime.Content.Length > 0)
+                RemoveDutToTime.ShowAsync();
+        }
 
         public void Update()
         {
