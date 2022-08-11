@@ -16,7 +16,6 @@ namespace Model
         public readonly int MAX_BOXES_PER_SIZE;
         public readonly int MIN_BOXES_PER_SIZE;
         public readonly int MAX_DAYS;
-
         public DB Data => _data;
         public Store()
         {

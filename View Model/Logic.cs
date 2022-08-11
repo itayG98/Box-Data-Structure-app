@@ -48,12 +48,12 @@ namespace View_Model
             }
             return Remain;
         }
-        public int TakeOffer(IEnumerable boxes)
+        public int TakeOffer(IEnumerable offer)
         //Return number of boxes wich taken
         {
             StringBuilder sb = new StringBuilder();
             Remain = AmountRequested;
-            foreach (Box b in boxes)
+            foreach (Box b in offer)
             {
                 if (Remain <= 0)
                 {
@@ -62,7 +62,7 @@ namespace View_Model
                     Msg = sb.ToString(); 
                     return Remain;
                 }
-                else if (Remain >= b.Count)
+                 if (Remain >= b.Count)
                 {
                     _boxesOffer.Remove(b.Node);
                     Remain -= store.RemoveBoxes(b, b.Count);
@@ -75,7 +75,8 @@ namespace View_Model
                 }
             }
             _boxesOffer.Empty();
-            sb.Append($"Remained :{Remain}");
+            if (Remain>0)
+                sb.Append($"Counldnt fulfill :{Remain} boxes");
             Msg = sb.ToString();
             return Remain;
         }
@@ -84,7 +85,10 @@ namespace View_Model
             _boxesOffer.Empty();
             store.RemoveBoxes(x, y,quantity);
         }
-        public void Add(double x, double y, int quantity) => AmountRequested = store.Add(x, y, quantity);
-
+        public void Add(double x, double y, int quantity)
+        {
+            AmountRequested = store.Add(x, y, quantity);
+            _boxesOffer.Empty();
+        }
     }
 }
