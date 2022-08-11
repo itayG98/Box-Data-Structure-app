@@ -91,9 +91,10 @@ namespace Boxes_Store_app
         }
 
 
-        private void TakeOffer_Click(object sender,RoutedEventArgs e)
+        private void TakeOffer_Click(object sender, RoutedEventArgs e)
         {
             logic.TakeOffer(Offer.SelectedItems);
+            ShowRecipt();
             Update();
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -129,10 +130,11 @@ namespace Boxes_Store_app
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
 
-
-        public async void ShowAlert(string msg)
+        public async void ShowRecipt()
         {
-            await new MessageDialog(msg).ShowAsync();
+            Grid gr = new Grid() { };
+            MessageDialog msgDialgo = new MessageDialog(logic.Msg, "Recipt");
+            await msgDialgo.ShowAsync(); 
         }
     }
 }
