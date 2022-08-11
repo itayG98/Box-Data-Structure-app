@@ -94,7 +94,7 @@ namespace Boxes_Store_app
         private void TakeOffer_Click(object sender, RoutedEventArgs e)
         {
             logic.TakeOffer(Offer.SelectedItems);
-            ShowRecipt();
+            //ShowRecipt();
             Update();
         }
         private void Remove_Click(object sender, RoutedEventArgs e)

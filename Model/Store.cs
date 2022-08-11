@@ -100,7 +100,7 @@ namespace Model
             if (quantity <=0 || height <=0 || width <=0)
                 return 0;
             //lower to max amount
-            if (quantity >= MAX_BOXES_PER_SIZE)
+            if (quantity > MAX_BOXES_PER_SIZE)
             {
                 returnedBoxes += quantity - MAX_BOXES_PER_SIZE;
                 quantity = MAX_BOXES_PER_SIZE;
@@ -138,6 +138,7 @@ namespace Model
                 else
                 {
                     Box box = new Box(width, height, quantity);
+                    DatesQueue.Remove(box);
                     Xnode.Value.AddNode(width, box);
                     box.Node = DatesQueue.Add(box);
                 }
@@ -145,6 +146,7 @@ namespace Model
             else
             {
                 Box box = new Box(width, height, quantity);
+                DatesQueue.Remove(box);
                 BST<double, Box> YTree = new BST<double, Box>(height, box);
                 MainTree.AddNode(width, YTree);
                 box.Node = DatesQueue.Add(box);
@@ -264,9 +266,9 @@ namespace Model
             int temp;
             if (width > 0 && height > 0 && quantity > 0)
             {
-                foreach (BST<double, Box> Ytree in MainTree.GetNextTreeByRange(width, width * (1 + LIMIT_PERCENTAGE)))
+                foreach (BST<double, Box> Ytree in MainTree.GetNextTreeByRange(width, width * (1 + LIMIT_PERCENTAGE / 100)))
                 {
-                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LIMIT_PERCENTAGE)))
+                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LIMIT_PERCENTAGE/100)))
                     {
                         temp = quantity < b.Count ? quantity : b.Count;
                         quantity -= temp;

@@ -15,7 +15,7 @@ namespace DataStructure
         private QueueNode<V> _root;
         private QueueNode<V> _tail;
         private int _length;
-        
+
         /// <summary>
         /// Root represent the oldest box
         /// </summary>
@@ -38,7 +38,7 @@ namespace DataStructure
                 Length = 1;
                 return Root;
             }
-            else if (Root!=null && Root.Next==null)
+            else if (Root != null && Root.Next == null)
             {
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;
@@ -69,8 +69,9 @@ namespace DataStructure
             foreach (QueueNode<V> node in GetQueueRootFirst())
             {
                 if (node.CompareTo(val) == 0)
+                {
                     if (node.Prev == null && node.Next == null)
-                    { 
+                    {
                         Empty();
                         return true;
                     }
@@ -84,13 +85,14 @@ namespace DataStructure
                         Root = Root.Next;
                         Root.Prev = null;
                     }
-                    else 
+                    else
                     {
                         node.Next.Prev = node.Prev;
                         node.Prev.Next = node.Next;
                     }
-                Length--;  
-                return true;   
+                    Length--;
+                    return true;
+                }
             }
             return false;
         }
@@ -112,7 +114,7 @@ namespace DataStructure
             }
             else if (toRemove == Tail)
             {
-                if (toRemove.Prev==null) 
+                if (toRemove.Prev == null)
                 {
                     Empty();
                     return true;
