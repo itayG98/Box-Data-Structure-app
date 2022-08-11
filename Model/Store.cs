@@ -54,7 +54,7 @@ namespace Model
         {
             int returnedBoxes = 0;
             //Check if box data is valid
-            if (box == null || box.Count <= 0) return -1;
+            if (box == null || box.Count <= 0) return 0;
             //lower to max amount
             if (box.Count >= MAX_BOXES_PER_SIZE)
             {
@@ -68,8 +68,10 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    if (!DatesQueue.Remove(Ynode.Value.Node)) //If the box doesnt have node field
-                        DatesQueue.Remove(Ynode.Value);
+                    if (box.Node == null) //If the box doesnt have node field
+                        DatesQueue.Remove(box.Node);
+                    else
+                        DatesQueue.Remove(box);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
@@ -77,9 +79,8 @@ namespace Model
                         returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
                     }
-                    else //Adding the boxes regulary
+                    else //Adding the boxes count regulary
                         Ynode.Value.Count += box.Count;
-                    Ynode.Value.Date = box.Date;
                 }
                 else
                     Xnode.Value.AddNode(box.Height, box);
@@ -96,7 +97,7 @@ namespace Model
         {
             int returnedBoxes = 0;
             //Check if box data is valid
-            if (quantity < 0 || height < 0 || width < 0)
+            if (quantity <=0 || height <=0 || width <=0)
                 return 0;
             //lower to max amount
             if (quantity >= MAX_BOXES_PER_SIZE)
@@ -110,18 +111,20 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(height);
                 if (Ynode != null) //Found y dim   => Ynode.Value==box to update
                 {
-                    if (!DatesQueue.Remove(Ynode.Value.Node)) //If the box doesnt have node field
+                    if (Ynode.Value.Node != null) //If the box doesnt have node field
                         DatesQueue.Remove(Ynode.Value);
+                    else
+                        DatesQueue.Remove(Ynode.Value.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                     {
                         Ynode.Value.Date = DateTime.Now;
-                        DatesQueue.Add(Ynode.Value);
+                        Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
                         return quantity;
                     }
                     if (Ynode.Value.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
-                        DatesQueue.Add(Ynode.Value);
+                        Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
                         return Ynode.Value.Count + quantity - MAX_BOXES_PER_SIZE;
                     }
                     else //Adding the boxes regulary

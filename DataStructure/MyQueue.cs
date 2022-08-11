@@ -66,43 +66,31 @@ namespace DataStructure
             if (IsEmpty() || val == null)
                 return false;
             QueueNode<V> temp = Root;
-            if (Root.CompareTo(val) == 0)
+            foreach (QueueNode<V> node in GetQueueNewFirst())
             {
-                if (Root.Next == null)
-                {
-                    Empty();
-                    return true;
-                }
-                temp = Root.Next;
-                temp.Prev = null;
-                Root = temp;
-                Length--;
-                return true;
-            }
-            else if (Tail.CompareTo(val) == 0)
-            {
-                if (Tail.Prev == null)
-                {
-                    Empty();
-                    return true;
-                }
-                temp = Tail.Prev;
-                temp.Next = null;
-                Tail = temp;
-                Length--;
-                return true;
-            }
-            temp = Root.Next;
-            while (temp != null)
-            {
-                if (temp.CompareTo(val) == 0)
-                {
-                    temp.Prev.Next = temp.Next;
-                    temp.Next.Prev = temp.Prev;
-                    Length--;
-                    return true;
-                }
-                temp = temp.Next;
+                if (node.CompareTo(val) == 0)
+                    if (node.Prev == null && node.Next == null)
+                    { 
+                        Empty();
+                        return true;
+                    }
+                    else if (node.Next == null) //Tail
+                    {
+                        Tail = node.Prev;
+                        Tail.Next = null;
+                    }
+                    else if (node.Prev == null) //Root
+                    {
+                        Root = Root.Next;
+                        Root.Prev = null;
+                    }
+                    else 
+                    {
+                        node.Next.Prev = node.Prev;
+                        node.Prev.Next = node.Next;
+                    }
+                Length--;  
+                return true;   
             }
             return false;
         }
@@ -173,7 +161,7 @@ namespace DataStructure
         /// New first queue
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<V> GetQueueNewFirst()
+        public IEnumerable GetQueueNewFirst()
         {
             if (!IsEmpty())
             {
@@ -190,7 +178,7 @@ namespace DataStructure
         /// Oldest first queue
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<V> GetQueueOldFirst()
+        public IEnumerable GetQueueOldFirst()
         {
             if (!IsEmpty())
             {
