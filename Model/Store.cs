@@ -92,6 +92,14 @@ namespace Model
             box.Node = DatesQueue.Add(box);
             return returnedBoxes;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="quantity"></param>
+        /// <param name="date"></param>
+        /// <returns>Amount of boxes which returned</returns>
         internal int Add(double width, double height, int quantity, DateTime date)
         {
             int returnedBoxes = 0;
@@ -118,13 +126,14 @@ namespace Model
                     {
                         Ynode.Value.Date = DateTime.Now;
                         Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return quantity;
+                        return quantity+returnedBoxes;
                     }
                     if (Ynode.Value.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
+                        int prevCount = Ynode.Value.Count;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
                         Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return Ynode.Value.Count + quantity - MAX_BOXES_PER_SIZE;
+                        return prevCount + quantity - MAX_BOXES_PER_SIZE+returnedBoxes;
                     }
                     else //Adding the boxes regulary
                     {
@@ -134,7 +143,7 @@ namespace Model
                         return 0;
                     }
                 }
-                else
+                else //Creating new inner tree
                 {
                     Box box = new Box(width, height, quantity);
                     DatesQueue.Remove(box);
@@ -142,7 +151,7 @@ namespace Model
                     box.Node = DatesQueue.Add(box);
                 }
             }
-            else
+            else //Creating new node in mainTree and inner tree
             {
                 Box box = new Box(width, height, quantity);
                 DatesQueue.Remove(box);
@@ -152,6 +161,15 @@ namespace Model
             }
             return returnedBoxes;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="quantity"></param>
+        /// <param name="date initialise to current date time"></param>
+        /// <returns>Amount of boxes which returned</returns>
         public int Add(double width, double height, int quantety) => Add(width, height, quantety, DateTime.Now);
 
         //--------------------------------------------------------------------------------------
@@ -226,8 +244,6 @@ namespace Model
                 MainTree.Remove(Xnode);
             return quantity;
         }
-
-
         //--------------------------------------------------------------------------------------
         public void ActionOnBoxes(Action<Box> act, Order ord)
         {

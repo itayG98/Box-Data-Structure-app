@@ -1,11 +1,7 @@
 ﻿using DataStructure;
 using Model;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace View_Model
@@ -66,17 +62,17 @@ namespace View_Model
                 {
                     int temp = b.Count;
                     _boxesOffer.Remove(b.Node);
-                    store.RemoveBoxes(b, AmountRequested<b.Count? AmountRequested:b.Count);
+                    store.RemoveBoxes(b, AmountRequested<b.Count? AmountRequested:b.Count); //Only subtruct needed amount
                     Remain -= temp - b.Count;
                     sb.AppendLine($"{temp - b.Count} Boxes of {b:dim}");
                 }
-                if (b.Count > 0 && b.Count < store.MIN_BOXES_PER_SIZE)
+                if (b.Count > 0 && b.Count < store.MIN_BOXES_PER_SIZE) //Append apropriate msg to the dialog of warning
                     msgDial.Content += $"Boxes of {b:dim} is below the limit! " + $"Only-{b.Count} left";
                 else if (b.Count <= 0 )
                     msgDial.Content += $"Out of {b:dim}" + $"{b.Count} boxes\n";
             }
             _boxesOffer.Empty();
-            if (Remain > 0)
+            if (Remain > 0) //If could'nt get the amount of boxes in the request
                 sb.Append($"Could not fulfill :{Remain} boxes");
             Msg = sb.ToString();
             return Remain;
@@ -86,9 +82,11 @@ namespace View_Model
             _boxesOffer.Empty();
             store.RemoveBoxes(x, y, quantity);
         }
-        public void Add(double x, double y, int quantity)
+        public void Add(double x, double y, int quantity, MessageDialog msgDial)
         {
-            AmountRequested = store.Add(x, y, quantity);
+            Remain = store.Add(x, y, quantity);
+            if (Remain > 0)
+                msgDial.Content += $"Couldn't add {Remain} boxes of Width - {x} height - {y}";
             _boxesOffer.Empty();
         }
     }

@@ -113,13 +113,16 @@ namespace Boxes_Store_app
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            MessageDialog TooManyAlert = new MessageDialog(String.Empty, "Too many boxes");
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
             if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
-            logic.Add(x, y, q);
+            logic.Add(x, y, q, TooManyAlert);
+            if (TooManyAlert.Content.Length > 0)
+                TooManyAlert.ShowAsync();
             Update();
         }
 
