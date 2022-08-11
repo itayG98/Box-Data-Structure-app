@@ -158,6 +158,11 @@ namespace DataStructure
             }
             return node.CompareTo(val) == 0;
         }
+
+        public void Sort() //Cont here
+        {
+            throw new NotFiniteNumberException();
+        }
         public bool IsEmpty() => Root == null && Tail == null;
         /// <summary>
         /// Return Root first value
