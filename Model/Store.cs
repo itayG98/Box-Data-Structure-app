@@ -103,7 +103,7 @@ namespace Model
         {
             int returnedBoxes = 0;
             //Check if box data is valid
-            if (quantity <=0 || height <=0 || width <=0)
+            if (quantity <= 0 || height <= 0 || width <= 0)
                 return 0;
             //lower to max amount
             if (quantity > MAX_BOXES_PER_SIZE)
@@ -125,14 +125,14 @@ namespace Model
                     {
                         Ynode.Value.Date = DateTime.Now;
                         Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return quantity+returnedBoxes;
+                        return quantity + returnedBoxes;
                     }
                     if (Ynode.Value.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         int prevCount = Ynode.Value.Count;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
                         Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return prevCount + quantity - MAX_BOXES_PER_SIZE+returnedBoxes;
+                        return prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
                     }
                     else //Adding the boxes regulary
                     {
@@ -162,7 +162,7 @@ namespace Model
         }
 
         /// <summary>
-        /// 
+        /// Adding new boxes from the requested type
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -283,7 +283,7 @@ namespace Model
             {
                 foreach (BST<double, Box> Ytree in MainTree.GetNextTreeByRange(width, width * (1 + LIMIT_PERCENTAGE / 100)))
                 {
-                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LIMIT_PERCENTAGE/100)))
+                    foreach (Box b in Ytree.GetNextTreeByRange(height, height * (1 + LIMIT_PERCENTAGE / 100)))
                     {
                         temp = quantity < b.Count ? quantity : b.Count;
                         quantity -= temp;
@@ -301,10 +301,7 @@ namespace Model
             foreach (Box box in GetQueue())
             {
                 if (box != null && box.LastPurchased >= MAX_DAYS)
-                {
-                    RemoveBoxes(box.Width, box.Height, box.Count);
-                    yield return DatesQueue.Pop();
-                }
+                    yield return RemoveBoxes(box, box.Count);
             }
         }
         public IEnumerable GetAll()
@@ -313,9 +310,11 @@ namespace Model
                 foreach (Box box in YTree.GetEnumerator(Order.InOrderV))
                     yield return box;
         }
-        public IEnumerable GetQueue()
-        {
-            return DatesQueue.GetQueueRootFirstByValue();
-        }
+
+        /// <summary>
+        /// Get oldest boxes first
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable GetQueue() => DatesQueue.GetQueueRootFirstByValue();
     }
 }

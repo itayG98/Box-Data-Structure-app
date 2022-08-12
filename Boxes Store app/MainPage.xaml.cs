@@ -43,6 +43,7 @@ namespace Boxes_Store_app
             logic.RemoveOld(RemoveDutToTime);
             if (RemoveDutToTime.Content.Length > 0)
                 RemoveDutToTime.ShowAsync();
+            Update();
         }
 
         public void Update()

@@ -27,7 +27,7 @@ namespace View_Model
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueRootFirstByValue(); } }
 
-        
+
         public Logic()
         {
             store = new Store();
@@ -74,13 +74,13 @@ namespace View_Model
                 {
                     int temp = b.Count;
                     _boxesOffer.Remove(b.Node);
-                    store.RemoveBoxes(b, AmountRequested<b.Count? AmountRequested:b.Count); //Only subtruct needed amount
+                    store.RemoveBoxes(b, AmountRequested < b.Count ? AmountRequested : b.Count); //Only subtruct needed amount
                     Remain -= temp - b.Count;
                     sb.AppendLine($"{temp - b.Count} Boxes of {b:dim}");
                 }
                 if (b.Count > 0 && b.Count < store.MIN_BOXES_PER_SIZE) //Append apropriate msg to the dialog of warning
                     msgDial.Content += $"Boxes of {b:dim} is below the limit! " + $"Only-{b.Count} left";
-                else if (b.Count <= 0 )
+                else if (b.Count <= 0)
                     msgDial.Content += $"Out of {b:dim}" + $"{b.Count} boxes\n";
             }
             _boxesOffer.Empty();
