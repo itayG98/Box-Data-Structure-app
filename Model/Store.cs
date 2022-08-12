@@ -1,7 +1,6 @@
 ﻿using DataStructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using MoockData;
 using System.Collections;
 
@@ -36,7 +35,7 @@ namespace Model
                 if (elem is Box box)
                     Add(box);
             }
-            //DatesQueue.Sort();
+            DatesQueue.QuickSort();
         }
         /// <summary>
         /// Return the boxes count which were not added

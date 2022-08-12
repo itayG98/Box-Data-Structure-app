@@ -261,10 +261,10 @@ namespace DataStructure
         {
             if (node != null)
             {
-                foreach (var n in Inorder(node.Left))
+                foreach (TreeNode n in Inorder(node.Left))
                     yield return n;
                 yield return node;
-                foreach (var n in Inorder(node.Right))
+                foreach (TreeNode n in Inorder(node.Right))
                     yield return n;
             }
         }

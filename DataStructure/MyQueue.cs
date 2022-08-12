@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataStructure
 {/// <summary>
@@ -159,10 +160,45 @@ namespace DataStructure
             return node.CompareTo(val) == 0;
         }
 
-        public void Sort() //Cont here
+        private QueueNode<V> Partition(QueueNode<V> root, QueueNode<V> tail)
         {
-            throw new NotFiniteNumberException();
+            V pivot = tail.Value;
+            QueueNode<V> i = root.Prev;
+            V temp;
+
+            for (QueueNode<V> j = root; j != tail; j = j.Next)
+            {
+                if (j.Value.CompareTo(pivot) <= 0)
+                {
+                    i = (i == null) ? root : i.Next;
+                    temp = i.Value;
+                    i.Value = j.Value;
+                    j.Value = temp;
+                }
+            }
+            i = (i == null) ? root : i.Next;
+            temp = i.Value;
+            i.Value = tail.Value;
+            tail.Value = temp;
+            return i;
         }
+        public void QuickSort(QueueNode<V> Root, QueueNode<V> Tail)
+        {
+            if (Tail != null && Root != Tail && Root != Tail.Next)
+            {
+                QueueNode<V> temp = Partition(Root, Tail);
+                QuickSort(Root, temp.Prev);
+                QuickSort(temp.Next, Tail);
+            }
+        }
+        public void QuickSort()
+        {
+            if (!IsEmpty())
+            {
+                QuickSort(Root, Tail);
+            }
+        }
+
         public bool IsEmpty() => Root == null && Tail == null;
         /// <summary>
         /// Return Root first value
