@@ -39,7 +39,7 @@ namespace Boxes_Store_app
 
         private void DayTimer_Tick(object sender, object e)
         {
-            MessageDialog RemoveDutToTime = new MessageDialog(String.Empty, "Removed Items");
+            MessageDialog RemoveDutToTime = new MessageDialog(String.Empty, "Expired boxes");
             logic.RemoveOld(RemoveDutToTime);
             if (RemoveDutToTime.Content.Length > 0)
                 RemoveDutToTime.ShowAsync();
@@ -138,11 +138,20 @@ namespace Boxes_Store_app
             Update();
         }
 
-
+        /// <summary>
+        /// Can only assign digits and floating point
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c) && c != '.');
         }
+        /// <summary>
+        /// Can noly assign digits
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void TextBox_OnBeforeTextChangingInt(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
