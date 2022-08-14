@@ -35,7 +35,6 @@ namespace Model
                 if (elem is Box box)
                     Add(box);
             }
-            DatesQueue.QuickSort();
         }
         /// <summary>
         /// Return the boxes count which were not added

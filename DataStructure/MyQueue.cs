@@ -149,7 +149,7 @@ namespace DataStructure
             return node.CompareTo(val) == 0;
         }
 
-        private QueueNode<V> Partition(QueueNode<V> last, QueueNode<V> first)
+/*        private QueueNode<V> Partition(QueueNode<V> last, QueueNode<V> first)
         {
             V pivot = first.Value;
             QueueNode<V> i = last.Prev;
@@ -185,7 +185,7 @@ namespace DataStructure
         {
             if (!IsEmpty())
                     QuickSort(Root, Tail);
-        }
+        }*/
 
         public bool IsEmpty() => Root == null && Tail == null;
         /// <summary>

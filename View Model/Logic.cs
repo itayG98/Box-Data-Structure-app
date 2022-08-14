@@ -74,7 +74,7 @@ namespace View_Model
                 {
                     int temp = b.Count;
                     _boxesOffer.Remove(b.Node);
-                    store.RemoveBoxes(b, AmountRequested < b.Count ? AmountRequested : b.Count); //Only subtruct needed amount
+                    store.RemoveBoxes(b, Remain < b.Count ? Remain : b.Count); //Only subtruct needed amount
                     Remain -= temp - b.Count;
                     sb.AppendLine($"{temp - b.Count} Boxes of {b:dim}");
                 }
