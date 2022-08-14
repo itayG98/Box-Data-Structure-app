@@ -6,8 +6,16 @@ using System.Collections;
 
 namespace Model
 {
+    /// <summary>
+    /// A class represent a box store
+    /// </summary>
     public class Store
     {
+        /// <summary>
+        ///<param name="MainTree"> A double dimention BST representing box data</param>
+        ///<param name="DatesQueue">A queue of last to first purchased or inserted boxes </param>
+        /// <param name="_data">Singeltone Datamock loading init data to the program </param>
+        /// </summary>
         private readonly BST<double, BST<double, Box>> MainTree;
         private readonly MyQueue<Box> DatesQueue;
         private readonly DB _data;
@@ -233,14 +241,6 @@ namespace Model
             return quantity;
         }
         //--------------------------------------------------------------------------------------
-        public void ActionOnBoxes(Action<Box> act, Order ord)
-        {
-            if (MainTree.IsEmpty())
-                return;
-            foreach (BST<double, Box> YTree in MainTree.GetEnumerator(ord))
-                foreach (Box box in YTree.GetEnumerator(ord))
-                    act(box);
-        }
         /// <summary>
         /// Do action for all fitting boxes in range of LimitPercentage
         /// </summary>
@@ -249,22 +249,24 @@ namespace Model
         /// <param name="quantity"></param>
         /// <returns></returns>
         /// 
-        public void PopOldBoxes()
+        public void ActionOnBoxes(Action<Box> act, Order ord)
         {
-            foreach (Box box in GetQueue())
-            {
-                if (box != null && box.LastPurchased >= MAX_DAYS)
-                {
-                    RemoveBoxes(box.Width, box.Height, box.Count);
-                    DatesQueue.Pop();
-                }
-                else
-                    return;
-            }
+            if (MainTree.IsEmpty())
+                return;
+            foreach (BST<double, Box> YTree in MainTree.GetEnumerator(ord))
+                foreach (Box box in YTree.GetEnumerator(ord))
+                    act(box);
         }
 
 
         //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Enumerate over the Main BST and return fitting boxes from closer to far
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
         public IEnumerable<Box> GetBestOffer(double width, double height, int quantity)
         {
             int temp;
@@ -285,6 +287,11 @@ namespace Model
                 }
             }
         }
+
+        /// <summary>
+        /// Remove and return the old boxes
+        /// </summary>
+        /// <returns>IEnumerable of the poped boxes </returns>
         public IEnumerable GetandPopOldBoxes()
         {
             foreach (Box box in GetQueue())
@@ -293,6 +300,10 @@ namespace Model
                     yield return RemoveBoxes(box, box.Count);
             }
         }
+        /// <summary>
+        /// Get all the Boxes in size order width first
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable GetAll()
         {
             foreach (BST<double, Box> YTree in MainTree.GetEnumerator(Order.InOrderV))

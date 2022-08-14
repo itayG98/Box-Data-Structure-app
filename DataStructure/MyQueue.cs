@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace DataStructure
 {/// <summary>
-/// Represent a Queue where the boxes with more transaction are first
+/// Represent a Queue where the element sorted by last to first 
 /// </summary>
 /// <typeparam name="V"></typeparam>
     public class MyQueue<V> where V : IComparable

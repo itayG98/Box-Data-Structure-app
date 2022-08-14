@@ -50,8 +50,15 @@ namespace View_Model
             DayTimer.Start();
         }
 
+        /// <summary>
+        /// Get the offer according to dimentions and quantity
+        /// <Return> remaining boxes </Return> 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public int GetOfferEfficintely(double x, double y)
-        //Return remaining boxes
+
         {
             Remain = AmountRequested;
             if (x < 0 && y < 0)
@@ -90,7 +97,7 @@ namespace View_Model
                 else
                 {
                     int temp = b.Count;
-                    _boxesOffer.Remove(b.Node);
+                    _boxesOffer.Remove(b);
                     store.RemoveBoxes(b, Remain < b.Count ? Remain : b.Count); //Only subtruct needed amount
                     Remain -= temp - b.Count;
                     sb.AppendLine($"{temp - b.Count} Boxes of {b:dim}");
