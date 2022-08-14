@@ -32,7 +32,7 @@ the time complexity of add and remove is by **O(1)** thanks to the Prev and Next
 
 # Purpose of the app
 
-## The app should manage storage app in the most efficient way
+## The app should manage storage in the most efficient way
 
 The app manage a boxes store storage and can add remove and give best offer for squared bottomed box represented by X as width and length and Y as height.
 It stores the data for the boxes in doubly dimentional BST with key and value and Date descending order linked list
