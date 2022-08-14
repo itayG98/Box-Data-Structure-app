@@ -10,8 +10,9 @@ using generic key and value i can store complex data in efficient get add and de
 i also added Searching with minimum and maximum value in efficient search.
 
 
+
+<p align="center" >The order of searching item with (16,10) keys with 33% percentage accuracy.</p>
 <p align="center">
-The order of searching item with (16,10) keys with 33% percentage accuracy
   <img height="600"  src="https://user-images.githubusercontent.com/91791115/184548132-d04d3aca-7af9-4d7b-acd4-abb91c40bb98.png">
 </p>
 
@@ -23,15 +24,31 @@ the time complexity of add and remove is by **O(1)** thanks to the Prev and Next
 
 
 
-<p align="center">Deleting node in the limked list in O(1) complexity.
-<img width="550" src="https://user-images.githubusercontent.com/91791115/184548141-5748bb70-eed1-4056-ba85-401b4e985234.png">
+<p align="center" >The order of searching item with (16,10) keys with 33% percentage accuracy.</p>
+<p align="center">
+  <img width="550" src="https://user-images.githubusercontent.com/91791115/184548141-5748bb70-eed1-4056-ba85-401b4e985234.png">
 </p>
 
 
-# Use case the app
+# Purpose of the app
 
-The app manage a boxes store storage and can add remove and give best offer for squared bottomed box represente as X and height represented as Y.
-My app store the data for the boxes in the store in a doubly dimentional BST with key and value
+## The app should manage storage app in the most efficient way
 
--Main tree has Double key and BST value
--Each inner BST has Double key and Box value 
+The app manage a boxes store storage and can add remove and give best offer for squared bottomed box represented by X as width and length and Y as height.
+It stores the data for the boxes in doubly dimentional BST with key and value and Date descending order linked list
+
+- Main tree has Double type key and BST type value
+- Each inner BST has Double type key and Box type value 
+
+### geting Ienumerable BST of the ranged valid values 
+https://github.com/itayG98/Box-Data-Structure-app/blob/2228db6354a857bc19bea6448301e56606ac8630/DataStructure/BST.cs#L207-L230
+
+### Method returns best offer as an enumerable usinng previos method 
+https://github.com/itayG98/Box-Data-Structure-app/blob/2228db6354a857bc19bea6448301e56606ac8630/Model/Store.cs#L270-L290
+
+
+<p align="center" >The Boxes store UI in UWP.</p>
+<p align="center">
+  <img width="800" src="https://user-images.githubusercontent.com/91791115/184551719-1bff48f9-0651-478d-af54-97cf367ac4e4.png"
+</p>
+
