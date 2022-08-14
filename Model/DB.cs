@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace MoockData
 {
-
+    /// <summary>
+    /// The class is a singeltone MoockData contains Boxes sorted array and laodes the configuration data
+    /// </summary>
     public class DB
     {
         private static DB _instance;

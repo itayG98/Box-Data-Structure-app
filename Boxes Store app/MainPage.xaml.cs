@@ -23,7 +23,7 @@ namespace Boxes_Store_app
         public MainPage()
         {
             this.InitializeComponent();
-            logic = new Logic();
+            logic = new Logic(Update);
             GetOffer.Click += GetOffer_Click;
             Add.Click += Add_Click;
             Remove.Click += Remove_Click;
@@ -32,19 +32,8 @@ namespace Boxes_Store_app
             Avilable_Item.ItemClick += Avilable_Item_ItemClick;
             Queue.IsItemClickEnabled = true;
             Queue.ItemClick += Queue_ItemClick;
-            DispatcherTimer dayTimer = new DispatcherTimer() {Interval=new TimeSpan(1,0,0,0)};
-            dayTimer.Tick += DayTimer_Tick;
-            dayTimer.Start();
         }
 
-        private void DayTimer_Tick(object sender, object e)
-        {
-            MessageDialog RemoveDutToTime = new MessageDialog(String.Empty, "Expired boxes");
-            logic.RemoveOld(RemoveDutToTime);
-            if (RemoveDutToTime.Content.Length > 0)
-                RemoveDutToTime.ShowAsync();
-            Update();
-        }
 
         public void Update()
         {
@@ -105,12 +94,11 @@ namespace Boxes_Store_app
 
         private void TakeOffer_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog WarMmsgDial = new MessageDialog(String.Empty,"Warning");
-            logic.TakeOffer(Offer.SelectedItems ,WarMmsgDial);
+            MessageDialog WarMmsgDial = new MessageDialog(String.Empty, "Warning");
+            logic.TakeOffer(Offer.SelectedItems, WarMmsgDial);
             ShowMessegeDialog(logic.Msg, "Recipt");
             if (WarMmsgDial.Content.Length > 0)
                 WarMmsgDial.ShowAsync();
-            Update();
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
@@ -121,7 +109,6 @@ namespace Boxes_Store_app
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
             logic.Remove(x, y, q);
-            Update();
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
@@ -135,7 +122,6 @@ namespace Boxes_Store_app
             logic.Add(x, y, q, TooManyAlert);
             if (TooManyAlert.Content.Length > 0)
                 TooManyAlert.ShowAsync();
-            Update();
         }
 
         /// <summary>
@@ -157,10 +143,11 @@ namespace Boxes_Store_app
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
 
-        public async void ShowMessegeDialog(string msg,string header)
+        public async void ShowMessegeDialog(string msg, string header)
         {
-            MessageDialog msgDialgo = new MessageDialog(msg,header);
-            await msgDialgo.ShowAsync(); 
+            MessageDialog msgDialgo = new MessageDialog(msg, header);
+            await msgDialgo.ShowAsync();
         }
     }
+
 }

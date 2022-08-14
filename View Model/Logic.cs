@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Text;
 using Windows.UI.Popups;
-
+using Windows.UI.Xaml;
 
 namespace View_Model
 {
@@ -18,6 +18,9 @@ namespace View_Model
         private int _remain;
         private MyQueue<Box> _boxesOffer;
         public Store store;
+        DispatcherTimer dayTimer;
+        private readonly Action _upDateAct;
+        private readonly TimeSpan _interval ;
 
 
         public int AmountRequested { get { return _amountRequested; } set { _amountRequested = value >= 0 ? value : 0; } }
@@ -27,11 +30,24 @@ namespace View_Model
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueRootFirstByValue(); } }
 
+        public DispatcherTimer DayTimer { get => dayTimer; private set => dayTimer = value; }
 
-        public Logic()
+        public Action UpDateAct => _upDateAct;
+
+        public Logic(Action update)
         {
             store = new Store();
             _boxesOffer = new MyQueue<Box>();
+            _upDateAct = update;
+            _interval = new TimeSpan(12, 0, 0, 0);
+            StartClock();
+        }
+
+        private void StartClock()
+        {
+            DayTimer = new DispatcherTimer() { Interval = _interval };
+            DayTimer.Tick += DayTimer_Tick;
+            DayTimer.Start();
         }
 
         public int GetOfferEfficintely(double x, double y)
@@ -48,6 +64,7 @@ namespace View_Model
                 _boxesOffer.Add(b);
                 Remain -= b.Count;
             }
+            UpDateAct.Invoke();
             return Remain;
         }
 
@@ -87,12 +104,15 @@ namespace View_Model
             if (Remain > 0) //If could'nt get the amount of boxes in the request
                 sb.Append($"Could not fulfill :{Remain} boxes");
             Msg = sb.ToString();
+            UpDateAct.Invoke();
             return Remain;
         }
         public void Remove(double x, double y, int quantity)
         {
             _boxesOffer.Empty();
             store.RemoveBoxes(x, y, quantity);
+            UpDateAct.Invoke();
+
         }
         public void Add(double x, double y, int quantity, MessageDialog msgDial)
         {
@@ -100,6 +120,16 @@ namespace View_Model
             if (Remain > 0)
                 msgDial.Content += $"Couldn't add {Remain} boxes of Width - {x} height - {y}";
             _boxesOffer.Empty();
+            UpDateAct.Invoke();
+        }
+
+        private void DayTimer_Tick(object sender, object e)
+        {
+            MessageDialog RemoveDutToTime = new MessageDialog(String.Empty, "Expired boxes");
+            RemoveOld(RemoveDutToTime);
+            if (RemoveDutToTime.Content.Length > 0)
+                RemoveDutToTime.ShowAsync();
+            UpDateAct.Invoke();
         }
     }
 }

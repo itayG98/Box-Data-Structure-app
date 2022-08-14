@@ -184,7 +184,7 @@ namespace DataStructure
         public void QuickSort()
         {
             if (!IsEmpty())
-                    QuickSort(Root, Tail);
+                QuickSort(Root, Tail);
         }*/
 
         public bool IsEmpty() => Root == null && Tail == null;
