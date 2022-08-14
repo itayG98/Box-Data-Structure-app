@@ -29,10 +29,11 @@ namespace View_Model
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueue(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueRootFirstByValue(); } }
-
         public DispatcherTimer DayTimer { get => dayTimer; private set => dayTimer = value; }
-
         public Action UpDateAct => _upDateAct;
+
+
+
 
         public Logic(Action update)
         {
@@ -42,6 +43,8 @@ namespace View_Model
             _interval = new TimeSpan(12, 0, 0, 0);
             StartClock();
         }
+
+
 
         private void StartClock()
         {
@@ -81,8 +84,13 @@ namespace View_Model
                 msgDial.Content += $"Out of {b:dim} boxes\n";
         }
 
+        /// <summary>
+        /// This method get the boxes which selected
+        /// </summary>
+        /// <param name="offer"></param>
+        /// <param name="msgDial"></param>
+        /// <returns Return number of boxes which taken /returns>
         public int TakeOffer(IEnumerable offer, MessageDialog msgDial)
-        //Return number of boxes wich taken
         {
             StringBuilder sb = new StringBuilder();
             Remain = AmountRequested;
@@ -114,6 +122,7 @@ namespace View_Model
             UpDateAct.Invoke();
             return Remain;
         }
+
         public void Remove(double x, double y, int quantity)
         {
             _boxesOffer.Empty();
@@ -121,6 +130,7 @@ namespace View_Model
             UpDateAct.Invoke();
 
         }
+
         public void Add(double x, double y, int quantity, MessageDialog msgDial)
         {
             Remain = store.Add(x, y, quantity);
@@ -130,6 +140,11 @@ namespace View_Model
             UpDateAct.Invoke();
         }
 
+        /// <summary>
+        /// This method remove the old boxes  each tick 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DayTimer_Tick(object sender, object e)
         {
             MessageDialog RemoveDutToTime = new MessageDialog(String.Empty, "Expired boxes");

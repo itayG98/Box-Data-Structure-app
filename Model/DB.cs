@@ -75,6 +75,9 @@ namespace MoockData
     }
 }
 
+/// <summary>
+/// Configuration data loader from local jason file
+/// </summary>
 public class Configuration
 {
     public ConfigData ConfigData { get; private set; }
@@ -89,6 +92,9 @@ public class Configuration
     }
 }
 
+/// <summary>
+/// Object represeting the propeties to load from the cinfiguration jason file
+/// </summary>
 public class ConfigData
 {
     public double LIMIT_PERCENTAGE { get; set; }
