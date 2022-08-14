@@ -66,10 +66,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    if (box.Node == null) //If the box doesnt have node field
-                        DatesQueue.Remove(box.Node);
-                    else
-                        DatesQueue.Remove(box);
+                    DatesQueue.Remove(box.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
@@ -103,26 +100,22 @@ namespace Model
         {
             Box box;
             int returnedBoxes = 0;
-            //Check if box data is valid
-            if (quantity <= 0 || height <= 0 || width <= 0)
+            if (quantity <= 0 || height <= 0 || width <= 0) //Check if box data is valid
                 return 0;
-            //lower to max amount
-            if (quantity > MAX_BOXES_PER_SIZE)
+
+            if (quantity > MAX_BOXES_PER_SIZE) //lower to max amount
             {
                 returnedBoxes += quantity - MAX_BOXES_PER_SIZE;
                 quantity = MAX_BOXES_PER_SIZE;
             }
             var Xnode = MainTree.FindNode(width);
-            if (Xnode != null)//Found x dim
+            if (Xnode != null)  //Found x dim
             {
                 var Ynode = Xnode.Value.FindNode(height);
-                if (Ynode != null) //Found y dim   => Ynode.Value==box to update
+                if (Ynode != null)  //Found y dim   => Ynode.Value==box to update
                 {
                     box = Ynode.Value;
-                    if (Ynode.Value.Node != null) //If the box doesnt have node field
-                        DatesQueue.Remove(Ynode.Value);
-                    else
-                        DatesQueue.Remove(Ynode.Value.Node);
+                    DatesQueue.Remove(Ynode.Value.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                     {
                         Ynode.Value.Date = DateTime.Now;
@@ -132,14 +125,14 @@ namespace Model
                     {
                         int prevCount = Ynode.Value.Count;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
-                        returnedBoxes= prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
+                        returnedBoxes = prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
                     }
                     else //Adding the boxes regulary
                     {
                         Ynode.Value.Count += quantity;
                         Ynode.Value.Date = date;
                         Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        returnedBoxes= 0;
+                        returnedBoxes = 0;
                     }
                 }
                 else //Creating new inner tree
@@ -155,7 +148,7 @@ namespace Model
                 BST<double, Box> YTree = new BST<double, Box>(height, box);
                 MainTree.AddNode(width, YTree);
             }
-            box.Node =DatesQueue.Add(box);
+            box.Node = DatesQueue.Add(box);
             return returnedBoxes;
         }
 

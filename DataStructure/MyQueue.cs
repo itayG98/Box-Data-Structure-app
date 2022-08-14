@@ -58,25 +58,27 @@ namespace DataStructure
         {
             if (IsEmpty() || val == null)
                 return false;
-            QueueNode<V> temp = Root;
             foreach (QueueNode<V> node in GetQueueRootFirst())
             {
                 if (node.CompareTo(val) == 0)
                 {
-                    if (node.Prev == null && node.Next == null)
+                    if (node.Prev == null) //Root
                     {
-                        Empty();
-                        return true;
+                        if (Root.Next != null)
+                        {
+                            Root = Root.Next;
+                            Root.Prev = null;
+                        }
+                        else
+                        {
+                            Root = null;
+                            Tail = null;
+                        }
                     }
                     else if (node.Next == null) //Tail
                     {
                         Tail = node.Prev;
                         Tail.Next = null;
-                    }
-                    else if (node.Prev == null) //Root
-                    {
-                        Root = Root.Next;
-                        Root.Prev = null;
                     }
                     else
                     {
@@ -182,22 +184,7 @@ namespace DataStructure
         public void QuickSort()
         {
             if (!IsEmpty())
-            {
-                if (Root.Next.Equals(Tail))
-                {
-                    if (Root.CompareTo(Tail.Value) < 0)
-                    {
-                        QueueNode<V> temp = Root;
-                        Root = Tail;
-                        Root.Prev = null;
-                        Tail =temp;
-                        Tail.Prev = Root;
-                        Root.Next = Tail;
-                    }
-                }
-                else 
                     QuickSort(Root, Tail);
-            }
         }
 
         public bool IsEmpty() => Root == null && Tail == null;
