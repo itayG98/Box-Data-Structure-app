@@ -43,7 +43,7 @@ It stores the data for the boxes in doubly dimentional BST with key and value an
 ### geting Ienumerable BST of the ranged valid values 
 https://github.com/itayG98/Box-Data-Structure-app/blob/2228db6354a857bc19bea6448301e56606ac8630/DataStructure/BST.cs#L207-L230
 
-### Method returns best offer as an enumerable usinng previos method 
+### Method returns best offer as an enumerable using the previos Ienumerable method 
 https://github.com/itayG98/Box-Data-Structure-app/blob/2228db6354a857bc19bea6448301e56606ac8630/Model/Store.cs#L270-L290
 
 
