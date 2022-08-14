@@ -30,3 +30,8 @@ the time complexity of add and remove is by **O(1)** thanks to the Prev and Next
 
 # Use case the app
 
+The app manage a boxes store storage and can add remove and give best offer for squared bottomed box represente as X and height represented as Y.
+My app store the data for the boxes in the store in a doubly dimentional BST with key and value
+
+-Main tree has Double key and BST value
+-Each inner BST has Double key and Box value 
