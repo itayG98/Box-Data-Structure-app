@@ -101,6 +101,7 @@ namespace Model
         /// <returns>Amount of boxes which returned</returns>
         internal int Add(double width, double height, int quantity, DateTime date)
         {
+            Box box;
             int returnedBoxes = 0;
             //Check if box data is valid
             if (quantity <= 0 || height <= 0 || width <= 0)
@@ -117,6 +118,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(height);
                 if (Ynode != null) //Found y dim   => Ynode.Value==box to update
                 {
+                    box = Ynode.Value;
                     if (Ynode.Value.Node != null) //If the box doesnt have node field
                         DatesQueue.Remove(Ynode.Value);
                     else
@@ -124,40 +126,36 @@ namespace Model
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                     {
                         Ynode.Value.Date = DateTime.Now;
-                        Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return quantity + returnedBoxes;
+                        returnedBoxes += quantity;
                     }
                     if (Ynode.Value.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         int prevCount = Ynode.Value.Count;
                         Ynode.Value.Count = MAX_BOXES_PER_SIZE;
-                        Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
+                        returnedBoxes= prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
                     }
                     else //Adding the boxes regulary
                     {
                         Ynode.Value.Count += quantity;
                         Ynode.Value.Date = date;
                         Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
-                        return 0;
+                        returnedBoxes= 0;
                     }
                 }
                 else //Creating new inner tree
                 {
-                    Box box = new Box(width, height, quantity);
+                    box = new Box(width, height, quantity);
                     DatesQueue.Remove(box);
                     Xnode.Value.AddNode(width, box);
-                    box.Node = DatesQueue.Add(box);
                 }
             }
             else //Creating new node in mainTree and inner tree
             {
-                Box box = new Box(width, height, quantity);
-                DatesQueue.Remove(box);
+                box = new Box(width, height, quantity);
                 BST<double, Box> YTree = new BST<double, Box>(height, box);
                 MainTree.AddNode(width, YTree);
-                box.Node = DatesQueue.Add(box);
             }
+            box.Node =DatesQueue.Add(box);
             return returnedBoxes;
         }
 
@@ -170,6 +168,7 @@ namespace Model
         /// <param name="date initialise to current date time"></param>
         /// <returns>Amount of boxes which returned</returns>
         public int Add(double width, double height, int quantety) => Add(width, height, quantety, DateTime.Now);
+
 
         //--------------------------------------------------------------------------------------
         /// <summary>

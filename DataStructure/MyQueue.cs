@@ -15,7 +15,6 @@ namespace DataStructure
     {
         private QueueNode<V> _root;
         private QueueNode<V> _tail;
-        private int _length;
 
         /// <summary>
         /// Root represent the oldest box
@@ -25,7 +24,6 @@ namespace DataStructure
         /// Tail represent the most new Box
         /// </summary>
         public QueueNode<V> Tail { get => _tail; private set => _tail = value; }
-        public int Length { get => _length; private set => _length = value < 0 ? 0 : 1; }
 
         public MyQueue() => Root = Tail = null;
         public QueueNode<V> Add(V val)
@@ -36,7 +34,6 @@ namespace DataStructure
                 Tail = null;
                 Root.Prev = null;
                 Root.Next = null;
-                Length = 1;
                 return Root;
             }
             else if (Root != null && Root.Next == null)
@@ -44,23 +41,18 @@ namespace DataStructure
                 Tail = new QueueNode<V>(val);
                 Root.Next = Tail;
                 Tail.Prev = Root;
-                Length = 2;
                 return Tail;
             }
-            QueueNode<V> newRoot = new QueueNode<V>(val)
-            {
-                Prev = Tail
-            };
+            QueueNode<V> newRoot = new QueueNode<V>(val);
             Tail.Next = newRoot;
+            newRoot.Prev = Tail;
             Tail = newRoot;
-            Length++;
-            return newRoot;
+            return Tail;
         }
         public void Empty()
         {
             Root = null;
             Tail = null;
-            Length = 0;
         }
         public bool Remove(V val)
         {
@@ -91,7 +83,6 @@ namespace DataStructure
                         node.Next.Prev = node.Prev;
                         node.Prev.Next = node.Next;
                     }
-                    Length--;
                     return true;
                 }
             }
@@ -110,7 +101,6 @@ namespace DataStructure
                 }
                 Root = toRemove.Next;
                 Root.Prev = null;
-                Length--;
                 return true;
             }
             else if (toRemove == Tail)
@@ -122,14 +112,12 @@ namespace DataStructure
                 }
                 toRemove.Prev.Next = null;
                 Tail = toRemove.Prev;
-                Length--;
                 return true;
             }
             else if (toRemove.Prev != null && toRemove.Next != null)
             {
                 toRemove.Prev.Next = toRemove.Next;
                 toRemove.Next.Prev = toRemove.Prev;
-                Length--;
                 return true;
             }
             return false;
@@ -142,7 +130,6 @@ namespace DataStructure
             {
                 V val = Root.Value;
                 Root = Root.Next;
-                Length--;
                 return val;
             }
         }
