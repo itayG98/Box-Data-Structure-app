@@ -114,36 +114,34 @@ namespace Model
                 if (Ynode != null)  //Found y dim   => Ynode.Value==box to update
                 {
                     box = Ynode.Value;
-                    DatesQueue.Remove(Ynode.Value.Node);
+                    box.Date = date;
+                    DatesQueue.Remove(box.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                     {
-                        Ynode.Value.Date = DateTime.Now;
                         returnedBoxes += quantity;
                     }
-                    if (Ynode.Value.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
+                    if (box.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         int prevCount = Ynode.Value.Count;
-                        Ynode.Value.Count = MAX_BOXES_PER_SIZE;
+                        box.Count = MAX_BOXES_PER_SIZE;
                         returnedBoxes = prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
                     }
                     else //Adding the boxes regulary
                     {
-                        Ynode.Value.Count += quantity;
-                        Ynode.Value.Date = date;
-                        Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
+                        box.Count += quantity;
                         returnedBoxes = 0;
                     }
                 }
                 else //Creating new inner tree
                 {
-                    box = new Box(width, height, quantity);
+                    box = new Box(width, height, quantity, date);
                     DatesQueue.Remove(box);
                     Xnode.Value.AddNode(width, box);
                 }
             }
             else //Creating new node in mainTree and inner tree
             {
-                box = new Box(width, height, quantity);
+                box = new Box(width, height, quantity, date);
                 BST<double, Box> YTree = new BST<double, Box>(height, box);
                 MainTree.AddNode(width, YTree);
             }
