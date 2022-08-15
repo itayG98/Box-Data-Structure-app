@@ -188,7 +188,10 @@ namespace Model
             if (Ynode == null)
                 return null;
 
-            DatesQueue.Remove(box);
+            if (box.Node != null)           //Remove form queue
+                DatesQueue.Remove(box.Node);
+            else
+                DatesQueue.Remove(box);
             if (box.Count > quantity)
             {
                 box.Count -= quantity;
@@ -213,6 +216,7 @@ namespace Model
         /// <returns></returns>
         public int RemoveBoxes(double width, double height, int quantity)
         {
+            Box box;
             if (width <= 0 || height <= 0 || quantity < 1)
                 return 0;
             var Xnode = MainTree.FindNode(width);
@@ -222,18 +226,22 @@ namespace Model
             if (Ynode == null)
                 return 0;
 
-            DatesQueue.Remove(Ynode.Value.Node);
+            box = Ynode.Value;
+            if (box.Node != null)           //Remove form queue
+                DatesQueue.Remove(box.Node);
+            else
+                DatesQueue.Remove(box);
             if (Ynode.Value.Count > quantity)
             {
-                Ynode.Value.Count -= quantity;
-                Ynode.Value.Date = DateTime.Now;
-                Ynode.Value.Node = DatesQueue.Add(Ynode.Value); //Update the queue
+                box.Count -= quantity;
+                box.Date = DateTime.Now;
+                box.Node = DatesQueue.Add(Ynode.Value); //Update the queue
             }
-            else if (Ynode.Value.Count == quantity)
+            else if (box.Count == quantity)
                 Xnode.Value.Remove(Ynode);
             else
             {
-                var count = Ynode.Value.Count;
+                var count = box.Count;
                 Xnode.Value.Remove(Ynode);
                 quantity = count;
             }
