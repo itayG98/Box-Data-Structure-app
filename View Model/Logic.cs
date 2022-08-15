@@ -123,16 +123,20 @@ namespace View_Model
             return Remain;
         }
 
-        public void Remove(double x, double y, int quantity)
+        public void Remove(double x, double y, int quantity, MessageDialog msgDial)
         {
+            if (x <= 0 || y <= 0 || quantity <= 0)
+                msgDial.Content += "Invalid input";
             _boxesOffer.Empty();
-            store.RemoveBoxes(x, y, quantity);
+            msgDial.Content += $"Removed {store.RemoveBoxes(x, y, quantity) } of Width {x:f2} Height {y:f2}";
             UpDateAct.Invoke();
 
         }
 
         public void Add(double x, double y, int quantity, MessageDialog msgDial)
         {
+            if (x <= 0 || y <= 0 || quantity <= 0)
+                msgDial.Content += "Invalid input";
             Remain = store.Add(x, y, quantity);
             if (Remain > 0)
                 msgDial.Content += $"Couldn't add {Remain} boxes of Width - {x} height - {y}";

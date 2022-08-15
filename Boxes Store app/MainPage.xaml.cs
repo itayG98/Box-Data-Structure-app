@@ -102,13 +102,16 @@ namespace Boxes_Store_app
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
+            MessageDialog Removal = new MessageDialog(String.Empty, "Remove");
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
             if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
-            logic.Remove(x, y, q);
+            logic.Remove(x, y, q, Removal);
+            if (Removal.Content.Length > 0)
+                Removal.ShowAsync();
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
