@@ -5,6 +5,7 @@ using System.Collections;
 using System.Text;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Documents;
 
 namespace View_Model
 {
@@ -20,7 +21,7 @@ namespace View_Model
         public Store store;
         DispatcherTimer dayTimer;
         private readonly Action _upDateAct;
-        private readonly TimeSpan _interval ;
+        private readonly TimeSpan _interval;
 
 
         public int AmountRequested { get { return _amountRequested; } set { _amountRequested = value >= 0 ? value : 0; } }
@@ -92,6 +93,7 @@ namespace View_Model
         /// <returns Return number of boxes which taken /returns>
         public int TakeOffer(IEnumerable offer, MessageDialog msgDial)
         {
+            MessageDialog warn = new MessageDialog(String.Empty, "Out of stock");
             StringBuilder sb = new StringBuilder();
             Remain = AmountRequested;
             foreach (Box b in offer)
@@ -111,13 +113,15 @@ namespace View_Model
                     sb.AppendLine($"{temp - b.Count} Boxes of {b:dim}");
                 }
                 if (b.Count > 0 && b.Count < store.MIN_BOXES_PER_SIZE) //Append apropriate msg to the dialog of warning
-                    msgDial.Content += $"Boxes of {b:dim} is below the limit! " + $"Only-{b.Count} left";
+                    warn.Content += $"Boxes of {b:dim} is below the limit! " + $"Only-{b.Count} left";
                 else if (b.Count <= 0)
-                    msgDial.Content += $"Out of {b:dim}" + $"{b.Count} boxes\n";
+                    warn.Content += $"Out of {b:dim}" + $"{b.Count} boxes\n";
             }
             _boxesOffer.Empty();
             if (Remain > 0) //If could'nt get the amount of boxes in the request
                 sb.Append($"Could not fulfill :{Remain} boxes");
+            if (warn.Content.Length > 0)
+                warn.ShowAsync();
             Msg = sb.ToString();
             UpDateAct.Invoke();
             return Remain;
@@ -128,9 +132,8 @@ namespace View_Model
             if (x <= 0 || y <= 0 || quantity <= 0)
                 msgDial.Content += "Invalid input";
             _boxesOffer.Empty();
-            msgDial.Content += $"Removed {store.RemoveBoxes(x, y, quantity) } of Width {x:f2} Height {y:f2}";
+            msgDial.Content += $"Removed {store.RemoveBoxes(x, y, quantity)} of Width {x:f2} Height {y:f2} \n";
             UpDateAct.Invoke();
-
         }
 
         public void Add(double x, double y, int quantity, MessageDialog msgDial)

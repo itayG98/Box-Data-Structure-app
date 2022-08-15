@@ -54,7 +54,7 @@ namespace MoockData
             Boxes[1] = new Box(5, 6, 45, new DateTime(2022, 8, 5));
             Boxes[2] = new Box(6, 6.5, 45, new DateTime(2022, 8, 7));
             Boxes[3] = new Box(6, 9.5, 45, new DateTime(2022, 6, 8));
-/*            Boxes[4] = new Box(8, 8.5, 54, new DateTime(2022, 6, 8));
+            Boxes[4] = new Box(8, 8.5, 54, new DateTime(2022, 6, 8));
             Boxes[5] = new Box(8, 2.5, 45, new DateTime(2022, 6, 9));
             Boxes[6] = new Box(8, 5.5, 45, new DateTime(2022, 5, 10));
             Boxes[7] = new Box(10, 6, 50, new DateTime(2022, 8, 11));
@@ -70,7 +70,7 @@ namespace MoockData
             Boxes[17] = new Box(17, 17, 76, new DateTime(2022, 7, 21));
             Boxes[18] = new Box(20, 20, 76, new DateTime(2022, 7, 23));
             Boxes[19] = new Box(25, 20, 76, new DateTime(2022, 7, 23));
-            Boxes[20] = new Box(25, 20, 76, new DateTime(2022, 1, 23));*/
+            Boxes[20] = new Box(25, 20, 76, new DateTime(2022, 1, 23));
             Array.Sort(Boxes);
         }
     }
