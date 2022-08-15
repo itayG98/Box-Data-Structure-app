@@ -11,7 +11,6 @@ namespace DataStructure
     /// 
 
     public enum Order { InOrderV, PreOrderV, RightPostOrderV };
-    public enum Direction { Left, Right };
     public class BST<K, V> where K : IComparable
     {
         private TreeNode _root;
@@ -94,7 +93,6 @@ namespace DataStructure
             }
             AddNode(key, val, Root);
         }
-        public void AddNode(TreeNode node) => AddNode(node.Key, node.Value);
         //===============================================================================================
 
         public void Remove(TreeNode node)

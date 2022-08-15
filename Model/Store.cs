@@ -9,7 +9,7 @@ namespace Model
     /// <summary>
     /// A class represent a box store
     /// </summary>
-    public class Store
+    public class Store : IEnumerable
     {
         /// <summary>
         ///<param name="MainTree"> A double dimention BST representing box data</param>
@@ -293,7 +293,7 @@ namespace Model
         /// <returns>IEnumerable of the poped boxes </returns>
         public IEnumerable GetandPopOldBoxes()
         {
-            foreach (Box box in GetQueue())
+            foreach (Box box in GetQueueOldFirst())
             {
                 if (box != null && box.LastPurchased >= MAX_DAYS)
                     yield return RemoveBoxes(box, box.Count);
@@ -313,7 +313,14 @@ namespace Model
         /// <summary>
         /// Get oldest boxes first
         /// </summary>
-        /// <returns></returns>
-        public IEnumerable GetQueue() => DatesQueue.GetQueueRootFirstByValue();
+        /// <returns> IEnumerable of boxes descending order </returns>
+        public IEnumerable GetQueueOldFirst() => DatesQueue.GetQueueRootFirstByValue();
+
+        public IEnumerable GetQueueNewFirst() => DatesQueue.GetQueueTalisFirstValue();
+
+        public IEnumerator GetEnumerator()
+        {
+            yield return GetAll();
+        }
     }
 }
