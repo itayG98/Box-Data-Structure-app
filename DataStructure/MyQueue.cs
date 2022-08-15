@@ -60,7 +60,7 @@ namespace DataStructure
                 return false;
             foreach (QueueNode<V> node in GetQueueRootFirst())
             {
-                if (node.CompareTo(val) == 0)
+                if (node.Value.Equals(val))
                 {
                     if (node.Prev == null) //Root
                     {

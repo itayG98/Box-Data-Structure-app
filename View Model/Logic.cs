@@ -64,7 +64,7 @@ namespace View_Model
 
         {
             Remain = AmountRequested;
-            if (x < 0 && y < 0)
+            if (x < 0 || y < 0)
                 return Remain;
             _boxesOffer.Empty();
             foreach (Box b in store.GetBestOffer(x, y, AmountRequested))
