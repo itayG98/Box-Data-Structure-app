@@ -72,26 +72,30 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    DatesQueue.Remove(box.Node);
+                    DatesQueue.Remove(Ynode.Value.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
-                    if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
+                    else if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         returnedBoxes += Ynode.Value.Count + box.Count - MAX_BOXES_PER_SIZE;
-                        Ynode.Value.Count = MAX_BOXES_PER_SIZE;
+                        Ynode.Value.Count = box.Count = MAX_BOXES_PER_SIZE;
                     }
                     else //Adding the boxes count regulary
                         Ynode.Value.Count += box.Count;
+                    Ynode.Value.Node= DatesQueue.Add(box);
                 }
                 else
+                {
                     Xnode.Value.AddNode(box.Height, box);
+                    box.Node = DatesQueue.Add(box);
+                }
             }
             else
             {
                 BST<double, Box> YTree = new BST<double, Box>(box.Height, box);
                 MainTree.AddNode(box.Width, YTree);
+                box.Node = DatesQueue.Add(box);
             }
-            box.Node = DatesQueue.Add(box);
             return returnedBoxes;
         }
         /// <summary>
@@ -137,11 +141,13 @@ namespace Model
                     {
                         box.Count += quantity;
                     }
+                    Ynode.Value.Node = DatesQueue.Add(box);
                 }
                 else //Creating new inner tree
                 {
                     box = new Box(width, height, quantity, date);
                     Xnode.Value.AddNode(height, box);
+                    box.Node = DatesQueue.Add(box);
                 }
             }
             else //Creating new node in mainTree and inner tree
@@ -149,8 +155,8 @@ namespace Model
                 box = new Box(width, height, quantity, date);
                 BST<double, Box> YTree = new BST<double, Box>(height, box);
                 MainTree.AddNode(width, YTree);
+                box.Node = DatesQueue.Add(box);
             }
-            box.Node = DatesQueue.Add(box);
             return returnedBoxes;
         }
 
