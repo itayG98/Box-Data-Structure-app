@@ -14,7 +14,6 @@ namespace View_Model
     /// </summary>
     public class Logic
     {
-        private string recipt;
         private int _amountRequested;
         private int _remain;
         private MyQueue<Box> _boxesOffer;
@@ -26,14 +25,11 @@ namespace View_Model
 
         public int AmountRequested { get { return _amountRequested; } set { _amountRequested = value >= 0 ? value : 0; } }
         public int Remain { get => _remain; private set { _remain = value >= 0 ? value : 0; } }
-        public string Msg { get => recipt; private set => recipt = value; }
         public IEnumerable Boxes { get { return store.GetAll(); } }
         public IEnumerable DatesQueue { get { return store.GetQueueOldFirst(); } }
         public IEnumerable BoxesOffer { get { return _boxesOffer.GetQueueRootFirstByValue(); } }
         public DispatcherTimer DayTimer { get => dayTimer; private set => dayTimer = value; }
         public Action UpDateAct => _upDateAct;
-
-
 
 
         public Logic(Action update)
@@ -44,7 +40,6 @@ namespace View_Model
             _interval = new TimeSpan(12, 0, 0, 0);
             StartClock();
         }
-
 
 
         private void StartClock()
@@ -122,7 +117,7 @@ namespace View_Model
                 sb.Append($"Could not fulfill :{Remain} boxes");
             if (warn.Content.Length > 0)
                 warn.ShowAsync();
-            Msg = sb.ToString();
+            msgDial.Content = sb.ToString();
             UpDateAct.Invoke();
             return Remain;
         }

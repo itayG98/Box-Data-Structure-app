@@ -92,12 +92,10 @@ namespace Boxes_Store_app
             Offer.SelectAll();
         }
 
-
         private void TakeOffer_Click(object sender, RoutedEventArgs e)
         {
-            MsgDial = new MessageDialog(String.Empty, "Recipt");
+            MsgDial = new MessageDialog(string.Empty, "Recipt");
             logic.TakeOffer(Offer.SelectedItems, MsgDial);
-            MsgDial.Content = logic.Msg;
             if (MsgDial.Content.Length > 0)
                 MsgDial.ShowAsync();
         }
