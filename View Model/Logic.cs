@@ -37,7 +37,7 @@ namespace View_Model
             store = new Store();
             _boxesOffer = new MyQueue<Box>();
             _upDateAct = update;
-            _interval = new TimeSpan(12, 0, 0, 0);
+            _interval = new TimeSpan(1, 0, 0, 0);
             StartClock();
         }
 

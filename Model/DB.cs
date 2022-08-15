@@ -50,7 +50,7 @@ namespace MoockData
             maxDays = Config.ConfigData.MAX_DAYS;
 
             Boxes = new Box[21];
-            Boxes[0] = new Box(5, 5.5, 70, new DateTime(2022, 8, 2));
+            Boxes[0] = new Box(25, 20, 76, new DateTime(2022, 1, 23));
             Boxes[1] = new Box(5, 6, 45, new DateTime(2022, 8, 5));
             Boxes[2] = new Box(6, 6.5, 45, new DateTime(2022, 8, 7));
             Boxes[3] = new Box(6, 9.5, 45, new DateTime(2022, 6, 8));

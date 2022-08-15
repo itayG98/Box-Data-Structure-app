@@ -73,7 +73,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    DatesQueue.Remove(box.Node);
+                    DatesQueue.Remove(box);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
@@ -85,7 +85,7 @@ namespace Model
                         Ynode.Value.Count += box.Count;
                 }
                 else
-                    Xnode.Value.AddNode(box.Height, box);
+                    Xnode.Value.AddNode(box.Width, box);
             }
             else
             {
