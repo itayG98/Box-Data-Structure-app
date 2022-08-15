@@ -128,16 +128,15 @@ namespace Model
                     {
                         returnedBoxes += quantity;
                     }
-                    if (box.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
+                    else if (box.Count + quantity >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
                     {
                         int prevCount = Ynode.Value.Count;
                         box.Count = MAX_BOXES_PER_SIZE;
-                        returnedBoxes = prevCount + quantity - MAX_BOXES_PER_SIZE + returnedBoxes;
+                        returnedBoxes += prevCount + quantity - MAX_BOXES_PER_SIZE ;
                     }
                     else //Adding the boxes regulary
                     {
                         box.Count += quantity;
-                        returnedBoxes = 0;
                     }
                 }
                 else //Creating new inner tree

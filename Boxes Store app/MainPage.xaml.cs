@@ -19,6 +19,7 @@ namespace Boxes_Store_app
     public sealed partial class MainPage : Page
     {
         public Logic logic;
+        public MessageDialog MsgDial { get; set ; }
 
         public MainPage()
         {
@@ -94,37 +95,37 @@ namespace Boxes_Store_app
 
         private void TakeOffer_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog WarMmsgDial = new MessageDialog(String.Empty, "Warning");
-            logic.TakeOffer(Offer.SelectedItems, WarMmsgDial);
-            ShowMessegeDialog(logic.Msg, "Recipt");
-            if (WarMmsgDial.Content.Length > 0)
-                WarMmsgDial.ShowAsync();
+            MsgDial = new MessageDialog(String.Empty, "Recipt");
+            logic.TakeOffer(Offer.SelectedItems, MsgDial);
+            MsgDial.Content = logic.Msg;
+            if (MsgDial.Content.Length > 0)
+                MsgDial.ShowAsync();
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog Removal = new MessageDialog(String.Empty, "Remove");
+            MessageDialog RemovalMsg = new MessageDialog(String.Empty, "Remove");
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
             if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
-            logic.Remove(x, y, q, Removal);
-            if (Removal.Content.Length > 0)
-                Removal.ShowAsync();
+            logic.Remove(x, y, q, RemovalMsg);
+            if (RemovalMsg.Content.Length > 0)
+                RemovalMsg.ShowAsync();
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog TooManyAlert = new MessageDialog(String.Empty, "Too many boxes");
+            MsgDial = new MessageDialog(String.Empty, "Boxes addition");
             if (!double.TryParse(X.Text, out double x) || x < 0)
                 return;
             if (!double.TryParse(Y.Text, out double y) || y < 0)
                 return;
             if (!int.TryParse(Quantity.Text, out int q) || q <= 0)
                 return;
-            logic.Add(x, y, q, TooManyAlert);
-            if (TooManyAlert.Content.Length > 0)
-                TooManyAlert.ShowAsync();
+            logic.Add(x, y, q, MsgDial);
+            if (MsgDial.Content.Length > 0)
+                MsgDial.ShowAsync();
         }
 
         /// <summary>
@@ -148,9 +149,9 @@ namespace Boxes_Store_app
 
         public async void ShowMessegeDialog(string msg, string header)
         {
-            MessageDialog msgDialgo = new MessageDialog(msg, header);
-            await msgDialgo.ShowAsync();
+            MsgDial.Content= msg;
+            MsgDial.Title = header;
+            await MsgDial.ShowAsync();
         }
     }
-
 }
