@@ -101,9 +101,9 @@ namespace DataStructure
         }
         public TreeNode Remove(TreeNode father, K KeyToDelete)
         {
-            if (father == null) //If the tree is empty or the key couldnt be found
+            if (father == null) //If the tree is empty
                 return father;
-
+             // looking for the father of the node to delete
             if (KeyToDelete.CompareTo(father.Key) < 0)
                 father.Left = Remove(father.Left, KeyToDelete);
             else if (KeyToDelete.CompareTo(father.Key) > 0)
