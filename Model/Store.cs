@@ -59,21 +59,24 @@ namespace Model
         {
             int returnedBoxes = 0;
             //Check if box data is valid
-            if (box == null || box.Count <= 0) return 0;
+            if (box == null || box.Count <= 0) return box.Count;
             //lower to max amount
             if (box.Count >= MAX_BOXES_PER_SIZE)
             {
                 returnedBoxes += box.Count - MAX_BOXES_PER_SIZE;
                 box.Count = MAX_BOXES_PER_SIZE;
             }
-
             var Xnode = MainTree.FindNode(box.Width);
             if (Xnode != null)//Found x dim
             {
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    DatesQueue.Remove(box);
+                    if (box.Node != null)           //Remove form queue
+                        DatesQueue.Remove(box.Node);
+                    else
+                        DatesQueue.Remove(box);
+
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
@@ -85,7 +88,7 @@ namespace Model
                         Ynode.Value.Count += box.Count;
                 }
                 else
-                    Xnode.Value.AddNode(box.Width, box);
+                    Xnode.Value.AddNode(box.Height, box);
             }
             else
             {
