@@ -33,8 +33,8 @@ namespace Boxes_Store_app
             Avilable_Item.ItemClick += Avilable_Item_ItemClick;
             Queue.IsItemClickEnabled = true;
             Queue.ItemClick += Queue_ItemClick;
+            Quantity.TextChanged += Quantity_TextChanged;
         }
-
 
         public void Update()
         {
@@ -125,6 +125,7 @@ namespace Boxes_Store_app
                 MsgDial.ShowAsync();
         }
 
+        private void Quantity_TextChanged(object sender, TextChangedEventArgs e) => GetOffer_Click(TakeOffer, null);
         /// <summary>
         /// Can only assign digits and floating point
         /// </summary>

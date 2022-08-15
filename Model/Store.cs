@@ -82,7 +82,7 @@ namespace Model
                     }
                     else //Adding the boxes count regulary
                         Ynode.Value.Count += box.Count;
-                    Ynode.Value.Node= DatesQueue.Add(box);
+                    Ynode.Value.Node= DatesQueue.Add(Ynode.Value);
                 }
                 else
                 {
@@ -141,7 +141,7 @@ namespace Model
                     {
                         box.Count += quantity;
                     }
-                    Ynode.Value.Node = DatesQueue.Add(box);
+                    Ynode.Value.Node = DatesQueue.Add(Ynode.Value);
                 }
                 else //Creating new inner tree
                 {
