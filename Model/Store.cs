@@ -72,11 +72,7 @@ namespace Model
                 var Ynode = Xnode.Value.FindNode(box.Height);
                 if (Ynode != null) //Found y dim
                 {
-                    if (box.Node != null)           //Remove form queue
-                        DatesQueue.Remove(box.Node);
-                    else
-                        DatesQueue.Remove(box);
-
+                    DatesQueue.Remove(box.Node);
                     if (Ynode.Value.Count >= MAX_BOXES_PER_SIZE) //If already too much boxes
                         returnedBoxes = box.Count;
                     if (Ynode.Value.Count + box.Count >= MAX_BOXES_PER_SIZE) //If sum of current and added boxes greater than maximum
@@ -188,10 +184,7 @@ namespace Model
             if (Ynode == null)
                 return null;
 
-            if (box.Node != null)           //Remove form queue
-                DatesQueue.Remove(box.Node);
-            else
-                DatesQueue.Remove(box);
+            DatesQueue.Remove(box.Node);  //Remove boxe's form queue
             if (box.Count > quantity)
             {
                 box.Count -= quantity;
@@ -227,15 +220,12 @@ namespace Model
                 return 0;
 
             box = Ynode.Value;
-            if (box.Node != null)           //Remove form queue
-                DatesQueue.Remove(box.Node);
-            else
-                DatesQueue.Remove(box);
-            if (Ynode.Value.Count > quantity)
+            DatesQueue.Remove(box.Node);    //Remove boxe's form queue
+            if (box.Count > quantity)
             {
                 box.Count -= quantity;
                 box.Date = DateTime.Now;
-                box.Node = DatesQueue.Add(Ynode.Value); //Update the queue
+                box.Node = DatesQueue.Add(box); //Update the queue
             }
             else if (box.Count == quantity)
                 Xnode.Value.Remove(Ynode);
