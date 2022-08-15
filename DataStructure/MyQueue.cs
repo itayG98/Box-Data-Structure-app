@@ -46,8 +46,8 @@ namespace DataStructure
             QueueNode<V> newRoot = new QueueNode<V>(val);
             Tail.Next = newRoot;
             newRoot.Prev = Tail;
-            Tail = newRoot;
-            return Tail;
+            Tail=newRoot;
+            return newRoot;
         }
         public void Empty()
         {
@@ -149,44 +149,6 @@ namespace DataStructure
             return node.CompareTo(val) == 0;
         }
 
-/*        private QueueNode<V> Partition(QueueNode<V> last, QueueNode<V> first)
-        {
-            V pivot = first.Value;
-            QueueNode<V> i = last.Prev;
-            V temp;
-
-            for (QueueNode<V> j = last; j != first; j = j.Next)
-            {
-                if (j.Value.CompareTo(pivot) <= 0)
-                {
-                    i = (i == null) ? last : i.Next;
-                    temp = i.Value;
-                    i.Value = j.Value;
-                    j.Value = temp;
-                }
-            }
-            i = (i == null) ? last : i.Next;
-            temp = i.Value;
-            i.Value = first.Value;
-            first.Value = temp;
-            return i;
-        }
-
-        public void QuickSort(QueueNode<V> tail, QueueNode<V> root)
-        {
-            if (root != null && tail != root && tail != root.Next)
-            {
-                QueueNode<V> temp = Partition(tail, root);
-                QuickSort(tail, temp.Prev);
-                QuickSort(temp.Next, root);
-            }
-        }
-        public void QuickSort()
-        {
-            if (!IsEmpty())
-                QuickSort(Root, Tail);
-        }*/
-
         public bool IsEmpty() => Root == null && Tail == null;
         /// <summary>
         /// Return Root first value
@@ -256,13 +218,51 @@ namespace DataStructure
                 }
             }
         }
+
+/*        private QueueNode<V> Partition(QueueNode<V> last, QueueNode<V> first)
+        {
+            V pivot = first.Value;
+            QueueNode<V> i = last.Prev;
+            V temp;
+
+            for (QueueNode<V> j = last; j != first; j = j.Next)
+            {
+                if (j.Value.CompareTo(pivot) <= 0)
+                {
+                    i = (i == null) ? last : i.Next;
+                    temp = i.Value;
+                    i.Value = j.Value;
+                    j.Value = temp;
+                }
+            }
+            i = (i == null) ? last : i.Next;
+            temp = i.Value;
+            i.Value = first.Value;
+            first.Value = temp;
+            return i;
+        }
+
+        public void QuickSort(QueueNode<V> tail, QueueNode<V> root)
+        {
+            if (root != null && tail != root && tail != root.Next)
+            {
+                QueueNode<V> temp = Partition(tail, root);
+                QuickSort(tail, temp.Prev);
+                QuickSort(temp.Next, root);
+            }
+        }
+        public void QuickSort()
+        {
+            if (!IsEmpty())
+                QuickSort(Root, Tail);
+        }*/
+
     }
 
     public class QueueNode<V> where V : IComparable
     {
         private QueueNode<V> _next;
         private QueueNode<V> _prev;
-
         private V _value;
         public QueueNode(V val) => Value = val;
 

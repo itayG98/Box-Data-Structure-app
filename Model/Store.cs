@@ -107,8 +107,8 @@ namespace Model
         {
             Box box;
             int returnedBoxes = 0;
-            if (quantity <= 0 || height <= 0 || width <= 0) //Check if box data is valid
-                return 0;
+            if (quantity <= 0 || width <= 0 || height <= 0) //Check if box data is valid
+                return quantity;
 
             if (quantity > MAX_BOXES_PER_SIZE) //lower to max amount
             {
@@ -132,7 +132,7 @@ namespace Model
                     {
                         int prevCount = Ynode.Value.Count;
                         box.Count = MAX_BOXES_PER_SIZE;
-                        returnedBoxes += prevCount + quantity - MAX_BOXES_PER_SIZE ;
+                        returnedBoxes += prevCount + quantity - MAX_BOXES_PER_SIZE;
                     }
                     else //Adding the boxes regulary
                     {
@@ -142,8 +142,7 @@ namespace Model
                 else //Creating new inner tree
                 {
                     box = new Box(width, height, quantity, date);
-                    DatesQueue.Remove(box);
-                    Xnode.Value.AddNode(width, box);
+                    Xnode.Value.AddNode(height, box);
                 }
             }
             else //Creating new node in mainTree and inner tree
@@ -177,7 +176,7 @@ namespace Model
         public Box RemoveBoxes(Box box, int quantity)
         {
             //Search the box in both trees
-            if (box.Width <= 0 || box.Height <= 0 || box.Count < 1)
+            if (box.Width <= 0 || box.Height <= 0 || box.Count < 1 || box == null)
                 return null;
             var Xnode = MainTree.FindNode(box.Width);
             if (Xnode == null)
@@ -191,7 +190,7 @@ namespace Model
             {
                 box.Count -= quantity;
                 box.Date = DateTime.Now;
-                box.Node = DatesQueue.Add(Ynode.Value); //Update the queue
+                box.Node = DatesQueue.Add(Ynode.Value); //Update the queue if removed only part of the boxes
             }
             else if (box.Count <= quantity)
             {

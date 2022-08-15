@@ -38,7 +38,7 @@ namespace DataStructure
             if (root == null)
                 return default;
 
-            int comp = Root.CompareTo(key);
+            int comp = root.CompareTo(key);
             if (comp == 0)
                 return root.Value;
             else if (comp > 0)
@@ -55,7 +55,7 @@ namespace DataStructure
             if (node == null)
                 return default;
 
-            int comp = node.CompareTo(key);
+            int comp = node.CompareTo(key); 
             if (comp == 0)
                 return node;
             else if (comp < 0)
@@ -68,7 +68,7 @@ namespace DataStructure
 
         public void AddNode(K key, V val, TreeNode node)
         {
-            int comp = node.CompareTo(key);
+            int comp = node.CompareTo(key); 
             if (comp > 0)
             {
                 if (node.Left == null)
@@ -157,7 +157,7 @@ namespace DataStructure
             BST<K, V> fitKey = new BST<K, V>();
             foreach (TreeNode node in RightPostOrder(Root))
             {
-                if (node.CompareTo(key) >= 0)
+                if (node.CompareTo(key) >= 0) //comp
                     fitKey.AddNode(node.Key, node.Value);
                 else
                     break;
@@ -169,7 +169,7 @@ namespace DataStructure
             BST<K, V> fitKey = new BST<K, V>();
             foreach (TreeNode node in Inorder(Root))
             {
-                if (node.CompareTo(key) <= 0)
+                if (node.CompareTo(key) <= 0) //comp
                     fitKey.AddNode(node.Key, node.Value);
                 else
                     break;
@@ -184,18 +184,18 @@ namespace DataStructure
                 TreeNode commonFather = Root;
                 while (commonFather != null)
                 {
-                    if (commonFather.CompareTo(min) < 0)
+                    if (commonFather.CompareTo(min) < 0) //comp
                         commonFather = commonFather.Right;
-                    else if (commonFather.CompareTo(max) > 0)
+                    else if (commonFather.CompareTo(max) > 0) //comp
                         commonFather = commonFather.Left;
                     else
                         break;
                 }
                 foreach (TreeNode node in Inorder(commonFather))
                 {
-                    if (node.CompareTo(min) >= 0 && node.CompareTo(max) <= 0)
+                    if (node.CompareTo(min) >= 0 && node.Key.CompareTo(max) <= 0) //comp
                         fitKey.AddNode(node.Key, node.Value);
-                    else if (node.CompareTo(max) > 0)
+                    else if (node.CompareTo(max) > 0)  //comp
                         break;
                 }
                 return fitKey;
@@ -218,7 +218,7 @@ namespace DataStructure
                 }
                 foreach (TreeNode node in Inorder(commonFather))
                 {
-                    if (node.CompareTo(min) >= 0 && node.CompareTo(max) <= 0)
+                    if (node.CompareTo(min) >= 0 && node.Key.CompareTo(max) <= 0)
                         yield return node.Value;
                     else if (node.CompareTo(max) > 0)
                         break;

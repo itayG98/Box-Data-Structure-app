@@ -56,22 +56,21 @@ namespace View_Model
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public int GetOfferEfficintely(double x, double y)
-
+        public int GetOffer(double x, double y,int quantity)
         {
-            Remain = AmountRequested;
+            AmountRequested = quantity;
             if (x < 0 || y < 0)
-                return Remain;
+                return quantity;
             _boxesOffer.Empty();
             foreach (Box b in store.GetBestOffer(x, y, AmountRequested))
             {
-                if (Remain == 0)
-                    return Remain;
+                if (quantity == 0)
+                    return quantity;
                 _boxesOffer.Add(b);
-                Remain -= b.Count;
+                quantity -= b.Count;
             }
             UpDateAct.Invoke();
-            return Remain;
+            return quantity;
         }
 
         public void RemoveOld(MessageDialog msgDial)
