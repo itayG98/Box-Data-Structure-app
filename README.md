@@ -30,7 +30,7 @@ the time complexity of add and remove is by **O(1)** thanks to the Prev and Next
 
 
 
-<p align="center" >The order of searching item with (16,10) keys with 33% percentage accuracy.</p>
+<p align="center" >Remove node from the doubly linked list.</p>
 <p align="center">
   <img width="550" src="https://user-images.githubusercontent.com/91791115/184548141-5748bb70-eed1-4056-ba85-401b4e985234.png">
 </p>
