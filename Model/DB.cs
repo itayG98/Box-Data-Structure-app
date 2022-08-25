@@ -69,8 +69,6 @@ namespace MoockData
             Boxes[16] = new Box(15, 15, 80, new DateTime(2022, 7, 20));
             Boxes[17] = new Box(17, 17, 76, new DateTime(2022, 7, 21));
             Boxes[18] = new Box(20, 20, 76, new DateTime(2022, 7, 23));
-            Boxes[19] = new Box(25, 20, 76, new DateTime(2022, 7, 23));
-            Boxes[20] = new Box(25, 20, 76, new DateTime(2022, 1, 23));
             Array.Sort(Boxes);
         }
     }
