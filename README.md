@@ -1,4 +1,4 @@
-# Purpose of the Data structure app
+# Purpose of the app
 
 ### The app should manage storage in the most efficient way
 
